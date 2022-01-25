@@ -7,6 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Conveyor.ConveyorCommand;
+import frc.robot.commands.Intake.IntakeCommand;
+import frc.robot.commands.Shooter.ShooterCommand;
+import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 
 /**
@@ -79,6 +85,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    CommandScheduler.getInstance().setDefaultCommand(Conveyor.getinstance(), new ConveyorCommand());
+    CommandScheduler.getInstance().setDefaultCommand(Shooter.getinstance(), new ShooterCommand());
+    CommandScheduler.getInstance().setDefaultCommand(Intake.getinstance(), new IntakeCommand());
 
   }
 

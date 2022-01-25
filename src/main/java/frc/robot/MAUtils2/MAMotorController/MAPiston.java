@@ -5,6 +5,7 @@
 package frc.robot.MAUtils2.MAMotorController;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -16,12 +17,12 @@ public class MAPiston {
 
     public MAPiston(int channel) {
         isDoubleSolenoid = false;
-        solenoid = new Solenoid(channel);
+        solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, channel);
     }
 
     public MAPiston(int forwardChannel, int reverseChannel) {
         isDoubleSolenoid = true;
-        doubleSolenoid = new DoubleSolenoid(forwardChannel, reverseChannel);
+        doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, forwardChannel, reverseChannel);
     }
 
     public void set(boolean on) {

@@ -32,11 +32,13 @@ public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterf
 
     }
 
-    private void configForwardLimitSwitchSource() {
+    @Override
+    public void configForwardLimitSwitchSource() {
         talonSRX.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
     }
 
-    private void configReverseLimitSwitchSource() {
+    @Override
+    public void configReverseLimitSwitchSource() {
         talonSRX.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
     }
 
@@ -138,6 +140,18 @@ public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterf
         talonSRX.configContinuousCurrentLimit(limit);
         talonSRX.configPeakCurrentDuration(0);
 
+    }
+
+    @Override
+    public void resetOnLimitF(boolean limit) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void resetOnLimitR(boolean limit) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

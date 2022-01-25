@@ -33,7 +33,7 @@ public class Shooter extends SubsystemBase {
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
-    //shooterBMotor.follow(shooterAMotor); //TODO: Fix the follow function that MASparkmax will follow another MASparkmax
+    shooterBMotor.follow(shooterAMotor.getCanSparkMax()); //TODO: Fix the follow function that MASparkmax will follow another MASparkmax
   }
 
   public void setMotor(double power){

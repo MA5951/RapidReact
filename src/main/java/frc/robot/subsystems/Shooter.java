@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -12,7 +12,7 @@ import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MASparkMax;
 import frc.robot.MAUtils2.RobotConstants.ENCODER;
 import frc.robot.MAUtils2.controllers.MAPidController;
-import frc.robot.Commands.Shooter.ShooterConstants;
+import frc.robot.commands.Shooter.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
@@ -26,14 +26,14 @@ public class Shooter extends SubsystemBase {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterAMotor = new MASparkMax(RobotConstants.ID6, false, 0, false, false, false, ENCODER.Alternate_Encoder, MotorType.kBrushless);
+    shooterAMotor = new MASparkMax(RobotConstants.ID6, true, 0, false, false, false, ENCODER.Alternate_Encoder, MotorType.kBrushless);
     shooterBMotor = new MASparkMax(RobotConstants.ID7, false, 0, false, false, false, ENCODER.Alternate_Encoder, MotorType.kBrushless);
 
-    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 0, -12, 12);
+    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 80, -12, 12);
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
-    shooterBMotor.follow(shooterAMotor.getCanSparkMax()); //TODO: Fix the follow function that MASparkmax will follow another MASparkmax
+    shooterBMotor.follow(shooterAMotor.getCanSparkMax());
   }
 
   public void setMotor(double power){
@@ -49,7 +49,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double calculate(double input){
-    pidController.setF((RobotConstants.KMAX_RPM_NEO / pidController.getSetpoint()) * 12);
+    pidController.setF((pidController.getSetpoint() / RobotConstants.KMAX_RPM_NEO) * 12);
     return pidController.calculate(input);
   }
 

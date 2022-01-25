@@ -15,3 +15,5 @@ public interface MotorInterfaceSubsystem extends Subsystem {
         return getVoltege() * 12;
     }
 }
+
+ 

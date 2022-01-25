@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterface, MATalonSRXInterface{
+public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterface, MATalonSRXInterface {
     private WPI_TalonSRX talonSRX;
 
     public MATalonSRX(int id, boolean inverted, double rampRate, boolean mod, boolean hasForwardLimitSwitch,
@@ -29,6 +29,28 @@ public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterf
             configReverseLimitSwitchSource();
 
         talonSRX.configSelectedFeedbackSensor(feedbackDevice);
+
+    }
+
+    public MATalonSRX(int id, boolean inverted, double rampRate, boolean mode, boolean hasForwardLimitSwitch,
+            boolean hasReverseLimitSwitch) {
+        talonSRX = new WPI_TalonSRX(id);
+        setInverted(inverted);
+        configRampRate(rampRate);
+        changeMode(mode);
+
+        if (hasForwardLimitSwitch)
+            configForwardLimitSwitchSource();
+
+        if (hasReverseLimitSwitch)
+            configReverseLimitSwitchSource();
+
+    }
+
+    public MATalonSRX(int id, boolean inverted, boolean mode) {
+        talonSRX = new WPI_TalonSRX(id);
+        setInverted(inverted);
+        changeMode(mode);
 
     }
 
@@ -77,7 +99,6 @@ public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterf
         talonSRX.setNeutralMode(onOff ? NeutralMode.Brake : NeutralMode.Coast);
 
     }
-
 
     public void resetEncoder() {
         talonSRX.setSelectedSensorPosition(0);
@@ -145,13 +166,13 @@ public class MATalonSRX implements MAMotorControlInterface, MAMotorSensorsInterf
     @Override
     public void resetOnLimitF(boolean limit) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void resetOnLimitR(boolean limit) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

@@ -4,12 +4,11 @@
 
 package frc.robot.MAUtils2.MAMotorController;
 
-import com.revrobotics.AlternateEncoderType;
-import com.revrobotics.CANDigitalInput;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
 
-import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.MAUtils2.RobotConstants;
@@ -18,9 +17,9 @@ import frc.robot.MAUtils2.RobotConstants;
 public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterface {
 
     private CANSparkMax canSparkMax;
-    private CANEncoder canEncoder;
-    private CANDigitalInput forwardLimitSwitch;
-    private CANDigitalInput reversLimitSwitch;
+    private RelativeEncoder canEncoder;
+    private SparkMaxLimitSwitch forwardLimitSwitch;
+    private SparkMaxLimitSwitch reversLimitSwitch;
 
     public MASparkMax(int id, boolean inverted, double rampRate, boolean mod, boolean hasForwardLimitSwitch,
             boolean hasReverseLimitSwitch, RobotConstants.ENCODER encoder, MotorType type) {
@@ -31,10 +30,38 @@ public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterf
         changeMode(mod);
         setCurrentLimit(60);
         if (hasForwardLimitSwitch)
-            forwardLimitSwitch = canSparkMax.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+            forwardLimitSwitch = canSparkMax.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
         if (hasReverseLimitSwitch)
-            reversLimitSwitch = canSparkMax.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+            reversLimitSwitch = canSparkMax.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+
+        if (encoder == RobotConstants.ENCODER.Encoder) {
+            setCanEncoder();
+        } else if (encoder == RobotConstants.ENCODER.Alternate_Encoder) {
+            setCanAlternateEncoder();
+        }
+    }
+
+    public MASparkMax(int id, boolean inverted, double rampRate, boolean mode, RobotConstants.ENCODER encoder, MotorType type) {
+        canSparkMax = new CANSparkMax(id, type);
+        canSparkMax.restoreFactoryDefaults();
+        setInverted(inverted);
+        configRampRate(rampRate);
+        changeMode(mode);
+        setCurrentLimit(60);
+        if (encoder == RobotConstants.ENCODER.Encoder) {
+            setCanEncoder();
+        } else if (encoder == RobotConstants.ENCODER.Alternate_Encoder) {
+            setCanAlternateEncoder();
+        }
+    }
+
+    public MASparkMax(int id, boolean inverted, boolean mode, RobotConstants.ENCODER encoder, MotorType type) {
+        canSparkMax = new CANSparkMax(id, type);
+        canSparkMax.restoreFactoryDefaults();
+        setInverted(inverted);
+        changeMode(mode);
+        setCurrentLimit(60);
 
         if (encoder == RobotConstants.ENCODER.Encoder) {
             setCanEncoder();
@@ -50,7 +77,7 @@ public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterf
     }
 
     private void setCanAlternateEncoder() {
-        canEncoder = canSparkMax.getAlternateEncoder(AlternateEncoderType.kQuadrature, RobotConstants.KTICKS_PER_PULSE);
+        canEncoder = canSparkMax.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, RobotConstants.KTICKS_PER_PULSE);
         canEncoder.setPositionConversionFactor(RobotConstants.KTICKS_PER_PULSE);
         canEncoder.setVelocityConversionFactor(RobotConstants.KTICKS_PER_PULSE);
     }
@@ -95,11 +122,11 @@ public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterf
     }
 
     public boolean getForwardLimitSwitch() {
-        return forwardLimitSwitch.get();
+        return forwardLimitSwitch.isPressed();
     }
 
     public boolean getReverseLimitSwitch() {
-        return reversLimitSwitch.get();
+        return reversLimitSwitch.isPressed();
     }
 
     public double getPosition() {

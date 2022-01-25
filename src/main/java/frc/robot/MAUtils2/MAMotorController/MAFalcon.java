@@ -16,12 +16,11 @@ public class MAFalcon implements MAMotorControlInterface, MAMotorSensorsInterfac
     private TalonFX falcon;
 
     public MAFalcon(int id, boolean inverted, double rampRate, NeutralMode mode, boolean hasForwardLimitSwitch,
-        boolean hasReverseLimitSwitch, FeedbackDevice feedbackDevice) {
+            boolean hasReverseLimitSwitch, FeedbackDevice feedbackDevice) {
         falcon = new TalonFX(id);
         setInverted(inverted);
         configRampRate(rampRate);
         falcon.setNeutralMode(mode);
-        
 
         if (hasForwardLimitSwitch)
             configForwardLimitSwitchSource();
@@ -32,6 +31,28 @@ public class MAFalcon implements MAMotorControlInterface, MAMotorSensorsInterfac
         falcon.configSelectedFeedbackSensor(feedbackDevice);
 
     }
+
+    public MAFalcon(int id, boolean inverted, double rampRate, NeutralMode mode, boolean hasForwardLimitSwitch,
+            boolean hasReverseLimitSwitch) {
+        falcon = new TalonFX(id);
+        setInverted(inverted);
+        configRampRate(rampRate);
+        falcon.setNeutralMode(mode);
+
+        if (hasForwardLimitSwitch)
+            configForwardLimitSwitchSource();
+
+        if (hasReverseLimitSwitch)
+            configReverseLimitSwitchSource();
+
+    }
+
+    public MAFalcon(int id, boolean inverted, NeutralMode mode) {
+    falcon = new TalonFX(id);
+    setInverted(inverted);
+    falcon.setNeutralMode(mode);
+
+}
 
     private void configForwardLimitSwitchSource() {
         falcon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
@@ -133,11 +154,13 @@ public class MAFalcon implements MAMotorControlInterface, MAMotorSensorsInterfac
         falcon.configSelectedFeedbackSensor(FD);
     }
 
-    public void setCurrentLimit(int limit){
-        falcon.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, limit, RobotConstants.KTRIGGER_THRESHOLD_TIME, 0));
+    public void setCurrentLimit(int limit) {
+        falcon.configStatorCurrentLimit(
+                new StatorCurrentLimitConfiguration(true, limit, RobotConstants.KTRIGGER_THRESHOLD_TIME, 0));
     }
 
-    public void setCurrentLimit(int limit, int triggerThresholdCurrent){
-        falcon.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, limit, RobotConstants.KTRIGGER_THRESHOLD_TIME, triggerThresholdCurrent));
+    public void setCurrentLimit(int limit, int triggerThresholdCurrent) {
+        falcon.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, limit,
+                RobotConstants.KTRIGGER_THRESHOLD_TIME, triggerThresholdCurrent));
     }
 }

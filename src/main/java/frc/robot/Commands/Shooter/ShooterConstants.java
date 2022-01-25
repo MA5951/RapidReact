@@ -1,4 +1,4 @@
-package frc.robot.commands.Shooter;
+package frc.robot.Commands.Shooter;
 
 public class ShooterConstants {
     public static final String SYSTEM_NAME = "Shooter";

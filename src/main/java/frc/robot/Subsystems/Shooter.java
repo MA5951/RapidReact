@@ -2,17 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Commands.Shooter.ShooterConstants;
+import frc.robot.MAUtils2.MAShuffleboard;
 import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MASparkMax;
 import frc.robot.MAUtils2.RobotConstants.ENCODER;
 import frc.robot.MAUtils2.controllers.MAPidController;
+import frc.robot.commands.Shooter.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
@@ -21,6 +22,8 @@ public class Shooter extends SubsystemBase {
 
   private MAPidController pidController;
 
+  private MAShuffleboard shooterShuffleboard;
+
   private static Shooter shooter;
 
   public Shooter() {
@@ -28,6 +31,8 @@ public class Shooter extends SubsystemBase {
     shooterBMotor = new MASparkMax(RobotConstants.ID7, false, 0, false, false, false, ENCODER.Encoder.Alternate_Encoder, MotorType.kBrushless);
 
     pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 0, -12, 12);
+
+    shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
     //shooterBMotor.follow(shooterAMotor); //TODO: Fix the follow function that MASparkmax will follow another MASparkmax
   }
@@ -40,8 +45,17 @@ public class Shooter extends SubsystemBase {
     return shooterAMotor.getVelocity();
   }
 
+  public void setSetpoint(double setpoint){
+    pidController.setSetpoint(setpoint);
+  }
+
   public double calculate(double input){
+    pidController.setF((RobotConstants.KMAX_RPM_NEO / pidController.getSetpoint()) * 12);
     return pidController.calculate(input);
+  }
+
+  public boolean atSetpoint(){
+    return pidController.atSetpoint();
   }
 
   public static Shooter getinstance(){
@@ -53,6 +67,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    shooterShuffleboard.addNum("Shooter RPM", getEncoder());
+    shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
   }
 }

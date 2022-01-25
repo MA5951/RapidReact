@@ -26,14 +26,14 @@ public class Shooter extends SubsystemBase {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterAMotor = new MASparkMax(RobotConstants.ID6, false, 0, false, false, false, ENCODER.Encoder.Alternate_Encoder, MotorType.kBrushless);
+    shooterAMotor = new MASparkMax(RobotConstants.ID6, true, 0, false, false, false, ENCODER.Encoder.Alternate_Encoder, MotorType.kBrushless);
     shooterBMotor = new MASparkMax(RobotConstants.ID7, false, 0, false, false, false, ENCODER.Encoder.Alternate_Encoder, MotorType.kBrushless);
 
-    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 0, -12, 12);
+    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 80, -12, 12);
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
-    shooterBMotor.follow(shooterAMotor.getCanSparkMax()); //TODO: Fix the follow function that MASparkmax will follow another MASparkmax
+    shooterBMotor.follow(shooterAMotor.getCanSparkMax());
   }
 
   public void setMotor(double power){

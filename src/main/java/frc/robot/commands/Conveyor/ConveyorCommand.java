@@ -26,14 +26,14 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void execute() {
     if (amoutOfBalls == 2)
-      conveyor.setTalon1Velocity(0.5); // TODO: change to 0
+      conveyor.setTalon1Velocity(0.65); // TODO: change to 0
     else
-      conveyor.setTalon1Velocity(0.5);
+      conveyor.setTalon1Velocity(0.65);
 
     if (conveyor.getIR2())
-      conveyor.setTalon2Velocity(0.5); // TODO: change to 0
+      conveyor.setTalon2Velocity(0.65); // TODO: change to 0
     else
-      conveyor.setTalon2Velocity(0.5);
+      conveyor.setTalon2Velocity(0.65);
 
 
   

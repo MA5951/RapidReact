@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setMotor(double power){
-    shooterAMotor.set(power);
+    shooterAMotor.setvoltage(power);
   }
 
   public double getEncoder(){

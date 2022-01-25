@@ -5,14 +5,16 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.MAUtils2.MAShuffleboard;
 import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MATalonSRX;
+import frc.robot.MAUtils2.MAMotorController.MAVictorSPX;
 
 public class Conveyor extends SubsystemBase {
 
-  private MATalonSRX talon1;
-  private MATalonSRX talon2;
+  private MAVictorSPX talon1;
+  private MAVictorSPX talon2;
 
   private ColorSensorV3 ir1;
   private ColorSensorV3 ir2;
@@ -22,8 +24,8 @@ public class Conveyor extends SubsystemBase {
   private MAShuffleboard conveyorShuffleboard;
 
   public Conveyor() {
-    talon1 = new MATalonSRX(RobotConstants.ID6, false, 0, false, false, false, FeedbackDevice.None);
-    talon2 = new MATalonSRX(RobotConstants.ID7, false, 0, false, false, false, FeedbackDevice.None);
+    talon1 = new MAVictorSPX(RobotConstants.ID6, false, RobotConstants.KMOTOR_BRAKE);
+    talon2 = new MAVictorSPX(RobotConstants.ID7, false, RobotConstants.KMOTOR_BRAKE);
 
     ir1 = new ColorSensorV3(Port.kOnboard);
     ir2 = new ColorSensorV3(Port.kMXP);

@@ -20,7 +20,7 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setSetpoint(4000);
+    shooter.setSetpoint(997);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

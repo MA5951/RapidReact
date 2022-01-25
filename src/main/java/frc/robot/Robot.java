@@ -87,8 +87,8 @@ public class Robot extends TimedRobot {
     }
 
     CommandScheduler.getInstance().setDefaultCommand(Conveyor.getinstance(), new ConveyorCommand());
-    CommandScheduler.getInstance().setDefaultCommand(Shooter.getinstance(), new ShooterCommand());
-    CommandScheduler.getInstance().setDefaultCommand(Intake.getinstance(), new IntakeCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(Shooter.getinstance(), new ShooterCommand());
+    // CommandScheduler.getInstance().setDefaultCommand(Intake.getinstance(), new IntakeCommand());
 
   }
 

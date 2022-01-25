@@ -6,7 +6,7 @@ import frc.robot.subsystems.Conveyor;
 
 public class ConveyorCommand extends CommandBase {
 
-  int amoutOfBalls=0;
+  int amoutOfBalls = 0;
 
   boolean ballIn = false;
 
@@ -26,12 +26,12 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void execute() {
     if (amoutOfBalls == 2)
-      conveyor.setTalon1Velocity(0);
+      conveyor.setTalon1Velocity(0.5); // TODO: change to 0
     else
       conveyor.setTalon1Velocity(0.5);
 
     if (conveyor.getIR2())
-      conveyor.setTalon2Velocity(0);
+      conveyor.setTalon2Velocity(0.5); // TODO: change to 0
     else
       conveyor.setTalon2Velocity(0.5);
 

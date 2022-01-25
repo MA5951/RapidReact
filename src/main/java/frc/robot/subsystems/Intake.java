@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MATalonSRX;
 
 public class Intake extends SubsystemBase {
@@ -15,7 +16,7 @@ public class Intake extends SubsystemBase {
   private static Intake intake;
 
   public Intake() {
-    intakeMotor = new MATalonSRX(1, false, 0, true, false, false, FeedbackDevice.None);
+    intakeMotor = new MATalonSRX(RobotConstants.ID5, false, 0, true, false, false, FeedbackDevice.None);
   }
 
   public void setPower(double power) {

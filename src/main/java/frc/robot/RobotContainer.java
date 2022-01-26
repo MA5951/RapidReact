@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.MAUtils2.JoystickContainer;
 import frc.robot.MAUtils2.RobotConstants;
+import frc.robot.commands.Automations.ShootingAutomation;
+import frc.robot.commands.Conveyor.ConveyorCommand;
+import frc.robot.commands.Intake.IntakeCommand;
+import frc.robot.commands.Shooter.ShooterCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,6 +37,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickContainer.AButton.whileActiveContinuous(new IntakeCommand());
+    JoystickContainer.BButton.whileActiveContinuous(new ConveyorCommand());
+    JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());
+    JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
   }
 
   /**

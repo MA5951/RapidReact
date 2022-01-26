@@ -13,8 +13,8 @@ import frc.robot.MAUtils2.MAMotorController.MAVictorSPX;
 
 public class Conveyor extends SubsystemBase {
 
-  private MAVictorSPX talon1;
-  private MAVictorSPX talon2;
+  private MAVictorSPX lowerVictor;
+  private MAVictorSPX upperVictor;
 
   private ColorSensorV3 ir1;
   private ColorSensorV3 ir2;
@@ -24,11 +24,13 @@ public class Conveyor extends SubsystemBase {
   private MAShuffleboard conveyorShuffleboard;
 
   public Conveyor() {
-    talon1 = new MAVictorSPX(RobotConstants.ID6, false, RobotConstants.KMOTOR_BRAKE);
-    talon2 = new MAVictorSPX(RobotConstants.ID7, false, RobotConstants.KMOTOR_BRAKE);
+    lowerVictor = new MAVictorSPX(RobotConstants.ID6, false, RobotConstants.KMOTOR_COAST);
+    upperVictor = new MAVictorSPX(RobotConstants.ID7, false, RobotConstants.KMOTOR_COAST);
 
     ir1 = new ColorSensorV3(Port.kOnboard);
     ir2 = new ColorSensorV3(Port.kMXP);
+
+    lowerVictor.configRampRate(0.1);
 
     conveyorShuffleboard = new MAShuffleboard("conveyor");
   }
@@ -49,12 +51,12 @@ public class Conveyor extends SubsystemBase {
     return getIR2Values() > 22;
   }
 
-  public void setTalon1Velocity(double velocity) {
-    talon1.set(velocity);
+  public void setLowerPower(double velocity) {
+    lowerVictor.set(velocity);
   }
 
-  public void setTalon2Velocity(double velocity) {
-    talon2.set(velocity);
+  public void setUpperPower(double velocity) {
+    upperVictor.set(velocity);
   }
 
   public static Conveyor getinstance() {

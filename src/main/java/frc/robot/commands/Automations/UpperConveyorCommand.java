@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.commands.Automations;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Shooter;
 
-public class IntakeCommand extends CommandBase {
-  /** Creates a new IntakeCommand. */
-  private Intake intake;
+public class UpperConveyorCommand extends CommandBase {
+  /** Creates a new UpperConveyorCommand. */
+  private Conveyor conveyor;
 
-  public IntakeCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    intake = Intake.getinstance();
-    addRequirements(intake);
+  public UpperConveyorCommand() {
+    conveyor = Conveyor.getinstance();
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +24,15 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setPower(-0.5);
+    if (Shooter.getinstance().atSetpoint()) {
+      conveyor.setUpperPower(0.65);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setPower(0);
+    conveyor.setUpperPower(0);
   }
 
   // Returns true when the command should end.

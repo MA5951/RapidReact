@@ -24,7 +24,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setPower(-0.5);
+    intake.setPower(-0.6);
   }
 
   // Called once the command ends or is interrupted.

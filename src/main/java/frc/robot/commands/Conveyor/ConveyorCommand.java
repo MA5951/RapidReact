@@ -29,14 +29,14 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void execute() {
     if (amoutOfBalls == 2)
-      conveyor.setLowerPower(-0.8);
+      conveyor.setLowerPower(-0.7);
     else
-      conveyor.setLowerPower(-0.8);
+      conveyor.setLowerPower(-0.7);
 
     if (conveyor.getIR2())
-      conveyor.setUpperPower(0.8);
+      conveyor.setUpperPower(0.7);
     else
-      conveyor.setUpperPower(0.8);
+      conveyor.setUpperPower(0.7);
 
 
   

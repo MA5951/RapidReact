@@ -21,7 +21,7 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void initialize() {
     if (conveyor.getIR1()){
-      amoutOfBalls = 1;
+      amoutOfBalls++;
     }
 
   }
@@ -29,12 +29,12 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void execute() {
     if (amoutOfBalls == 2)
-      conveyor.setLowerPower(-0.7);
+      conveyor.setLowerPower(0);
     else
       conveyor.setLowerPower(-0.7);
 
     if (conveyor.getIR2())
-      conveyor.setUpperPower(0.7);
+      conveyor.setUpperPower(0);
     else
       conveyor.setUpperPower(0.7);
 
@@ -58,7 +58,7 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     conveyor.setLowerPower(0);
-    conveyor.setUpperPower(0);;
+    conveyor.setUpperPower(0);
   }
 
   @Override

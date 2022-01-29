@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
   private static Intake intake;
 
   public Intake() {
-    intakeMotor = new MATalonSRX(RobotConstants.ID5, false, 0, true, false, false, FeedbackDevice.None);
+    intakeMotor = new MATalonSRX(RobotConstants.ID10, false, 0, true, false, false, FeedbackDevice.None); //ID5
   }
 
   public void setPower(double power) {

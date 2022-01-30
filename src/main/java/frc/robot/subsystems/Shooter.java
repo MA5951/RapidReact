@@ -11,11 +11,12 @@ import frc.robot.MAUtils2.MAShuffleboard;
 import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MAPiston;
 import frc.robot.MAUtils2.MAMotorController.MASparkMax;
+import frc.robot.MAUtils2.MASubsystem.PistonInterfaceSubsystem;
 import frc.robot.MAUtils2.RobotConstants.ENCODER;
 import frc.robot.MAUtils2.controllers.MAPidController;
 import frc.robot.commands.Shooter.ShooterConstants;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   /** Creates a new Shooter. */
   private MASparkMax shooterAMotor;
   private MASparkMax shooterBMotor;
@@ -33,7 +34,7 @@ public class Shooter extends SubsystemBase {
     shooterAMotor = new MASparkMax(RobotConstants.ID1, true, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
     shooterBMotor = new MASparkMax(RobotConstants.ID3, false, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
 
-    shooterAPiston = new MAPiston(0, 1);
+    shooterAPiston = new MAPiston(5, 6);
     shooterBPiston = new MAPiston(2, 3);
 
     pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 65, -12, 12);

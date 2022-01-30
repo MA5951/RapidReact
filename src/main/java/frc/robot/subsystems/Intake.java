@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, Pi
   }
 
   public void setVoltege (double voltege){
-    intake.setVoltege(voltege);
+    intakeMotor.setvoltage(voltege);
   }
 
   public double getVoltege(){

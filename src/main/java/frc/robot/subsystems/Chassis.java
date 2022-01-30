@@ -57,10 +57,10 @@ public class Chassis extends SubsystemBase {
     leftRearMotor.follow(leftFrontMotor);
     rightRearMotor.follow(rightFrontMotor);
 
-    leftFrontMotor.setNeutralMode(NeutralMode.Brake);
-    leftRearMotor.setNeutralMode(NeutralMode.Brake);
-    rightFrontMotor.setNeutralMode(NeutralMode.Brake);
-    rightRearMotor.setNeutralMode(NeutralMode.Brake);
+    leftFrontMotor.setNeutralMode(NeutralMode.Coast);
+    leftRearMotor.setNeutralMode(NeutralMode.Coast);
+    rightFrontMotor.setNeutralMode(NeutralMode.Coast);
+    rightRearMotor.setNeutralMode(NeutralMode.Coast);
 
     navx = new AHRS(Port.kMXP);
     // odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);

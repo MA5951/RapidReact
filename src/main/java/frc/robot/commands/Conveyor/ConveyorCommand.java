@@ -29,13 +29,13 @@ public class ConveyorCommand extends CommandBase {
     if (conveyor.amoutOfBalls == 2)
       conveyor.setLowerPower(0); //0
     else
-      conveyor.setLowerPower(-0.6);
+      conveyor.setLowerPower(0.75);
 
     if (conveyor.getIR2()){
       conveyor.setUpperPower(0); //0
     }
     else{
-      conveyor.setUpperPower(0.6);
+      conveyor.setUpperPower(-0.75);
     }
 
 

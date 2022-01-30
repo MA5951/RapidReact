@@ -42,7 +42,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // ---------------------------- Intake ----------------------------
-    JoystickContainer.AButton.whileActiveContinuous(new MAMotorCommand(Intake.getinstance(), -0.8));
+    JoystickContainer.AButton.whileActiveContinuous(new MAMotorCommand(Intake.getinstance(), -0.9));
     JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
 
     // ---------------------------- Conveyor ----------------------------

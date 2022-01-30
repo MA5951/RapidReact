@@ -10,11 +10,11 @@ import frc.robot.MAUtils2.MASubsystem.PistonInterfaceSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MATogalPistonCommand extends InstantCommand {
+public class MATogglePistonCommand extends InstantCommand {
 
     private PistonInterfaceSubsystem subsystem;
 
-  public MATogalPistonCommand(PistonInterfaceSubsystem subsystem) {
+  public MATogglePistonCommand(PistonInterfaceSubsystem subsystem) {
     this.subsystem = subsystem;
     addRequirements(subsystem);
   }

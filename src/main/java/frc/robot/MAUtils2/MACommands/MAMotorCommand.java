@@ -4,10 +4,10 @@
 
 package frc.robot.MAUtils2.MACommands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.MAUtils2.MASubsystem.MotorInterfaceSubsystem;
 
-public class MAMotorCommand extends InstantCommand  {
+public class MAMotorCommand extends CommandBase  {
   /** Creates a new MAMotorCommands. */
   private MotorInterfaceSubsystem subsystem;
   private double power;
@@ -20,7 +20,10 @@ public class MAMotorCommand extends InstantCommand  {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() {}
+
+  @Override
+  public void execute(){
     subsystem.setPower(power);
   }
 

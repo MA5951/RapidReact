@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MAUtils2.MAShuffleboard;
 import frc.robot.MAUtils2.RobotConstants;
+import frc.robot.MAUtils2.MAMotorController.MAPiston;
 import frc.robot.MAUtils2.MAMotorController.MASparkMax;
 import frc.robot.MAUtils2.RobotConstants.ENCODER;
 import frc.robot.MAUtils2.controllers.MAPidController;
@@ -19,6 +20,9 @@ public class Shooter extends SubsystemBase {
   private MASparkMax shooterAMotor;
   private MASparkMax shooterBMotor;
 
+  private MAPiston shooterAPiston;
+  private MAPiston shooterBPiston;
+
   private MAPidController pidController;
 
   private MAShuffleboard shooterShuffleboard;
@@ -28,6 +32,9 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     shooterAMotor = new MASparkMax(RobotConstants.ID1, true, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
     shooterBMotor = new MASparkMax(RobotConstants.ID3, false, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+
+    shooterAPiston = new MAPiston(0, 1);
+    shooterBPiston = new MAPiston(2, 3);
 
     pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 65, -12, 12);
 
@@ -55,6 +62,20 @@ public class Shooter extends SubsystemBase {
 
   public boolean atSetpoint(){
     return pidController.atSetpoint();
+  }
+
+  public void open(){
+    shooterAPiston.set(true);
+    shooterBPiston.set(true);
+  }
+
+  public void close(){
+    shooterAPiston.set(false);
+    shooterBPiston.set(false);
+  }
+
+  public boolean isOpen(){
+    return shooterAPiston.get();
   }
 
   public static Shooter getinstance(){

@@ -17,6 +17,7 @@ import frc.robot.commands.Automations.ShootingAutomation;
 import frc.robot.commands.Conveyor.ConveyorCommand;
 import frc.robot.commands.Shooter.ShooterCommand;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -50,6 +51,7 @@ public class RobotContainer {
     // ---------------------------- Shooter ----------------------------
     JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());
     JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
+    JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
   }

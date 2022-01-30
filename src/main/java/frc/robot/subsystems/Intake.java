@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MAUtils2.RobotConstants;
 import frc.robot.MAUtils2.MAMotorController.MAMotorControlInterface;
 import frc.robot.MAUtils2.MAMotorController.MAPiston;
+import frc.robot.MAUtils2.MAMotorController.MATalonSRX;
 import frc.robot.MAUtils2.MAMotorController.MAVictorSPX;
 import frc.robot.MAUtils2.MASubsystem.MotorInterfaceSubsystem;
 import frc.robot.MAUtils2.MASubsystem.PistonInterfaceSubsystem;
@@ -15,24 +16,28 @@ import frc.robot.MAUtils2.MASubsystem.PistonInterfaceSubsystem;
 public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, PistonInterfaceSubsystem {
   /** Creates a new Instake. */
   private MAMotorControlInterface intakeMotor;
-  private MAPiston piston;
+  private MAPiston piston2;
+  private MAPiston piston1;
   private static Intake intake;
 
   public Intake() {
-    intakeMotor = new MAVictorSPX(RobotConstants.ID5, false, false);
-    piston = new MAPiston(1, 2);
+    intakeMotor = new MATalonSRX(RobotConstants.ID5, false, false);
+    piston2 = new MAPiston(0,1);
+    piston1 = new MAPiston(7,4);
   }
 
   public void open(){
-    piston.set(true);
+    piston1.set(true);
+    piston2.set(true);
   }
 
   public void close(){
-    piston.set(false);
+    piston1.set(false);
+    piston2.set(false);
   }
 
   public boolean isOpen(){
-    return piston.get();
+    return piston1.get();
   }
 
   public void setVoltege (double voltege){

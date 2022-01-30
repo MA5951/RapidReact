@@ -6,8 +6,6 @@ import frc.robot.subsystems.Conveyor;
 
 public class ConveyorCommand extends CommandBase {
 
-  int amoutOfBalls = 0;
-
   boolean ballIn = false;
 
   private Conveyor conveyor;
@@ -21,22 +19,24 @@ public class ConveyorCommand extends CommandBase {
   @Override
   public void initialize() {
     if (conveyor.getIR1()){
-      amoutOfBalls++;
+      conveyor.amoutOfBalls = 1;
     }
 
   }
 
   @Override
   public void execute() {
-    if (amoutOfBalls == 2)
-      conveyor.setLowerPower(0);
+    if (conveyor.amoutOfBalls == 2)
+      conveyor.setLowerPower(0); //0
     else
-      conveyor.setLowerPower(-0.7);
+      conveyor.setLowerPower(-0.6);
 
-    if (conveyor.getIR2())
-      conveyor.setUpperPower(0);
-    else
-      conveyor.setUpperPower(0.7);
+    if (conveyor.getIR2()){
+      conveyor.setUpperPower(0); //0
+    }
+    else{
+      conveyor.setUpperPower(0.6);
+    }
 
 
   
@@ -47,18 +47,18 @@ public class ConveyorCommand extends CommandBase {
     }
     
     else if (ballIn) {
-      amoutOfBalls++;
+      conveyor.amoutOfBalls++;
       ballIn = false;
     }
 
 
-    SmartDashboard.putNumber("amoutOfBalls", amoutOfBalls);
+    SmartDashboard.putNumber("amoutOfBalls", conveyor.amoutOfBalls);
   }
 
   @Override
   public void end(boolean interrupted) {
     conveyor.setLowerPower(0);
-    conveyor.setUpperPower(0);
+    conveyor.setUpperPower(0);;
   }
 
   @Override

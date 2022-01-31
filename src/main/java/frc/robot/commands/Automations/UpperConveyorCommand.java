@@ -5,9 +5,9 @@
 package frc.robot.commands.Automations;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.Conveyor.ConveyorCommand;
-import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.shooter.Shooter;
 
 public class UpperConveyorCommand extends CommandBase {
   /** Creates a new UpperConveyorCommand. */

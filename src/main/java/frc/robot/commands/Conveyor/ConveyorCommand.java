@@ -1,8 +1,8 @@
-package frc.robot.commands.Conveyor;
+package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.conveyor.Conveyor;
 
 public class ConveyorCommand extends CommandBase {
 

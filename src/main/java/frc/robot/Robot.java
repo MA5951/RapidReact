@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 
     Chassis.getinstance();
     Shooter.getinstance();
-    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
+    // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
 
   }
 

@@ -1,16 +1,8 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands.Chassis;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.MAUtils2.JoystickContainer;
 import frc.robot.subsystems.Chassis;
-import frc.robot.commands.Chassis.ChassisConstants;
 
 public class TankDrive extends CommandBase {
   private Chassis chassis;
@@ -20,52 +12,49 @@ public class TankDrive extends CommandBase {
     addRequirements(chassis);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
  
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (JoystickContainer.rightJoystick.getY() > ChassisConstants.KTHRESHOLD
-        || JoystickContainer.rightJoystick.getY() < -ChassisConstants.KTHRESHOLD) {
-      if (JoystickContainer.rightJoystick.getRawButton(1) || JoystickContainer.leftJoystick.getRawButton(1)) {
-
-        chassis.setRightPercent(JoystickContainer.rightJoystick.getY() * ChassisConstants.KSCALE);
-      } else {
+    if (JoystickContainer.rightJoystick.getY() > 0.1 || JoystickContainer.rightJoystick.getY() < -0.1) {
+      if (JoystickContainer.rightJoystick.getRawButtonPressed(1)){
+        //chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * 3.5 * ChassisConstants.KSCALE);
         chassis.setRightPercent(JoystickContainer.rightJoystick.getY());
+      } else {
+        //chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * 3.5);
+        chassis.setRightPercent(JoystickContainer.rightJoystick.getY() * ChassisConstants.KSCALE);
       }
     } else {
-
-      chassis.setRightVoltage(0);
+      chassis.setRightVelocitySetpoint(0);
     }
 
-    if (JoystickContainer.leftJoystick.getY() > ChassisConstants.KTHRESHOLD
-        || JoystickContainer.leftJoystick.getY() < -ChassisConstants.KTHRESHOLD) {
-
-      if (JoystickContainer.rightJoystick.getRawButton(1) || JoystickContainer.leftJoystick.getRawButton(1)) {
-
+    if (JoystickContainer.leftJoystick.getY() > 0.1 || JoystickContainer.leftJoystick.getY() < -0.1) {
+      if (JoystickContainer.leftJoystick.getRawButtonPressed(1)){
+        //chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.KSCALE * 3.5);
         chassis.setLeftPercent(JoystickContainer.leftJoystick.getY() * ChassisConstants.KSCALE);
       } else {
+        //chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * 3.5);
         chassis.setLeftPercent(JoystickContainer.leftJoystick.getY());
       }
     } else {
-
-      chassis.setLeftVoltage(0);
+     //chassis.setLeftVelocitySetpoint(0);
+     chassis.setLeftPercent(0);
     }
+
+    // chassis.setLeftPercent(chassis.leftVelocityMApathPIDOutput());
+    // chassis.setRightPercent(chassis.rightVelocityMApathPIDOutput());
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

@@ -22,7 +22,6 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   private MASparkMax shooterBMotor;
 
   private MAPiston shooterAPiston;
-  private MAPiston shooterBPiston;
 
   private MAPidController pidController;
 
@@ -31,13 +30,12 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterAMotor = new MASparkMax(RobotConstants.ID1, true, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
-    shooterBMotor = new MASparkMax(RobotConstants.ID3, false, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+    shooterAMotor = new MASparkMax(RobotConstants.ID8, true, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
+    shooterBMotor = new MASparkMax(RobotConstants.ID9, false, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
 
     shooterAPiston = new MAPiston(5, 6);
-    shooterBPiston = new MAPiston(2, 3);
 
-    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 65, -12, 12);
+    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
@@ -67,12 +65,10 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
 
   public void open(){
     shooterAPiston.set(true);
-    shooterBPiston.set(true);
   }
 
   public void close(){
     shooterAPiston.set(false);
-    shooterBPiston.set(false);
   }
 
   public boolean isOpen(){

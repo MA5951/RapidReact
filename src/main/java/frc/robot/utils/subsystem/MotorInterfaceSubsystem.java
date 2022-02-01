@@ -3,15 +3,15 @@ package frc.robot.utils.subsystem;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public interface MotorInterfaceSubsystem extends Subsystem {
-    public void setVoltege (double voltege);
+    public void setVoltage (double voltege);
     
     default void setPower(double power){
-        setVoltege(power * 12);
+        setVoltage(power * 12);
     }
 
-    public double getVoltege();
+    public double getVoltage();
 
     default double getPower(){
-        return getVoltege() * 12;
+        return getVoltage() * 12;
     }
 }

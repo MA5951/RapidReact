@@ -6,7 +6,7 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.RobotConstants;
-import frc.robot.utils.motor.MAMotorControlInterface;
+import frc.robot.utils.motor.MAMotorControllerInterface;
 import frc.robot.utils.motor.MAPiston;
 import frc.robot.utils.motor.MATalonSRX;
 import frc.robot.utils.subsystem.MotorInterfaceSubsystem;
@@ -14,13 +14,13 @@ import frc.robot.utils.subsystem.PistonInterfaceSubsystem;
 
 public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, PistonInterfaceSubsystem {
   /** Creates a new Instake. */
-  private MAMotorControlInterface intakeMotor;
+  private MAMotorControllerInterface intakeMotor;
   private MAPiston piston2;
   private MAPiston piston1;
   private static Intake intake;
 
   public Intake() {
-    intakeMotor = new MATalonSRX(RobotConstants.ID5, false, false);
+    intakeMotor = new MATalonSRX(RobotConstants.ID5, false, RobotConstants.KMOTOR_COAST);
     piston2 = new MAPiston(0,1);
     piston1 = new MAPiston(7,4);
   }
@@ -39,12 +39,12 @@ public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, Pi
     return piston1.get();
   }
 
-  public void setVoltege (double voltege){
+  public void setVoltage (double voltege){
     intakeMotor.setvoltage(voltege);
   }
 
-  public double getVoltege(){
-    return intake.getVoltege();
+  public double getVoltage(){
+    return intake.getVoltage();
   }
 
 

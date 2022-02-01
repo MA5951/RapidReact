@@ -29,8 +29,8 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterAMotor = new MASparkMax(RobotConstants.ID8, true, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
-    shooterBMotor = new MASparkMax(RobotConstants.ID9, false, 0, false, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+    shooterAMotor = new MASparkMax(RobotConstants.ID8, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
+    shooterBMotor = new MASparkMax(RobotConstants.ID9, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
 
     shooterAPiston = new MAPiston(5, 6);
 

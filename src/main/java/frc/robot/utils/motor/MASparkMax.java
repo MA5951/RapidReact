@@ -11,30 +11,47 @@ import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import frc.robot.utils.RobotConstants;
 
 /** Add your docs here. */
-public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterface {
+public class MASparkMax implements MAMotorControllerInterface, MAMotorSensorsInterface {
 
     private CANSparkMax canSparkMax;
     private RelativeEncoder canEncoder;
     private SparkMaxLimitSwitch forwardLimitSwitch;
     private SparkMaxLimitSwitch reversLimitSwitch;
 
-    public MASparkMax(int id, boolean inverted, double rampRate, boolean mod, boolean hasForwardLimitSwitch,
-            boolean hasReverseLimitSwitch, RobotConstants.ENCODER encoder, MotorType type) {
+    public MASparkMax(int id, boolean inverted, double rampRate, boolean mod, RobotConstants.LIMIT_SWITCH limitSwitch, RobotConstants.ENCODER encoder, MotorType type) {
         canSparkMax = new CANSparkMax(id, type);
         canSparkMax.restoreFactoryDefaults();
         setInverted(inverted);
         configRampRate(rampRate);
         changeMode(mod);
         setCurrentLimit(60);
-        if (hasForwardLimitSwitch)
+        if (limitSwitch == RobotConstants.LIMIT_SWITCH.forward)
             forwardLimitSwitch = canSparkMax.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
-        if (hasReverseLimitSwitch)
-            reversLimitSwitch = canSparkMax.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        if (limitSwitch == RobotConstants.LIMIT_SWITCH.reverse)
+            reversLimitSwitch = canSparkMax.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+
+        if (encoder == RobotConstants.ENCODER.Encoder) {
+            setCanEncoder();
+        } else if (encoder == RobotConstants.ENCODER.Alternate_Encoder) {
+            setCanAlternateEncoder();
+        }
+    }
+
+    public MASparkMax(int id, boolean inverted, boolean mod, RobotConstants.LIMIT_SWITCH limitSwitch, RobotConstants.ENCODER encoder, MotorType type) {
+        canSparkMax = new CANSparkMax(id, type);
+        canSparkMax.restoreFactoryDefaults();
+        setInverted(inverted);
+        changeMode(mod);
+        setCurrentLimit(60);
+        if (limitSwitch == RobotConstants.LIMIT_SWITCH.forward)
+            forwardLimitSwitch = canSparkMax.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+
+        if (limitSwitch == RobotConstants.LIMIT_SWITCH.reverse)
+            reversLimitSwitch = canSparkMax.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
 
         if (encoder == RobotConstants.ENCODER.Encoder) {
             setCanEncoder();
@@ -95,7 +112,7 @@ public class MASparkMax implements MAMotorControlInterface, MAMotorSensorsInterf
     }
 
     @Override
-    public double getOutPut() {
+    public double getOutput() {
         return canSparkMax.get();
     }
 

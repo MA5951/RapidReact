@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.utils.RobotConstants;
 
-public class MAFalcon implements MAMotorControlInterface, MAMotorSensorsInterface {
+public class MAFalcon implements MAMotorControllerInterface, MAMotorSensorsInterface {
 
     private TalonFX falcon;
 
@@ -75,7 +75,7 @@ public class MAFalcon implements MAMotorControlInterface, MAMotorSensorsInterfac
     }
 
     @Override
-    public double getOutPut() {
+    public double getOutput() {
         return falcon.getMotorOutputPercent();
     }
 

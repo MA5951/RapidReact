@@ -1,6 +1,6 @@
 package frc.robot.utils.motor;
 
-public interface MAMotorControlInterface {
+public interface MAMotorControllerInterface {
 
     public void setvoltage(double Voltage);
 
@@ -8,7 +8,7 @@ public interface MAMotorControlInterface {
         setvoltage(Power * 12);
     }
 
-    public double getOutPut();
+    public double getOutput();
 
     public void configRampRate(double rampRate);
 

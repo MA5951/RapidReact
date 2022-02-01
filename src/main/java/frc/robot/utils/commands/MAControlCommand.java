@@ -34,7 +34,7 @@ public class MAControlCommand extends CommandBase {
   @Override
   public void execute() {
     if (voltege) {
-      subSystem.setVoltege(subSystem.calculate(SetPoint));
+      subSystem.setVoltage(subSystem.calculate(SetPoint));
     } else {
       subSystem.setPower(subSystem.calculate(SetPoint));
     }

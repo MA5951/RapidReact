@@ -27,7 +27,7 @@ public class MADriverStation {
     }
 
     public static boolean isOperatorControlEnabled() {
-        return DriverStation.isOperatorControlEnabled();
+        return DriverStation.isTeleopEnabled();
     }
 
     public static boolean isFMSAttached() {

@@ -18,17 +18,20 @@ import frc.robot.utils.subsystem.PistonInterfaceSubsystem;
 public class Climb extends SubsystemBase implements PistonInterfaceSubsystem {
   /** Creates a new Climb. */
   private MASparkMax rotationMotor, extensionMotor;
-  private MAPidController rotationPID, extensionPID;
+  private MAPidController rotationMotionPID, extensionMotionPID;
   private MAPiston leftPiston, rightPiston;
+
+  private static Climb climb;
 
   public Climb() {
     rotationMotor = new MASparkMax(RobotConstants.ID6, false, RobotConstants.KMOTOR_BRAKE, LIMIT_SWITCH.forward,
         ENCODER.Alternate_Encoder, MotorType.kBrushless);
     rotationMotor.enableLimitSwitchF(true);
+
     extensionMotor = new MASparkMax(RobotConstants.ID7, false, RobotConstants.KMOTOR_BRAKE, ENCODER.Alternate_Encoder, MotorType.kBrushless);
     
-    rotationPID = new MAPidController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI, ClimbConstants.ROTATION_KD, 0, 30, -12, 12);
-    extensionPID = new MAPidController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
+    rotationMotionPID = new MAPidController(ClimbConstants.ROTAION_KP, ClimbConstants.ROTAION_KI, ClimbConstants.ROTAION_KD, 0, 0, -12, 12);
+    extensionMotionPID = new MAPidController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
 
     leftPiston = new MAPiston(2, 3);
     rightPiston = new MAPiston(8, 9);
@@ -63,29 +66,29 @@ public class Climb extends SubsystemBase implements PistonInterfaceSubsystem {
   }
 
   public void setRotationSetpoint(double setpoint) {
-    rotationPID.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
-    rotationPID.setSetpoint(setpoint);
+    rotationMotionPID.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
+    rotationMotionPID.setSetpoint(setpoint);
   }
 
   public void setExtensionSetpoint(double setpoint) {
-    extensionPID.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
-    extensionPID.setSetpoint(setpoint);
+    extensionMotionPID.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
+    extensionMotionPID.setSetpoint(setpoint);
   }
 
   public boolean setRotationAtSetpoint() {
-    return rotationPID.atSetpoint();
+    return rotationMotionPID.atSetpoint();
   }
 
   public boolean setExtensionatSetpoint() {
-    return extensionPID.atSetpoint();
+    return extensionMotionPID.atSetpoint();
   }
 
-  public double calculateRotation(double input){
-    return rotationPID.calculate(input);
+  public double calculateRotation(double input) {
+    return rotationMotionPID.calculate(input);
   }
 
-  public double calculateExtension(double input){
-    return extensionPID.calculate(input);
+  public double calculateExtension(double input) {
+    return extensionMotionPID.calculate(input);
   }
 
   public void open() {
@@ -100,6 +103,13 @@ public class Climb extends SubsystemBase implements PistonInterfaceSubsystem {
 
   public boolean isOpen() {
     return leftPiston.get() && rightPiston.get();
+  }
+
+  public static Climb getinstance() {
+    if (climb == null) {
+      climb = new Climb();
+    }
+    return climb;
   }
 
   @Override

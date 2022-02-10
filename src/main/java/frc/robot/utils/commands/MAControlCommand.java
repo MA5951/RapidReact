@@ -16,11 +16,11 @@ public class MAControlCommand extends CommandBase {
   private boolean voltege;
 
 
-  public MAControlCommand(ControlInterfaceSubsystem subSystem, double setPoint, boolean stoppable, boolean voltege) {
+  public MAControlCommand(ControlInterfaceSubsystem subSystem, double setPoint, boolean stoppable, boolean voltage) {
     this.subSystem = subSystem;
     this.SetPoint = setPoint;
     this.stoppable = stoppable;
-    this.voltege = voltege;
+    this.voltege = voltage;
 
     addRequirements(subSystem);
   }

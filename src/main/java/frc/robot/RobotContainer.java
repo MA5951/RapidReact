@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.automations.ShootingAutomation;
 import frc.robot.commands.conveyor.ConveyorCommand;
 import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.climb.Climb;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utils.JoystickContainer;
+import frc.robot.utils.commands.MAControlCommand;
 import frc.robot.utils.commands.MAMotorCommand;
 import frc.robot.utils.commands.MATogglePistonCommand;
 
@@ -51,6 +53,7 @@ public class RobotContainer {
     JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
+    JoystickContainer.POVDown.whenPressed(new MATogglePistonCommand(Climb.getinstance()));
   }
 
   /**

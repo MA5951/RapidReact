@@ -50,11 +50,11 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   }
 
   public void setSetpoint(double setpoint){
+    pidController.setF(((pidController.getSetpoint() / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
     pidController.setSetpoint(setpoint);
   }
 
   public double calculate(double input){
-    pidController.setF(((pidController.getSetpoint() / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
     return pidController.calculate(input);
   }
 

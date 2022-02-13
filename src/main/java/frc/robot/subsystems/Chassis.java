@@ -7,10 +7,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * @author yuval rader
  */
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -37,8 +40,10 @@ public class Chassis extends SubsystemBase {
 
   public MAShuffleboard chassisShuffleboard;
 
+  private ColorSensorV3 leftColorSensor;
+  private ColorSensorV3 rightColorSensor;
+
   // private OdometryHandler odometryHandler;
-  public Field2d m_field;
 
   public static Chassis getinstance() {
     if (chassis == null) {
@@ -63,6 +68,10 @@ public class Chassis extends SubsystemBase {
     rightRearMotor.setNeutralMode(NeutralMode.Coast);
 
     navx = new AHRS(Port.kMXP);
+
+    leftColorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    rightColorSensor = new ColorSensorV3(I2C.Port.kMXP);
+
     // odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);
     
     rightVelocityPID = new MAPidController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
@@ -79,7 +88,6 @@ public class Chassis extends SubsystemBase {
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
     
     resetSensors();
-    m_field = new Field2d();
   }
 
   public void setLeftVoltage(double voltage) {
@@ -273,9 +281,10 @@ public class Chassis extends SubsystemBase {
 
     chassisShuffleboard.addNum("left f", getLeftF());
     chassisShuffleboard.addNum("right F", getRightF());
+
+    chassisShuffleboard.addBoolean("Left Color Sensor", leftColorSensor.getColor() == Color.kBlack);
+    chassisShuffleboard.addBoolean("Right Color Sensor", rightColorSensor.getColor() == Color.kBlack);
     // chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
-    // SmartDashboard.putData("Field", m_field);
-    // m_field.setRobotPose(currentPose);
 
     // chassisShuffleboard.addNum("Left MPS", leftMPS());
     // chassisShuffleboard.addNum("Right MPS", rightMPS());

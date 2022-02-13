@@ -2,6 +2,8 @@ package frc.robot.subsystems.conveyor;
 
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.MAShuffleboard;
@@ -13,8 +15,8 @@ public class Conveyor extends SubsystemBase {
   private MAVictorSPX lowerVictor;
   private MAVictorSPX upperVictor;
 
-  private ColorSensorV3 ir1;
-  private ColorSensorV3 ir2;
+  private DigitalInput ir1;
+  private DigitalInput ir2;
 
   private static Conveyor conveyor;
 
@@ -26,28 +28,20 @@ public class Conveyor extends SubsystemBase {
     lowerVictor = new MAVictorSPX(RobotConstants.ID6, false, RobotConstants.KMOTOR_COAST); //ID6
     upperVictor = new MAVictorSPX(RobotConstants.ID7, false, RobotConstants.KMOTOR_COAST); //ID7
 
-    ir1 = new ColorSensorV3(Port.kOnboard);
-    ir2 = new ColorSensorV3(Port.kMXP);
+    ir1 = new DigitalInput(1);
+    ir2 = new DigitalInput(2);
 
     lowerVictor.configRampRate(0.1);
 
     conveyorShuffleboard = new MAShuffleboard("conveyor");
   }
 
-  public int getIR1Values() {
-    return ir1.getIR();
-  }
-
-  public int getIR2Values() {
-    return ir2.getIR();
-  }
-
   public boolean getIR1() {
-    return getIR1Values() > 18;
+    return ir1.get();
   }
 
   public boolean getIR2() {
-    return getIR2Values() > 23;
+    return ir2.get();
   }
 
   public void setLowerPower(double velocity) {
@@ -68,10 +62,8 @@ public class Conveyor extends SubsystemBase {
   @Override
   public void periodic() {
 
-    conveyorShuffleboard.addNum("ir1Values", getIR1Values());
     conveyorShuffleboard.addBoolean("ir1", getIR1());
 
-    conveyorShuffleboard.addNum("ir2Values", getIR2Values());
     conveyorShuffleboard.addBoolean("ir2", getIR2());
   }
 }

@@ -5,19 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.MAUtils2.JoystickContainer;
-import frc.robot.MAUtils2.RobotConstants;
-import frc.robot.MAUtils2.MACommands.MAMotorCommand;
-import frc.robot.MAUtils2.MACommands.MATogglePistonCommand;
-import frc.robot.MAUtils2.MACommands.MApistonCommand;
-import frc.robot.commands.Automations.ShootingAutomation;
-import frc.robot.commands.Conveyor.ConveyorCommand;
-import frc.robot.commands.Shooter.ShooterCommand;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.automations.ShootingAutomation;
+import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.climb.Climb;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.utils.JoystickContainer;
+import frc.robot.utils.commands.MAControlCommand;
+import frc.robot.utils.commands.MAMotorCommand;
+import frc.robot.utils.commands.MATogglePistonCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -54,6 +53,7 @@ public class RobotContainer {
     JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
+    JoystickContainer.POVDown.whenPressed(new MATogglePistonCommand(Climb.getinstance()));
   }
 
   /**

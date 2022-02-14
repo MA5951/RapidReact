@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
-import frc.robot.utils.limelight;
+import frc.robot.utils.Limelight;
 
 public class PIDVisionFeeder extends CommandBase {
 
@@ -25,8 +25,8 @@ public class PIDVisionFeeder extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    limelight.camMode(0);
-    limelight.pipeline(1);
+    Limelight.camMode(0);
+    Limelight.pipeline(1);
   
     chassis.setIdleMode(NeutralMode.Brake);
   }
@@ -43,7 +43,7 @@ public class PIDVisionFeeder extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    limelight.camMode(1);
+    Limelight.camMode(1);
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
     chassis.resetPID();

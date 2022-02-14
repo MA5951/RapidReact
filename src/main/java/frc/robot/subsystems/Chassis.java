@@ -22,7 +22,7 @@ import frc.robot.subsystems.chassis.ChassisConstants;
 import frc.robot.utils.MACalculations;
 import frc.robot.utils.MAShuffleboard;
 import frc.robot.utils.RobotConstants;
-import frc.robot.utils.limelight;
+import frc.robot.utils.Limelight;
 import frc.robot.utils.controllers.MAPidController;
 
 public class Chassis extends SubsystemBase {
@@ -204,11 +204,11 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getVisionAnglePIDOutput(double setpoint) {
-    return anglePIDVision.calculate(limelight.x * -1, setpoint);
+    return anglePIDVision.calculate(Limelight.x * -1, setpoint);
   }
 
   public double getVisionDistancePIDOutput(double setpoint) {
-    return distancePIDVision.calculate(limelight.Tshort, setpoint);
+    return distancePIDVision.calculate(Limelight.Tshort, setpoint);
   }
 
   public boolean isVisionAngleAtSetpoint() {

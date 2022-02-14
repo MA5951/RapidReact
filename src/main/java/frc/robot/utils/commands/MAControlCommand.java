@@ -10,47 +10,48 @@ import frc.robot.utils.subsystem.ControlInterfaceSubsystem;
 public class MAControlCommand extends CommandBase {
   /** Creates a new MAControlCommand. */
 
-  private ControlInterfaceSubsystem subSystem;
-  private double SetPoint;
+  private ControlInterfaceSubsystem subsystem;
+  private double setpoint;
   private boolean stoppable;
-  private boolean voltege;
+  private boolean voltage;
 
 
-  public MAControlCommand(ControlInterfaceSubsystem subSystem, double setPoint, boolean stoppable, boolean voltage) {
-    this.subSystem = subSystem;
-    this.SetPoint = setPoint;
+  public MAControlCommand(ControlInterfaceSubsystem subsystem, double setpoint, boolean stoppable, boolean voltage) {
+    this.subsystem = subsystem;
+    this.setpoint = setpoint;
     this.stoppable = stoppable;
-    this.voltege = voltage;
+    this.voltage = voltage;
 
-    addRequirements(subSystem);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.setSetpoint(this.setpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (voltege) {
-      subSystem.setVoltage(subSystem.calculate(SetPoint));
+    if (voltage) {
+      subsystem.setVoltage(subsystem.calculate());
     } else {
-      subSystem.setPower(subSystem.calculate(SetPoint));
+      subsystem.setPower(subsystem.calculate());
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subSystem.setPower(0);
+    subsystem.setPower(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if (stoppable) {
-      if (subSystem.atSetpoint()) {
+      if (subsystem.atSetpoint()) {
         return true;
       }
     }

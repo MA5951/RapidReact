@@ -15,4 +15,8 @@ public class ClimbConstants {
     public static final double EXTENSION_KP = 0;
     public static final double EXTENSION_KI = 0;
     public static final double EXTENSION_KD = 0;
+
+    public static final double PASSIVE_KP = 0;
+    public static final double PASSIVE_KI = 0;
+    public static final double PASSIVE_KD = 0;
 }

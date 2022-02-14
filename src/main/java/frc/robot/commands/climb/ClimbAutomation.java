@@ -5,28 +5,20 @@
 package frc.robot.commands.climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.climb.Climb;
 
-public class RotationJoystickCommand extends CommandBase {
-  /** Creates a new RotationCommand. */
-  private Climb climb;
-
-  public RotationJoystickCommand() {
-    climb = Climb.getinstance();
-    addRequirements(climb);
+public class ClimbAutomation extends CommandBase {
+  /** Creates a new ClimbAutomation. */
+  public ClimbAutomation() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

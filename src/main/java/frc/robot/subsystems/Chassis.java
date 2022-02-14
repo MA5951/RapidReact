@@ -18,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import frc.robot.MAUtils2.*;
-import frc.robot.MAUtils2.controllers.MAPidController;
-import frc.robot.commands.Chassis.ChassisConstants;
+import frc.robot.subsystems.chassis.ChassisConstants;
+import frc.robot.utils.MACalculations;
+import frc.robot.utils.MAShuffleboard;
+import frc.robot.utils.RobotConstants;
+import frc.robot.utils.limelight;
+import frc.robot.utils.controllers.MAPidController;
 
 public class Chassis extends SubsystemBase {
   private static Chassis chassis;
@@ -75,7 +78,7 @@ public class Chassis extends SubsystemBase {
     // odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);
     
     rightVelocityPID = new MAPidController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
-        ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RiGHT_VELOCITY, 0, 20, -12, 12);
+        ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RIGHT_VELOCITY, 0, 20, -12, 12);
     leftVelocityPID = new MAPidController(ChassisConstants.KP_MAPATH_LEFT_VELOCITY,
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 20, -12, 12);
 

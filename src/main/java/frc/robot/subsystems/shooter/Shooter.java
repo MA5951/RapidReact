@@ -38,7 +38,7 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
-    shooterBMotor.follow(shooterAMotor.getCanSparkMax());
+    shooterBMotor.follow(shooterAMotor);
   }
 
   public void setMotor(double power){

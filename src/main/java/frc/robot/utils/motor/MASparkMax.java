@@ -171,8 +171,8 @@ public class MASparkMax implements MAMotorControllerInterface, MAMotorSensorsInt
         return canSparkMax;
     }
 
-    public void follow(CANSparkMax Motor) {
-        canSparkMax.follow(Motor);
+    public void follow(MASparkMax motor) {
+        canSparkMax.follow(motor.getCanSparkMax());
     }
 
     public void enableLimitSwitchR(boolean enable) {

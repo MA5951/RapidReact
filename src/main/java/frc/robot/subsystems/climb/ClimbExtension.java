@@ -46,6 +46,10 @@ public class ClimbExtension extends SubsystemBase implements ControlInterfaceSub
     return extensionMotor.getOutput() * 12;
   }
 
+  public double getCurrent() {
+    return extensionMotor.getStatorCurrent();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

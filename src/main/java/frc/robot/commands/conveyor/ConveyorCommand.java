@@ -1,4 +1,4 @@
-package frc.robot.commands.conveyor;
+package frc.robot.commands.Conveyor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -63,6 +63,6 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return conveyor.amoutOfBalls == 2;
   }
 }

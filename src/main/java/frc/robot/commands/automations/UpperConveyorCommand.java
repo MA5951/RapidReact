@@ -2,10 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.automations;
+package frc.robot.commands.Automations;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.commands.Conveyor.ConveyorCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 

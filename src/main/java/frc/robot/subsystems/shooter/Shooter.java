@@ -7,6 +7,7 @@ package frc.robot.subsystems.shooter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PortMap;
 import frc.robot.utils.MAShuffleboard;
 import frc.robot.utils.RobotConstants;
 import frc.robot.utils.RobotConstants.ENCODER;
@@ -17,10 +18,11 @@ import frc.robot.utils.subsystem.PistonInterfaceSubsystem;
 
 public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   /** Creates a new Shooter. */
-  private MASparkMax shooterAMotor;
-  private MASparkMax shooterBMotor;
+  private MASparkMax shooterLeftMotor;
+  private MASparkMax shooterRightMotor;
 
-  private MAPiston shooterAPiston;
+  private MAPiston shooterLeftPiston;
+  private MAPiston shooterRightPiston;
 
   private MAPidController pidController;
 
@@ -29,24 +31,25 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterAMotor = new MASparkMax(RobotConstants.ID8, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
-    shooterBMotor = new MASparkMax(RobotConstants.ID9, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+    shooterLeftMotor = new MASparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
+    shooterRightMotor = new MASparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
 
-    shooterAPiston = new MAPiston(5, 6);
+    shooterLeftPiston = new MAPiston(PortMap.shooterLeftPistonForward, PortMap.shooterLeftPistonReverse);
+    shooterRightPiston = new MAPiston(PortMap.shooterRightPistonForward, PortMap.shooterRightPistonReverse);
 
     pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
 
     shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
 
-    shooterBMotor.follow(shooterAMotor);
+    shooterRightMotor.follow(shooterLeftMotor);
   }
 
   public void setMotor(double power){
-    shooterAMotor.setvoltage(power);
+    shooterLeftMotor.setvoltage(power);
   }
 
   public double getEncoder(){
-    return shooterAMotor.getVelocity();
+    return shooterLeftMotor.getVelocity();
   }
 
   public void setSetpoint(double setpoint){
@@ -63,15 +66,17 @@ public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
   }
 
   public void open(){
-    shooterAPiston.set(true);
+    shooterLeftPiston.set(true);
+    shooterRightPiston.set(true);
   }
 
   public void close(){
-    shooterAPiston.set(false);
+    shooterLeftPiston.set(false);
+    shooterRightPiston.set(false);
   }
 
   public boolean isOpen(){
-    return shooterAPiston.get();
+    return shooterLeftPiston.get();
   }
 
   public static Shooter getinstance(){

@@ -6,6 +6,7 @@ package frc.robot.subsystems.climb;
 
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PortMap;
 import frc.robot.utils.RobotConstants;
 import frc.robot.utils.controllers.MAPidController;
 import frc.robot.utils.motor.MASparkMax;
@@ -17,7 +18,7 @@ public class ClimbPassive extends SubsystemBase implements ControlInterfaceSubsy
   private MAPidController passivePID;
 
   public ClimbPassive() {
-    leftPassiveMotor = new MASparkMax(RobotConstants.ID9, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    leftPassiveMotor = new MASparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     rightPassiveMotor = new MASparkMax(RobotConstants.ID10, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
     rightPassiveMotor.follow(leftPassiveMotor);

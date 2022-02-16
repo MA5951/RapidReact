@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PortMap;
 import frc.robot.utils.MAShuffleboard;
 import frc.robot.utils.RobotConstants;
 import frc.robot.utils.motor.MAVictorSPX;
@@ -25,8 +26,8 @@ public class Conveyor extends SubsystemBase {
   public int amoutOfBalls;
 
   public Conveyor() {
-    lowerVictor = new MAVictorSPX(RobotConstants.ID6, false, RobotConstants.KMOTOR_COAST); //ID6
-    upperVictor = new MAVictorSPX(RobotConstants.ID7, false, RobotConstants.KMOTOR_COAST); //ID7
+    lowerVictor = new MAVictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); //ID6
+    upperVictor = new MAVictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); //ID7
 
     ir1 = new DigitalInput(1);
     ir2 = new DigitalInput(2);

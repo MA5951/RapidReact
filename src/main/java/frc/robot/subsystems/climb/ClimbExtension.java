@@ -6,6 +6,7 @@ package frc.robot.subsystems.climb;
 
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PortMap;
 import frc.robot.utils.RobotConstants;
 import frc.robot.utils.controllers.MAPidController;
 import frc.robot.utils.motor.MASparkMax;
@@ -17,7 +18,7 @@ public class ClimbExtension extends SubsystemBase implements ControlInterfaceSub
   private MAPidController extensionPID;
 
   public ClimbExtension() {
-    extensionMotor = new MASparkMax(RobotConstants.ID7, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    extensionMotor = new MASparkMax(PortMap.climbExtentionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
     extensionPID = new MAPidController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
   }
 

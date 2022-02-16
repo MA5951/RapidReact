@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import frc.robot.PortMap;
 import frc.robot.subsystems.chassis.ChassisConstants;
 import frc.robot.utils.MACalculations;
 import frc.robot.utils.MAShuffleboard;
@@ -57,10 +58,10 @@ public class Chassis extends SubsystemBase {
 
   private Chassis() {
     chassisShuffleboard = new MAShuffleboard(ChassisConstants.KSUBSYSTEM_NAME);
-    leftFrontMotor = new TalonFX(3);
-    leftRearMotor = new TalonFX(4);
-    rightFrontMotor = new TalonFX(1);
-    rightRearMotor = new TalonFX(2);
+    leftFrontMotor = new TalonFX(PortMap.chassisLeftFrontMotor);
+    leftRearMotor = new TalonFX(PortMap.chassisLeftRearMotor);
+    rightFrontMotor = new TalonFX(PortMap.chassisRightFrontMotor);
+    rightRearMotor = new TalonFX(PortMap.chassisRightRearMotor);
     
     leftRearMotor.follow(leftFrontMotor);
     rightRearMotor.follow(rightFrontMotor);

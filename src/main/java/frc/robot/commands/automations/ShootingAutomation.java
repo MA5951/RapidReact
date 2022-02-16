@@ -19,7 +19,7 @@ public class ShootingAutomation extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Shooter.getinstance(), Conveyor.getinstance());
     
-    shooterCommand = new ShooterCommand();
+    shooterCommand = new ShooterCommand(Limelight.distance()); //TODO: Distance setpoint calculations
     upperConveyorCommand = new UpperConveyorCommand();
 
   }

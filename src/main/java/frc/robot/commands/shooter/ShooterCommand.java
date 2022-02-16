@@ -10,17 +10,19 @@ import frc.robot.subsystems.shooter.Shooter;
 public class ShooterCommand extends CommandBase {
   /** Creates a new ShooterCommand. */
   private Shooter shooter;
+  private double setpoint;
 
-  public ShooterCommand() {
+  public ShooterCommand(double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = Shooter.getinstance();
     addRequirements(shooter);
+    this.setpoint = setpoint;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setSetpoint(3150); //Launch Pad: 3275 Fender: 2500
+    shooter.setSetpoint(setpoint); //Launch Pad: 3275 Fender: 2500
   }
 
   // Called every time the scheduler runs while the command is scheduled.

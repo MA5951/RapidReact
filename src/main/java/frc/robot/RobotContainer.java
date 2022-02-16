@@ -75,7 +75,7 @@ public class RobotContainer {
       JoystickContainer.BButton.whileActiveContinuous(new ConveyorCommand());
 
       // ---------------------------- Shooter ----------------------------
-      JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());
+      JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand(3275));
       JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
 
       // ---------------------------- Climb ----------------------------

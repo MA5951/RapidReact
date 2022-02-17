@@ -16,7 +16,6 @@ public class IntakeAutomation extends SequentialCommandGroup {
   /** Creates a new IntakeAutomation. */
   public IntakeAutomation(double power) {
     // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new MApistonCommand(Intake.getinstance(), true), 
       new MAMotorCommand(Intake.getinstance(), power)

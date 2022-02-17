@@ -8,17 +8,19 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.commands.Conveyor.ConveyorCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.utils.commands.MAMotorCommand;
+import frc.robot.utils.commands.MApistonCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeConveyanceCommand extends ParallelDeadlineGroup {
+public class IntakeConveyanceAutomation extends ParallelDeadlineGroup {
   /** Creates a new IntakeConveyanceCommand. */
-  public IntakeConveyanceCommand() {
+  public IntakeConveyanceAutomation(double power) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     super(new ConveyorCommand());
-    addCommands(new MAMotorCommand(Intake.getinstance(), -0.9));
-    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new MApistonCommand(Intake.getinstance(), true),
+      new MAMotorCommand(Intake.getinstance(), power));
   }
 }

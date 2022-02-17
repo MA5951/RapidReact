@@ -35,9 +35,9 @@ public class ShootingAutomation extends CommandBase {
   @Override
   public void execute() {
     if (Limelight.distance() > 0){
-      new MApistonCommand(Shooter.getinstance(), true);
+      new MApistonCommand(Shooter.getinstance(), true).schedule();;
     }else{
-      new MApistonCommand(Shooter.getinstance(), false);
+      new MApistonCommand(Shooter.getinstance(), false).schedule();;
     }
     
     shooterCommand.execute();

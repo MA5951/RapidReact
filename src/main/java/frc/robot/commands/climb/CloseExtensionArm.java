@@ -10,11 +10,10 @@ import frc.robot.subsystems.climb.ClimbExtension;
 public class CloseExtensionArm extends CommandBase {
   /** Creates a new CloseExtensionArm. */
   private ClimbExtension climbExtension;
-  private double maxCurrent;
+  private final static double maxCurrent = 8; // TODO Change to real voltage value after testing
 
   public CloseExtensionArm(ClimbExtension climbExtension) {
     this.climbExtension = climbExtension;
-    maxCurrent = 8; // TODO Change to real voltage value after testing
 
     addRequirements(this.climbExtension);
   }

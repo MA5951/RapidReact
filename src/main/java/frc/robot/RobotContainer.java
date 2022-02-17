@@ -57,13 +57,24 @@ public class RobotContainer {
     JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
     controlModeToogle.whenPressed(new InstantCommand(RobotContainer::toogleControlMode));
     // ---------------------------- Intake ----------------------------
-    JoystickContainer.AButton.whileActiveContinuous(new SwitchBasedOnControlMode(new IntakeAutomation(-0.9), new MAMotorCommand(Intake.getinstance(), -0.9)));
-    JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
+    JoystickContainer.AButton.whileActiveContinuous(
+      new SwitchBasedOnControlMode(
+        new IntakeAutomation(-0.9), 
+        new MAMotorCommand(Intake.getinstance(), -0.9)));
+    
+        JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
     // ---------------------------- Conveyor ----------------------------
-    JoystickContainer.BButton.whileActiveContinuous(new SwitchBasedOnControlMode(new IntakeConveyanceAutomation(-0.9), new ConveyorCommand()));
+    JoystickContainer.BButton.whileActiveContinuous(
+      new SwitchBasedOnControlMode(
+        new IntakeConveyanceAutomation(-0.9), 
+        new ConveyorCommand()));
     // ---------------------------- Shooter ----------------------------
-    JoystickContainer.YButton.whileActiveContinuous(new SwitchBasedOnControlMode(new ShootingAutomation(), new ShooterCommand(3275)));
-    JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
+    JoystickContainer.YButton.whileActiveContinuous(
+      new SwitchBasedOnControlMode(
+        new ShootingAutomation(), 
+        new ShooterCommand(3275)));
+    
+        JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
     // ---------------------------- Climb ----------------------------
 
   }

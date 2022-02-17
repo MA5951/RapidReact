@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.automations.ShootingAutomation;
-import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
@@ -43,7 +43,7 @@ public class RobotContainer {
     JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
 
     // ---------------------------- Conveyor ----------------------------
-    JoystickContainer.BButton.whileActiveContinuous(new ConveyorCommand());
+    JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
 
     // ---------------------------- Shooter ----------------------------
     JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());

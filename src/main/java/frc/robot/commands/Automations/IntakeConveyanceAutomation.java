@@ -5,6 +5,7 @@
 package frc.robot.commands.Automations;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Conveyor.ConveyorCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.utils.commands.MAMotorCommand;
@@ -18,9 +19,10 @@ public class IntakeConveyanceAutomation extends ParallelDeadlineGroup {
   public IntakeConveyanceAutomation(double power) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    super(new ConveyorCommand());
-    addCommands(
-      new MApistonCommand(Intake.getinstance(), true),
-      new MAMotorCommand(Intake.getinstance(), power));
+    super(
+        new ConveyorCommand(),
+        new SequentialCommandGroup(
+            new MApistonCommand(Intake.getinstance(), true),
+            new MAMotorCommand(Intake.getinstance(), power)));
   }
 }

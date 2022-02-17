@@ -7,19 +7,19 @@ package frc.robot.subsystems.climb;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.controllers.MAPidController;
-import frc.robot.utils.motor.MASparkMax;
-import frc.robot.utils.subsystem.ControlInterfaceSubsystem;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.controllers.PIDController;
+import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.ControlSubsystem;
 
-public class ClimbExtension extends SubsystemBase implements ControlInterfaceSubsystem {
+public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   /** Climb Extension Arm */
-  private MASparkMax extensionMotor;
-  private MAPidController extensionPID;
+  private MA_SparkMax extensionMotor;
+  private PIDController extensionPID;
 
   public ClimbExtension() {
-    extensionMotor = new MASparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
-    extensionPID = new MAPidController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
+    extensionMotor = new MA_SparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
   }
 
   @Override
@@ -39,7 +39,7 @@ public class ClimbExtension extends SubsystemBase implements ControlInterfaceSub
 
   @Override
   public void setVoltage(double voltage) {
-    extensionMotor.setvoltage(voltage);
+    extensionMotor.setVoltage(voltage);
   }
 
   @Override

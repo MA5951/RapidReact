@@ -8,44 +8,44 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.utils.MAShuffleboard;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.RobotConstants.ENCODER;
-import frc.robot.utils.controllers.MAPidController;
-import frc.robot.utils.motor.MAPiston;
-import frc.robot.utils.motor.MASparkMax;
-import frc.robot.utils.subsystem.PistonInterfaceSubsystem;
+import com.ma5951.utils.Shuffleboard;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.RobotConstants.ENCODER;
+import com.ma5951.utils.controllers.PIDController;
+import com.ma5951.utils.motor.Piston;
+import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.PistonSubsystem;
 
-public class Shooter extends SubsystemBase implements PistonInterfaceSubsystem {
+public class Shooter extends SubsystemBase implements PistonSubsystem {
   /** Creates a new Shooter. */
-  private MASparkMax shooterLeftMotor;
-  private MASparkMax shooterRightMotor;
+  private MA_SparkMax shooterLeftMotor;
+  private MA_SparkMax shooterRightMotor;
 
-  private MAPiston shooterLeftPiston;
-  private MAPiston shooterRightPiston;
+  private Piston shooterLeftPiston;
+  private Piston shooterRightPiston;
 
-  private MAPidController pidController;
+  private PIDController pidController;
 
-  private MAShuffleboard shooterShuffleboard;
+  private Shuffleboard shooterShuffleboard;
 
   private static Shooter shooter;
 
   public Shooter() {
-    shooterLeftMotor = new MASparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
-    shooterRightMotor = new MASparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+    shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
+    shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
 
-    shooterLeftPiston = new MAPiston(PortMap.shooterLeftPistonForward, PortMap.shooterLeftPistonReverse);
-    shooterRightPiston = new MAPiston(PortMap.shooterRightPistonForward, PortMap.shooterRightPistonReverse);
+    shooterLeftPiston = new Piston(PortMap.shooterLeftPistonForward, PortMap.shooterLeftPistonReverse);
+    shooterRightPiston = new Piston(PortMap.shooterRightPistonForward, PortMap.shooterRightPistonReverse);
 
-    pidController = new MAPidController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
+    pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
 
-    shooterShuffleboard = new MAShuffleboard(ShooterConstants.SYSTEM_NAME);
+    shooterShuffleboard = new Shuffleboard(ShooterConstants.SYSTEM_NAME);
 
     shooterRightMotor.follow(shooterLeftMotor);
   }
 
   public void setMotor(double power){
-    shooterLeftMotor.setvoltage(power);
+    shooterLeftMotor.setVoltage(power);
   }
 
   public double getEncoder(){

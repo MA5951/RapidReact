@@ -7,11 +7,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
-import frc.robot.utils.autonomous.OdometryHandler;
-import frc.robot.utils.autonomous.Path;
-import frc.robot.utils.autonomous.PathFollower;
-import frc.robot.utils.autonomous.PathGenerator;
-import frc.robot.utils.autonomous.Waypoint;
+import com.ma5951.utils.autonomous.OdometryHandler;
+import com.ma5951.utils.autonomous.Path;
+import com.ma5951.utils.autonomous.PathFollower;
+import com.ma5951.utils.autonomous.PathGenerator;
+import com.ma5951.utils.autonomous.Waypoint;
 
 public class AutonomousCommand extends CommandBase {
 

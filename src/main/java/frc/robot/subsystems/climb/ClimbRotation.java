@@ -7,26 +7,26 @@ package frc.robot.subsystems.climb;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.controllers.MAPidController;
-import frc.robot.utils.motor.MASparkMax;
-import frc.robot.utils.subsystem.ControlInterfaceSubsystem;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.controllers.PIDController;
+import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.ControlSubsystem;
 
-public class ClimbRotation extends SubsystemBase implements ControlInterfaceSubsystem {
+public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     /**
      * Climb Rotation Arm
      */
-    private MASparkMax leftRotationMotor, rightRotationMotor;
-    private MAPidController rotationPID;
+    private MA_SparkMax leftRotationMotor, rightRotationMotor;
+    private PIDController rotationPID;
 
     public ClimbRotation() {
-        leftRotationMotor = new MASparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftRotationMotor.enableLimitSwitchF(true);
 
-        rightRotationMotor = new MASparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
 
-        rotationPID = new MAPidController(ClimbConstants.ROTAION_KP, ClimbConstants.ROTAION_KI, ClimbConstants.ROTAION_KD, 0, 0, -12, 12);
+        rotationPID = new PIDController(ClimbConstants.ROTAION_KP, ClimbConstants.ROTAION_KI, ClimbConstants.ROTAION_KD, 0, 0, -12, 12);
 
     }
 
@@ -47,7 +47,7 @@ public class ClimbRotation extends SubsystemBase implements ControlInterfaceSubs
 
     @Override
     public void setVoltage(double voltage) {
-        leftRotationMotor.setvoltage(voltage);
+        leftRotationMotor.setVoltage(voltage);
     }
 
     @Override

@@ -6,24 +6,24 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.motor.MAMotorControllerInterface;
-import frc.robot.utils.motor.MAPiston;
-import frc.robot.utils.motor.MATalonSRX;
-import frc.robot.utils.subsystem.MotorInterfaceSubsystem;
-import frc.robot.utils.subsystem.PistonInterfaceSubsystem;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.motor.MotorController;
+import com.ma5951.utils.motor.Piston;
+import com.ma5951.utils.motor.MA_TalonSRX;
+import com.ma5951.utils.subsystem.MotorSubsystem;
+import com.ma5951.utils.subsystem.PistonSubsystem;
 
-public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, PistonInterfaceSubsystem {
+public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsystem {
   /** Creates a new Instake. */
-  private MAMotorControllerInterface intakeMotor;
-  private MAPiston intakeLeftPiston;
-  private MAPiston intakeRightPiston;
+  private MA_TalonSRX intakeMotor;
+  private Piston intakeLeftPiston;
+  private Piston intakeRightPiston;
   private static Intake intake;
 
   public Intake() {
-    intakeMotor = new MATalonSRX(PortMap.intakeMotor, false, RobotConstants.KMOTOR_COAST);
-    intakeLeftPiston = new MAPiston(PortMap.intakeLeftPistonForward, PortMap.intakeLeftPistonReverse);
-    intakeRightPiston = new MAPiston(PortMap.intakeRightPistonForward, PortMap.intakeRightPistonReverse);
+    intakeMotor = new MA_TalonSRX(PortMap.intakeMotor, false, RobotConstants.KMOTOR_COAST);
+    intakeLeftPiston = new Piston(PortMap.intakeLeftPistonForward, PortMap.intakeLeftPistonReverse);
+    intakeRightPiston = new Piston(PortMap.intakeRightPistonForward, PortMap.intakeRightPistonReverse);
   }
 
   public void open(){
@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase implements MotorInterfaceSubsystem, Pi
   }
 
   public void setVoltage (double voltege){
-    intakeMotor.setvoltage(voltege);
+    intakeMotor.setVoltage(voltege);
   }
 
   public double getVoltage(){

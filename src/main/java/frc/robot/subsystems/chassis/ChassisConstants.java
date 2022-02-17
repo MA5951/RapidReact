@@ -5,10 +5,12 @@
 package frc.robot.subsystems.chassis;
 
 import edu.wpi.first.math.system.plant.DCMotor;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.MACalculations;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.Calculations;
 
-/** Add your docs here. */
+/**
+ * Add your docs here.
+ */
 public class ChassisConstants {
     public static final String KSUBSYSTEM_NAME = "Chassis";
 
@@ -17,12 +19,12 @@ public class ChassisConstants {
     public static final double KP_MAPATH_RIGHT_VELOCITY = 0.09;
     public static final double KI_MAPATH_RIGHT_VELOCITY = 0;
     public static final double KD_MAPATH_RIGHT_VELOCITY = 0;
-    public static final double KF_MAPATH_RIGHT_VELOCITY = 1.0/4;
+    public static final double KF_MAPATH_RIGHT_VELOCITY = 1.0 / 4;
 
     public static final double KP_MAPATH_LEFT_VELOCITY = 0.06;
     public static final double KI_MAPATH_LEFT_VELOCITY = 0;
     public static final double KD_MAPATH_LEFT_VELOCITY = 0;
-    public static final double KF_MAPATH_LEFT_VELOCITY = 1.0/7.2;
+    public static final double KF_MAPATH_LEFT_VELOCITY = 1.0 / 7.2;
 
     public static final double KP_MAPATH_ANGLE = 0.3;
     public static final double KI_MAPATH_ANGLE = 0;
@@ -54,7 +56,6 @@ public class ChassisConstants {
     public final static double KSPROCKET_RADIUS = 0.016;// TOOD
     public static final double KCHASSIS_GEAR = KwhellRadius * KMOTOR_GEAR_RATIO; // TODO
     public final static double KMOTOR_FORCE = ((1 / KMOTOR_GEAR_RATIO) * RobotConstants.KSTALL_TORQUE_FALCON * 2) / KwhellRadius;
-    public static final double KMAX_SPEED = MACalculations
-            .fromRPMToLinearSpeed(DCMotor.getNEO(2).freeSpeedRadPerSec * 10, KCHASSIS_GEAR); // TODO
+    public static final double KMAX_SPEED = Calculations.fromRPMToLinearSpeed(DCMotor.getNEO(2).freeSpeedRadPerSec * 10, KCHASSIS_GEAR); // TODO
     public static final double KMAX_ACCELERATION = KMOTOR_FORCE * 2 / KSUB_MAS;
 }

@@ -9,12 +9,13 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.Limelight;
-import frc.robot.utils.autonomous.OdometryHandler;
-import frc.robot.utils.MACalculations;
-import frc.robot.utils.MAShuffleboard;
-import frc.robot.utils.controllers.MAPidController;
+
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.Limelight;
+import com.ma5951.utils.autonomous.OdometryHandler;
+import com.ma5951.utils.Calculations;
+import com.ma5951.utils.Shuffleboard;
+import com.ma5951.utils.controllers.PIDController;
 
 public class Chassis extends SubsystemBase {
   private static Chassis chassis;
@@ -26,13 +27,13 @@ public class Chassis extends SubsystemBase {
 
   private AHRS navx;
 
-  private MAPidController rightVelocityPID;
-  private MAPidController leftVelocityPID;
+  private PIDController rightVelocityPID;
+  private PIDController leftVelocityPID;
 
-  private MAPidController anglePIDVision;
-  private MAPidController distancePIDVision;
+  private PIDController anglePIDVision;
+  private PIDController distancePIDVision;
 
-  public MAShuffleboard chassisShuffleboard;
+  public Shuffleboard chassisShuffleboard;
 
   private OdometryHandler odometryHandler;
   public Field2d m_field;
@@ -45,7 +46,7 @@ public class Chassis extends SubsystemBase {
   }
 
   private Chassis() {
-    chassisShuffleboard = new MAShuffleboard(ChassisConstants.KSUBSYSTEM_NAME);
+    chassisShuffleboard = new Shuffleboard(ChassisConstants.KSUBSYSTEM_NAME);
     leftFrontMotor = new TalonFX(3);
     leftRearMotor = new TalonFX(4);
     rightFrontMotor = new TalonFX(1);
@@ -57,14 +58,14 @@ public class Chassis extends SubsystemBase {
     navx = new AHRS(Port.kMXP);
     odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);
     
-    rightVelocityPID = new MAPidController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
+    rightVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
         ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RIGHT_VELOCITY, 0, 20, -12, 12);
-    leftVelocityPID = new MAPidController(ChassisConstants.KP_MAPATH_LEFT_VELOCITY,
+    leftVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_LEFT_VELOCITY,
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 20, -12, 12);
 
-    anglePIDVision = new MAPidController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
+    anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
         ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
-    distancePIDVision = new MAPidController(ChassisConstants.KP_VISION_DISTANCE, ChassisConstants.KI_VISION_DISTANCE,
+    distancePIDVision = new PIDController(ChassisConstants.KP_VISION_DISTANCE, ChassisConstants.KI_VISION_DISTANCE,
         ChassisConstants.KD_VISION_DISTANCE, 0, 2, -12, 12);
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
@@ -110,11 +111,11 @@ public class Chassis extends SubsystemBase {
   }
   
   public double getRightEncoder(){
-    return MACalculations.toRPMFromEncoderConnectToTalon((rightRearMotor.getSelectedSensorVelocity() + rightFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
+    return Calculations.toRPMFromEncoderConnectToTalon((rightRearMotor.getSelectedSensorVelocity() + rightFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
   }
 
   public double getLeftEncoder(){
-    return MACalculations.toRPMFromEncoderConnectToTalon((leftRearMotor.getSelectedSensorVelocity() + leftFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
+    return Calculations.toRPMFromEncoderConnectToTalon((leftRearMotor.getSelectedSensorVelocity() + leftFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
   }
 
   public double getLeftVelocity() {

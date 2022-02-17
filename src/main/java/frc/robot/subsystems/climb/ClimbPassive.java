@@ -7,23 +7,23 @@ package frc.robot.subsystems.climb;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.utils.RobotConstants;
-import frc.robot.utils.controllers.MAPidController;
-import frc.robot.utils.motor.MASparkMax;
-import frc.robot.utils.subsystem.ControlInterfaceSubsystem;
+import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.controllers.PIDController;
+import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.ControlSubsystem;
 
-public class ClimbPassive extends SubsystemBase implements ControlInterfaceSubsystem {
+public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   /** Climb Passive Arms */
-  private MASparkMax leftPassiveMotor, rightPassiveMotor;
-  private MAPidController passivePID;
+  private MA_SparkMax leftPassiveMotor, rightPassiveMotor;
+  private PIDController passivePID;
 
   public ClimbPassive() {
-    leftPassiveMotor = new MASparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    leftPassiveMotor = new MA_SparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-    rightPassiveMotor = new MASparkMax(RobotConstants.ID10, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    rightPassiveMotor = new MA_SparkMax(RobotConstants.ID10, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
     rightPassiveMotor.follow(leftPassiveMotor);
 
-    passivePID = new MAPidController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD, 20);
+    passivePID = new PIDController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD, 20);
   }
 
   @Override
@@ -43,7 +43,7 @@ public class ClimbPassive extends SubsystemBase implements ControlInterfaceSubsy
 
   @Override
   public void setVoltage(double voltage) {
-    leftPassiveMotor.setvoltage(voltage);
+    leftPassiveMotor.setVoltage(voltage);
   }
 
   @Override

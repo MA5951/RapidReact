@@ -6,15 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
+//import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.automations.ShootingAutomation;
 import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.utils.JoystickContainer;
-import frc.robot.utils.commands.MAMotorCommand;
-import frc.robot.utils.commands.MATogglePistonCommand;
+import com.ma5951.utils.JoystickContainer;
+import com.ma5951.utils.commands.MotorCommand;
+import com.ma5951.utils.commands.TogglePistonCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,8 +39,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // ---------------------------- Intake ----------------------------
-    JoystickContainer.AButton.whileActiveContinuous(new MAMotorCommand(Intake.getinstance(), -0.9));
-    JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
+    JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9));
+    JoystickContainer.RB.whenPressed(new TogglePistonCommand(Intake.getinstance()));
 
     // ---------------------------- Conveyor ----------------------------
     JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
@@ -48,7 +48,7 @@ public class RobotContainer {
     // ---------------------------- Shooter ----------------------------
     JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());
     JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
-    JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
+    JoystickContainer.LB.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
     

@@ -30,10 +30,8 @@ public class ConveyBallsCommand extends CommandBase {
             conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
         }
 
-        if (conveyor.getAmountOfBalls() == 2) {
-            conveyor.setLowerPower(0);
-            conveyor.setUpperPower(0);
-        } else if (conveyor.isBallInUpper()) {
+
+        if (conveyor.isBallInUpper()) {
             conveyor.setLowerPower(conveyorPower);
             conveyor.setUpperPower(0);
         } else {
@@ -53,6 +51,6 @@ public class ConveyBallsCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return conveyor.getAmountOfBalls() == 2;
     }
 }

@@ -10,46 +10,54 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class UpperConveyorCommand extends CommandBase {
-  /** Creates a new UpperConveyorCommand. */
-  private Conveyor conveyor;
+    /**
+     * Creates a new UpperConveyorCommand.
+     */
+    private Conveyor conveyor;
 
-  private ConveyBallsCommand conveyBallsCommand;
+    private boolean isBallAtTop = false;
+
+    private ConveyBallsCommand conveyBallsCommand;
 
 
-  public UpperConveyorCommand() {
-    conveyor = Conveyor.getInstance();
-    addRequirements(conveyor);
+    public UpperConveyorCommand() {
+        conveyor = Conveyor.getInstance();
+        addRequirements(conveyor);
 
-    conveyBallsCommand = new ConveyBallsCommand();
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    conveyBallsCommand.initialize();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if (Shooter.getinstance().atSetpoint()) {
-      conveyor.setLowerPower(-0.6);
-      conveyor.setUpperPower(0.6);
-
-      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-      
+        conveyBallsCommand = new ConveyBallsCommand();
     }
-  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    conveyBallsCommand.end(true);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        conveyBallsCommand.initialize();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        isBallAtTop = conveyor.isBallInUpper();
+
+        if (Shooter.getinstance().atSetpoint()) {
+            conveyor.setLowerPower(-0.6);
+            conveyor.setUpperPower(0.6);
+
+            if (!conveyor.isBallInUpper() && isBallAtTop) {
+                conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+                isBallAtTop = false;
+            }
+        }
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        conveyBallsCommand.end(true);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

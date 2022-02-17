@@ -4,12 +4,11 @@
 
 package frc.robot;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.IntakeConveyanceAutomation;
@@ -35,7 +34,7 @@ import frc.robot.utils.commands.MATogglePistonCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static boolean robotControlMode;
-  JoystickButton controlModeSwitch;
+  JoystickButton controlModeToogle;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -43,7 +42,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     boolean robotControlMode = true;
-    JoystickButton controlModeSwitch = new JoystickButton(JoystickContainer.leftJoystick, 3);
     configureButtonBindings();
   }
 
@@ -56,31 +54,22 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    controlModeSwitch.whenPressed(new ControlModeSwitch());
-    if (robotControlMode) {// ---------------------------- Auto Mode ----------------------------
-      // ---------------------------- Intake ----------------------------
-      JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(-0.9));
-      // ---------------------------- Conveyor ----------------------------
-      JoystickContainer.BButton.whileActiveContinuous(new IntakeConveyanceAutomation());
-      // ---------------------------- Shooter ----------------------------
-      JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
-      // ---------------------------- Climb ----------------------------
+    JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
+    controlModeToogle.whenPressed(new InstantCommand(RobotContainer::toogleControlMode));
+    // ---------------------------- Intake ----------------------------
+    JoystickContainer.AButton.whileActiveContinuous(new SwitchBasedOnControlMode(new IntakeAutomation(-0.9), new MAMotorCommand(Intake.getinstance(), -0.9)));
+    JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
+    // ---------------------------- Conveyor ----------------------------
+    JoystickContainer.BButton.whileActiveContinuous(new SwitchBasedOnControlMode(new IntakeConveyanceAutomation(-0.9), new ConveyorCommand()));
+    // ---------------------------- Shooter ----------------------------
+    JoystickContainer.YButton.whileActiveContinuous(new SwitchBasedOnControlMode(new ShootingAutomation(), new ShooterCommand(3275)));
+    JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
+    // ---------------------------- Climb ----------------------------
 
-    } else {// ---------------------------- Manual Mode ----------------------------
-      // ---------------------------- Intake ----------------------------
-      JoystickContainer.AButton.whileActiveContinuous(new MAMotorCommand(Intake.getinstance(), -0.9));
-      JoystickContainer.RB.whenPressed(new MATogglePistonCommand(Intake.getinstance()));
+  }
 
-      // ---------------------------- Conveyor ----------------------------
-      JoystickContainer.BButton.whileActiveContinuous(new ConveyorCommand());
-
-      // ---------------------------- Shooter ----------------------------
-      JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand(3275));
-      JoystickContainer.LB.whenPressed(new MATogglePistonCommand(Shooter.getinstance()));
-
-      // ---------------------------- Climb ----------------------------
-
-    }
+  public static void toogleControlMode(){
+    robotControlMode = !robotControlMode;
   }
 
   /**

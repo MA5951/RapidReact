@@ -18,7 +18,7 @@ public class ClimbExtension extends SubsystemBase implements ControlInterfaceSub
   private MAPidController extensionPID;
 
   public ClimbExtension() {
-    extensionMotor = new MASparkMax(PortMap.climbExtentionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    extensionMotor = new MASparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
     extensionPID = new MAPidController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
   }
 

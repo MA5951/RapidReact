@@ -7,6 +7,7 @@ package frc.robot.subsystems.climb;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
+
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.MA_SparkMax;
@@ -20,13 +21,18 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     private PIDController rotationPID;
 
     public ClimbRotation() {
-        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE,
+                RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.Alternate_Encoder,
+                CANSparkMaxLowLevel.MotorType.kBrushless);
         leftRotationMotor.enableLimitSwitchF(true);
 
-        rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
+                RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
 
-        rotationPID = new PIDController(ClimbConstants.ROTAION_KP, ClimbConstants.ROTAION_KI, ClimbConstants.ROTAION_KD, 0, 0, -12, 12);
+        rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
+                ClimbConstants.ROTATION_KD,
+                0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
 
     }
 

@@ -19,7 +19,7 @@ import com.ma5951.utils.controllers.PIDController;
 
 public class Chassis extends SubsystemBase {
   private static Chassis chassis;
-  
+
   private TalonFX leftFrontMotor;
   private TalonFX leftRearMotor;
   private TalonFX rightFrontMotor;
@@ -51,13 +51,13 @@ public class Chassis extends SubsystemBase {
     leftRearMotor = new TalonFX(4);
     rightFrontMotor = new TalonFX(1);
     rightRearMotor = new TalonFX(2);
-    
+
     leftRearMotor.follow(leftFrontMotor);
     rightRearMotor.follow(rightFrontMotor);
 
     navx = new AHRS(Port.kMXP);
     odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);
-    
+
     rightVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
         ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RIGHT_VELOCITY, 0, 20, -12, 12);
     leftVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_LEFT_VELOCITY,
@@ -70,7 +70,7 @@ public class Chassis extends SubsystemBase {
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
-    
+
     resetSensors();
     m_field = new Field2d();
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
@@ -85,11 +85,11 @@ public class Chassis extends SubsystemBase {
     rightFrontMotor.set(ControlMode.PercentOutput, voltage / 12);
   }
 
-  public void setRightPercent(double power){
+  public void setRightPercent(double power) {
     rightFrontMotor.set(ControlMode.PercentOutput, power);
   }
 
-  public void setLeftPercent(double power){
+  public void setLeftPercent(double power) {
     leftFrontMotor.set(ControlMode.PercentOutput, power);
   }
 
@@ -109,13 +109,17 @@ public class Chassis extends SubsystemBase {
   public double getRightDistance() {
     return rightRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER;
   }
-  
-  public double getRightEncoder(){
-    return Calculations.toRPMFromEncoderConnectToTalon((rightRearMotor.getSelectedSensorVelocity() + rightFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
+
+  public double getRightEncoder() {
+    return Calculations.toRPMFromEncoderConnectToTalon(
+        (rightRearMotor.getSelectedSensorVelocity() + rightFrontMotor.getSelectedSensorVelocity()) / 2,
+        RobotConstants.KCTRE_MAG_ENCODER_TPR);
   }
 
-  public double getLeftEncoder(){
-    return Calculations.toRPMFromEncoderConnectToTalon((leftRearMotor.getSelectedSensorVelocity() + leftFrontMotor.getSelectedSensorVelocity()) / 2, RobotConstants.KCTRE_MAG_ENCODER_TPR);
+  public double getLeftEncoder() {
+    return Calculations.toRPMFromEncoderConnectToTalon(
+        (leftRearMotor.getSelectedSensorVelocity() + leftFrontMotor.getSelectedSensorVelocity()) / 2,
+        RobotConstants.KCTRE_MAG_ENCODER_TPR);
   }
 
   public double getLeftVelocity() {
@@ -134,25 +138,29 @@ public class Chassis extends SubsystemBase {
     return falconTicksToMeters(falconTicks);
   }
 
-  private double falconTicksToMeters(double ticks){
+  private double falconTicksToMeters(double ticks) {
     return ticks * ChassisConstants.KMETER_PER_TICKS;
   }
 
   public double rightRPM() {
-    return falconTicksToRPM((rightFrontMotor.getSelectedSensorVelocity() + rightRearMotor.getSelectedSensorVelocity()) / 2);
+    return falconTicksToRPM(
+        (rightFrontMotor.getSelectedSensorVelocity() + rightRearMotor.getSelectedSensorVelocity()) / 2);
   }
 
   public double leftRPM() {
-    return falconTicksToRPM((leftFrontMotor.getSelectedSensorVelocity() + rightRearMotor.getSelectedSensorVelocity()) / 2);
+    return falconTicksToRPM(
+        (leftFrontMotor.getSelectedSensorVelocity() + rightRearMotor.getSelectedSensorVelocity()) / 2);
   }
 
   public double leftMPS() {
-    // System.out.println("LEFT " + falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity()));
+    // System.out.println("LEFT " +
+    // falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity());
   }
 
   public double rightMPS() {
-    // System.out.println("RIGHT " + falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity()));
+    // System.out.println("RIGHT " +
+    // falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity());
   }
 
@@ -209,11 +217,11 @@ public class Chassis extends SubsystemBase {
     return leftVelocityPID.atSetpoint();
   }
 
-  public void setRightVelocitySetpoint(double setpoint){
+  public void setRightVelocitySetpoint(double setpoint) {
     rightVelocityPID.setSetpoint(setpoint);
   }
 
-  public void setLeftVelocitySetpoint(double setpoint){
+  public void setLeftVelocitySetpoint(double setpoint) {
     leftVelocityPID.setSetpoint(setpoint);
   }
 
@@ -225,19 +233,19 @@ public class Chassis extends SubsystemBase {
     return leftVelocityPID.calculate(getLeftVelocity());
   }
 
-  public double getRightPID(double measurement){
+  public double getRightPID(double measurement) {
     return rightVelocityPID.calculate(measurement);
   }
 
-  public double getLeftPID(double measurement){
+  public double getLeftPID(double measurement) {
     return leftVelocityPID.calculate(measurement);
   }
 
-  public double getLeftF(){
+  public double getLeftF() {
     return leftVelocityPID.getSetpoint() * ChassisConstants.KF_MAPATH_LEFT_VELOCITY;
   }
 
-  public double getRightF(){
+  public double getRightF() {
     return rightVelocityPID.getSetpoint() * ChassisConstants.KF_MAPATH_RIGHT_VELOCITY;
   }
 
@@ -248,21 +256,20 @@ public class Chassis extends SubsystemBase {
   @Override
   public void periodic() {
     odometryHandler.update();
-    
+
     chassisShuffleboard.addNum("right distance", getRightDistance());
     chassisShuffleboard.addNum("left distance", getLeftDistance());
     chassisShuffleboard.addNum("right velocity", getRightVelocity());
     chassisShuffleboard.addNum("left velocity", getLeftVelocity());
     chassisShuffleboard.addNum("right velocity setpoint", rightVelocityPID.getSetpoint());
-    chassisShuffleboard.addNum("left velocity setpoint",leftVelocityPID.getSetpoint());
+    chassisShuffleboard.addNum("left velocity setpoint", leftVelocityPID.getSetpoint());
     chassisShuffleboard.addNum("angle", getAngle());
 
     chassisShuffleboard.addNum("right encoder", rightRearMotor.getSelectedSensorPosition());
     chassisShuffleboard.addNum("left encoder", leftRearMotor.getSelectedSensorPosition());
 
-
-   chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
-   chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());
+    chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
+    chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());
 
     chassisShuffleboard.addNum("left f", getLeftF());
     chassisShuffleboard.addNum("right F", getRightF());
@@ -272,7 +279,9 @@ public class Chassis extends SubsystemBase {
 
     // chassisShuffleboard.addNum("Left MPS", leftMPS());
     // chassisShuffleboard.addNum("Right MPS", rightMPS());
-    // System.out.println("Left Speed: " + leftRearMotor.getSelectedSensorVelocity());
-    // System.out.println("Right Speed " + rightRearMotor.getSelectedSensorVelocity());
+    // System.out.println("Left Speed: " +
+    // leftRearMotor.getSelectedSensorVelocity());
+    // System.out.println("Right Speed " +
+    // rightRearMotor.getSelectedSensorVelocity());
   }
 }

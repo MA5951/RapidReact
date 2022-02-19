@@ -25,8 +25,8 @@ public class Conveyor extends SubsystemBase {
         lowerVictor = new MA_VictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); // ID6
         upperVictor = new MA_VictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); // ID7
 
-        lowerIR = new DigitalInput(1);
-        upperIR = new DigitalInput(2);
+        lowerIR = new DigitalInput(PortMap.conveyorLowerIR);
+        upperIR = new DigitalInput(PortMap.conveyorUpperIR);
 
         lowerVictor.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 

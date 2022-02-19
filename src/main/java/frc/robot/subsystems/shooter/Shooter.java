@@ -21,8 +21,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
   private MA_SparkMax shooterLeftMotor;
   private MA_SparkMax shooterRightMotor;
 
-  private Piston shooterLeftPiston;
-  private Piston shooterRightPiston;
+  private Piston shooterPiston;
 
   private PIDController pidController;
 
@@ -34,8 +33,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
     shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
     shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); // ID9
 
-    shooterLeftPiston = new Piston(PortMap.shooterLeftPistonForward, PortMap.shooterLeftPistonReverse);
-    shooterRightPiston = new Piston(PortMap.shooterRightPistonForward, PortMap.shooterRightPistonReverse);
+    shooterPiston = new Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
 
     pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP,
         ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0,
@@ -69,17 +67,15 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
   }
 
   public void open() {
-    shooterLeftPiston.set(true);
-    shooterRightPiston.set(true);
+    shooterPiston.set(true);
   }
 
   public void close() {
-    shooterLeftPiston.set(false);
-    shooterRightPiston.set(false);
+    shooterPiston.set(false);
   }
 
   public boolean isOpen() {
-    return shooterLeftPiston.get();
+    return shooterPiston.get();
   }
 
   public static Shooter getinstance() {

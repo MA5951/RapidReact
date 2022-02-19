@@ -7,7 +7,6 @@ package frc.robot.subsystems.intake;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.RobotConstants;
-import com.ma5951.utils.motor.MotorController;
 import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_TalonSRX;
 import com.ma5951.utils.subsystem.MotorSubsystem;
@@ -16,28 +15,24 @@ import com.ma5951.utils.subsystem.PistonSubsystem;
 public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsystem {
   /** Creates a new Instake. */
   private MA_TalonSRX intakeMotor;
-  private Piston intakeLeftPiston;
-  private Piston intakeRightPiston;
+  private Piston intakePiston;
   private static Intake intake;
 
   public Intake() {
     intakeMotor = new MA_TalonSRX(PortMap.intakeMotor, false, RobotConstants.KMOTOR_COAST);
-    intakeLeftPiston = new Piston(PortMap.intakeLeftPistonForward, PortMap.intakeLeftPistonReverse);
-    intakeRightPiston = new Piston(PortMap.intakeRightPistonForward, PortMap.intakeRightPistonReverse);
+    intakePiston = new Piston(PortMap.intakePistonForward, PortMap.intakePistonReverse);
   }
 
   public void open() {
-    intakeRightPiston.set(true);
-    intakeLeftPiston.set(true);
+    intakePiston.set(true);
   }
 
   public void close() {
-    intakeRightPiston.set(false);
-    intakeLeftPiston.set(false);
+    intakePiston.set(false);
   }
 
   public boolean isOpen() {
-    return intakeRightPiston.get();
+    return intakePiston.get();
   }
 
   public void setVoltage(double voltege) {

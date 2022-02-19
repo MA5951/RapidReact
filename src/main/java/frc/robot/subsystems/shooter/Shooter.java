@@ -21,8 +21,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
   private MA_SparkMax shooterLeftMotor;
   private MA_SparkMax shooterRightMotor;
 
-  private Piston shooterLeftPiston;
-  private Piston shooterRightPiston;
+  private Piston shooterPiston;
 
   private PIDController pidController;
 
@@ -31,56 +30,54 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
   private static Shooter shooter;
 
   public Shooter() {
-    shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); //ID8
-    shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); //ID9
+    shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
+    shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); // ID9
 
-    shooterLeftPiston = new Piston(PortMap.shooterLeftPistonForward, PortMap.shooterLeftPistonReverse);
-    shooterRightPiston = new Piston(PortMap.shooterRightPistonForward, PortMap.shooterRightPistonReverse);
+    shooterPiston = new Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
 
-    pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP, ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
+    pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP,
+        ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0, 50, -12, 12);
 
     shooterShuffleboard = new Shuffleboard(ShooterConstants.SYSTEM_NAME);
 
     shooterRightMotor.follow(shooterLeftMotor);
   }
 
-  public void setMotor(double power){
+  public void setMotor(double power) {
     shooterLeftMotor.setVoltage(power);
   }
 
-  public double getEncoder(){
+  public double getEncoder() {
     return shooterLeftMotor.getVelocity();
   }
 
-  public void setSetpoint(double setpoint){
+  public void setSetpoint(double setpoint) {
     pidController.setF(((pidController.getSetpoint() / RobotConstants.KMAX_RPM_NEO) * 12) * 1.1);
     pidController.setSetpoint(setpoint);
   }
 
-  public double calculate(double input){
+  public double calculate(double input) {
     return pidController.calculate(input);
   }
 
-  public boolean atSetpoint(){
+  public boolean atSetpoint() {
     return pidController.atSetpoint();
   }
 
-  public void open(){
-    shooterLeftPiston.set(true);
-    shooterRightPiston.set(true);
+  public void open() {
+    shooterPiston.set(true);
   }
 
-  public void close(){
-    shooterLeftPiston.set(false);
-    shooterRightPiston.set(false);
+  public void close() {
+    shooterPiston.set(false);
   }
 
-  public boolean isOpen(){
-    return shooterLeftPiston.get();
+  public boolean isOpen() {
+    return shooterPiston.get();
   }
 
-  public static Shooter getinstance(){
-    if (shooter == null){
+  public static Shooter getinstance() {
+    if (shooter == null) {
       shooter = new Shooter();
     }
     return shooter;

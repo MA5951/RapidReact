@@ -11,7 +11,8 @@ public class ChasisPID extends CommandBase {
   public static Joystick rightJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
 
   private Chassis chassis;
-  public ChasisPID() {   
+
+  public ChasisPID() {
     chassis = Chassis.getinstance();
     addRequirements(chassis);
   }
@@ -19,28 +20,26 @@ public class ChasisPID extends CommandBase {
   @Override
   public void initialize() {
     chassis.resetPID();
-    
+
   }
 
   @Override
   public void execute() {
-    System.out.println("swag");
     if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
       chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7 * 0.4);
       chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7 * 0.4);
-    } 
-    else {
+    } else {
       chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7);
       chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7);
     }
-   
-    chassis.setRightPercent(chassis.getRightPID(chassis.getRightEncoder())+chassis.getRightF());
-    chassis.setLeftPercent(chassis.getLeftPID(chassis.getRightEncoder())+chassis.getLeftF());
+
+    chassis.setRightPercent(chassis.getRightPID(chassis.getRightEncoder()) + chassis.getRightF());
+    chassis.setLeftPercent(chassis.getLeftPID(chassis.getRightEncoder()) + chassis.getLeftF());
   }
 
-
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {

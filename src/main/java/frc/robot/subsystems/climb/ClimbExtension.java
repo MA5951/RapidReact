@@ -18,8 +18,10 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   private PIDController extensionPID;
 
   public ClimbExtension() {
-    extensionMotor = new MA_SparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE, RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
-    extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI, ClimbConstants.EXTENSION_KD, 0, 30, -12, 12);
+    extensionMotor = new MA_SparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE,
+        RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
+        ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
   }
 
   @Override

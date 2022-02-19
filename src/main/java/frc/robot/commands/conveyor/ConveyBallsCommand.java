@@ -3,12 +3,12 @@ package frc.robot.commands.conveyor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.conveyor.ConveyorConstants;
 
 public class ConveyBallsCommand extends CommandBase {
 
-    private final double conveyorPower = 0.75;
+    private final double conveyorPower = ConveyorConstants.CONVEYOR_POWER;
     private Conveyor conveyor = Conveyor.getInstance();
-
 
     public ConveyBallsCommand() {
         addRequirements(conveyor);
@@ -30,7 +30,6 @@ public class ConveyBallsCommand extends CommandBase {
             conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
         }
 
-
         if (conveyor.isBallInUpper()) {
             conveyor.setLowerPower(conveyorPower);
             conveyor.setUpperPower(0);
@@ -46,11 +45,10 @@ public class ConveyBallsCommand extends CommandBase {
     public void end(boolean interrupted) {
         conveyor.setLowerPower(0);
         conveyor.setUpperPower(0);
-        ;
     }
 
     @Override
     public boolean isFinished() {
-        return conveyor.getAmountOfBalls() == 2;
+        return conveyor.getAmountOfBalls() == ConveyorConstants.CONVEYOR_MAX_BALLS;
     }
 }

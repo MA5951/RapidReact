@@ -22,13 +22,13 @@ public class Conveyor extends SubsystemBase {
     private int amountOfBalls;
 
     public Conveyor() {
-        lowerVictor = new MA_VictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); //ID6
-        upperVictor = new MA_VictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); //ID7
+        lowerVictor = new MA_VictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); // ID6
+        upperVictor = new MA_VictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); // ID7
 
         lowerIR = new DigitalInput(1);
         upperIR = new DigitalInput(2);
 
-        lowerVictor.configRampRate(0.1);
+        lowerVictor.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 
         conveyorShuffleboard = new Shuffleboard("conveyor");
     }
@@ -50,7 +50,7 @@ public class Conveyor extends SubsystemBase {
     }
 
     public void setAmountOfBalls(int numBalls) {
-        if ((getAmountOfBalls() + numBalls) <= 2) {
+        if ((getAmountOfBalls() + numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS) {
             amountOfBalls = numBalls;
         }
     }

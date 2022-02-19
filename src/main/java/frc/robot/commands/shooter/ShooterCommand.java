@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterConstants;
 
 public class ShooterCommand extends CommandBase {
   /** Creates a new ShooterCommand. */
@@ -20,13 +21,13 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setSetpoint(3150); //Launch Pad: 3275 Fender: 2500
+    shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD); // Launch Pad: 3275 Fender: 2500
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setMotor(shooter.calculate(shooter.getEncoder()));
+    shooter.setMotor(shooter.calculate(shooter.getVelocity()));
   }
 
   // Called once the command ends or is interrupted.

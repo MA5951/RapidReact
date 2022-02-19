@@ -26,31 +26,30 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     intakeRightPiston = new Piston(PortMap.intakeRightPistonForward, PortMap.intakeRightPistonReverse);
   }
 
-  public void open(){
+  public void open() {
     intakeRightPiston.set(true);
     intakeLeftPiston.set(true);
   }
 
-  public void close(){
+  public void close() {
     intakeRightPiston.set(false);
     intakeLeftPiston.set(false);
   }
 
-  public boolean isOpen(){
+  public boolean isOpen() {
     return intakeRightPiston.get();
   }
 
-  public void setVoltage (double voltege){
+  public void setVoltage(double voltege) {
     intakeMotor.setVoltage(voltege);
   }
 
-  public double getVoltage(){
+  public double getVoltage() {
     return intake.getVoltage();
   }
 
-
   public static Intake getinstance() {
-    if (intake == null){
+    if (intake == null) {
       intake = new Intake();
     }
     return intake;

@@ -22,11 +22,11 @@ public class Conveyor extends SubsystemBase {
     private int amountOfBalls;
 
     public Conveyor() {
-        lowerVictor = new MA_VictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); //ID6
-        upperVictor = new MA_VictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); //ID7
+        lowerVictor = new MA_VictorSPX(PortMap.conveyorLowerMotor, false, RobotConstants.KMOTOR_COAST); // ID6
+        upperVictor = new MA_VictorSPX(PortMap.conveyorUpperMotor, false, RobotConstants.KMOTOR_COAST); // ID7
 
-        lowerIR = new DigitalInput(1);
-        upperIR = new DigitalInput(2);
+        lowerIR = new DigitalInput(PortMap.conveyorLowerIR);
+        upperIR = new DigitalInput(PortMap.conveyorUpperIR);
 
         lowerVictor.configRampRate(0.1);
 

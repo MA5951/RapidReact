@@ -17,6 +17,8 @@ public class PortMap {
     // Conveyor
     public static final int conveyorLowerMotor = 6;
     public static final int conveyorUpperMotor = 7;
+    public static final int conveyorLowerIR = 1;
+    public static final int conveyorUpperIR = 2;
 
     // Shooter
     public static final int shooterLeftMotor = 8;

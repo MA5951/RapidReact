@@ -14,6 +14,7 @@ import com.ma5951.utils.subsystem.ControlSubsystem;
 
 public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   /** Climb Passive Arms */
+  private static ClimbPassive climbPassive;
   private MA_SparkMax leftPassiveMotor, rightPassiveMotor;
   private PIDController passivePID;
 
@@ -27,6 +28,13 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
 
     passivePID = new PIDController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD,
         ClimbConstants.PASSIVE_TOLERANCE);
+  }
+
+  public static ClimbPassive getInstance() {
+    if (climbPassive == null) {
+      climbPassive = new ClimbPassive();
+    }
+    return climbPassive;
   }
 
   @Override

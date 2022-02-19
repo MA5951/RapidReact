@@ -5,16 +5,22 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.automations.ShootingAutomation;
 import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.climb.ClimbExtension;
+import frc.robot.subsystems.climb.ClimbPassive;
+import frc.robot.subsystems.climb.ClimbRotation;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.TogglePistonCommand;
+import com.ma5951.utils.subsystem.MotorSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -50,14 +56,21 @@ public class RobotContainer {
     JoystickContainer.RB.whenPressed(new TogglePistonCommand(Intake.getinstance()));
 
     // ---------------------------- Conveyor ----------------------------
-    JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
+    // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
+    JoystickContainer.BButton.whenPressed(() -> Conveyor.getInstance().setLowerPower(0.3))
+        .whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
+    JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setUpperPower(0.3))
+        .whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 
     // ---------------------------- Shooter ----------------------------
     JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand());
-    JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
+    // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
     JoystickContainer.LB.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
+    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.1));
+    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.1));
+    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
   }
 

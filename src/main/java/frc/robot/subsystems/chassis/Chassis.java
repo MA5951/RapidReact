@@ -6,9 +6,12 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.PortMap;
 
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Limelight;
@@ -16,6 +19,7 @@ import com.ma5951.utils.autonomous.OdometryHandler;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
+import com.revrobotics.ColorSensorV3;
 
 public class Chassis extends SubsystemBase {
   private static Chassis chassis;
@@ -38,6 +42,9 @@ public class Chassis extends SubsystemBase {
   private OdometryHandler odometryHandler;
   public Field2d m_field;
 
+  private ColorSensorV3 colorSensorLeft;
+  private ColorSensorV3 colorSensorRight;
+
   public static Chassis getinstance() {
     if (chassis == null) {
       chassis = new Chassis();
@@ -47,10 +54,10 @@ public class Chassis extends SubsystemBase {
 
   private Chassis() {
     chassisShuffleboard = new Shuffleboard(ChassisConstants.KSUBSYSTEM_NAME);
-    leftFrontMotor = new TalonFX(3);
-    leftRearMotor = new TalonFX(4);
-    rightFrontMotor = new TalonFX(1);
-    rightRearMotor = new TalonFX(2);
+    leftFrontMotor = new TalonFX(PortMap.chassisLeftFrontMotor);
+    leftRearMotor = new TalonFX(PortMap.chassisLeftRearMotor);
+    rightFrontMotor = new TalonFX(PortMap.chassisRightFrontMotor);
+    rightRearMotor = new TalonFX(PortMap.chassisRightRearMotor);
 
     leftRearMotor.follow(leftFrontMotor);
     rightRearMotor.follow(rightFrontMotor);
@@ -70,6 +77,10 @@ public class Chassis extends SubsystemBase {
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
+
+    colorSensorLeft = new ColorSensorV3(I2C.Port.kMXP);
+    colorSensorRight = new ColorSensorV3(I2C.Port.kOnboard);
+
 
     resetSensors();
     m_field = new Field2d();
@@ -253,6 +264,15 @@ public class Chassis extends SubsystemBase {
     return odometryHandler;
   }
 
+
+  public int getLeftColorSensor(){
+    return colorSensorLeft.getIR();
+  }
+
+  public int getRightColorSensor(){
+    return colorSensorRight.getIR();
+  }
+
   @Override
   public void periodic() {
     odometryHandler.update();
@@ -265,8 +285,11 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("left velocity setpoint", leftVelocityPID.getSetpoint());
     chassisShuffleboard.addNum("angle", getAngle());
 
-    chassisShuffleboard.addNum("right encoder", rightRearMotor.getSelectedSensorPosition());
-    chassisShuffleboard.addNum("left encoder", leftRearMotor.getSelectedSensorPosition());
+    chassisShuffleboard.addNum("right rear encoder", rightRearMotor.getSelectedSensorPosition());
+    chassisShuffleboard.addNum("left rear encoder", leftRearMotor.getSelectedSensorPosition());
+    chassisShuffleboard.addNum("right front encoder", rightFrontMotor.getSelectedSensorPosition());
+    chassisShuffleboard.addNum("left front encoder", leftFrontMotor.getSelectedSensorPosition());
+
 
     chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
     chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());
@@ -274,6 +297,10 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("left f", getLeftF());
     chassisShuffleboard.addNum("right F", getRightF());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
+
+    chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
+    chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
+
     // SmartDashboard.putData("Field", m_field);
     // m_field.setRobotPose(currentPose);
 

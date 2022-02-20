@@ -23,12 +23,12 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     public ClimbRotation() {
         leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.Alternate_Encoder,
+                RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.No_Encoder,
                 CANSparkMaxLowLevel.MotorType.kBrushless);
-        leftRotationMotor.enableLimitSwitchF(true);
+        // leftRotationMotor.enableLimitSwitchF(true);
 
         rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+                RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
 
         rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,

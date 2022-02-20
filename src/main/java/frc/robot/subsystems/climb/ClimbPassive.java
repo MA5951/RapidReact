@@ -22,10 +22,6 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
     leftPassiveMotor = new MA_SparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE,
         RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-    rightPassiveMotor = new MA_SparkMax(RobotConstants.ID10, false, RobotConstants.KMOTOR_BRAKE,
-        RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
-    rightPassiveMotor.follow(leftPassiveMotor);
-
     passivePID = new PIDController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD,
         ClimbConstants.PASSIVE_TOLERANCE);
   }

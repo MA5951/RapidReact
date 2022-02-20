@@ -14,6 +14,7 @@ import com.ma5951.utils.subsystem.ControlSubsystem;
 
 public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   /** Climb Extension Arm */
+  private static ClimbExtension climbExtension;
   private MA_SparkMax extensionMotor;
   private PIDController extensionPID;
 
@@ -22,6 +23,13 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
         RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
         ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
+  }
+
+  public static ClimbExtension getInstance() {
+    if (climbExtension == null) {
+      climbExtension = new ClimbExtension();
+    }
+    return climbExtension;
   }
 
   @Override
@@ -56,5 +64,6 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
   }
 }

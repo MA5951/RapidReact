@@ -17,6 +17,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     /**
      * Climb Rotation Arm
      */
+    private static ClimbRotation climbRotation;
     private MA_SparkMax leftRotationMotor, rightRotationMotor;
     private PIDController rotationPID;
 
@@ -33,7 +34,13 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
                 ClimbConstants.ROTATION_KD,
                 0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
+    }
 
+    public static ClimbRotation getInstance() {
+        if (climbRotation == null) {
+            climbRotation = new ClimbRotation();
+        }
+        return climbRotation;
     }
 
     @Override

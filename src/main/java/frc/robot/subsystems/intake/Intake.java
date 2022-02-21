@@ -50,6 +50,10 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     return intake;
   }
 
+  public boolean canMove(){
+    return true;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

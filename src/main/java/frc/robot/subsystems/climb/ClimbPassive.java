@@ -53,9 +53,12 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
     leftPassiveMotor.setVoltage(voltage);
   }
 
-  @Override
   public double getVoltage() {
     return leftPassiveMotor.getOutput() * 12;
+  }
+
+  public boolean canMove(){
+    return true; //TODO
   }
 
   @Override

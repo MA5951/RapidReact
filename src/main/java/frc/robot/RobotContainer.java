@@ -53,7 +53,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // ---------------------------- Intake ----------------------------
     JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
-    JoystickContainer.RB.whenPressed(new TogglePistonCommand(Intake.getinstance()));
+    JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()));
 
     // ---------------------------- Conveyor ----------------------------
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
@@ -65,11 +65,11 @@ public class RobotContainer {
     // ---------------------------- Shooter ----------------------------
     JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand()); // B button
     // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
-    JoystickContainer.LB.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
+    JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
 
     // ---------------------------- Climb ----------------------------
-    JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.1));
-    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.1));
+    // JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.1));
+    // JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.1));
     JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
   }

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.commands.chassis.TankDrive;
 import frc.robot.subsystems.chassis.Chassis;
+import frc.robot.subsystems.conveyor.Conveyor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -102,6 +103,7 @@ public class Robot extends TimedRobot {
 
     Chassis.getinstance();
     Shooter.getinstance();
+    Conveyor.getInstance();
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
 
   }

@@ -14,9 +14,10 @@ import com.ma5951.utils.RobotConstants.ENCODER;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.ControlSubsystem;
 import com.ma5951.utils.subsystem.PistonSubsystem;
 
-public class Shooter extends SubsystemBase implements PistonSubsystem {
+public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSubsystem {
   /** Creates a new Shooter. */
   private MA_SparkMax shooterLeftMotor;
   private MA_SparkMax shooterRightMotor;
@@ -40,11 +41,10 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
         ShooterConstants.SHOOTER_VELOCITY_PID_TOLERANCE, -12, 12);
 
     shooterShuffleboard = new Shuffleboard(ShooterConstants.SYSTEM_NAME);
-
     shooterRightMotor.follow(shooterLeftMotor);
   }
 
-  public void setMotor(double power) {
+  public void setVoltage(double power) {
     shooterLeftMotor.setVoltage(power);
   }
 
@@ -58,8 +58,8 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
     pidController.setSetpoint(setpoint);
   }
 
-  public double calculate(double input) {
-    return pidController.calculate(input);
+  public double calculate() {
+    return pidController.calculate(getVelocity());
   }
 
   public boolean atSetpoint() {
@@ -85,9 +85,18 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
     return shooter;
   }
 
+  public boolean canMove(){
+    return true;
+  }
+
+  public void reset(){
+    return;
+  }
+
   @Override
   public void periodic() {
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
-    shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
+    shooterShuffleboard.addNum("Shooter RPM setPoint", pidController.getSetpoint());
+    shooterShuffleboard.addBoolean("At Setpoint", atSetpoint()); 
   }
 }

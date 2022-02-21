@@ -32,7 +32,7 @@ public class ConveyBallsCommand extends CommandBase {
 
         if (conveyor.isBallInUpper()) {
             conveyor.setLowerPower(conveyorPower);
-            conveyor.setUpperPower(0);
+            conveyor.setUpperPower(conveyorPower); //0
         } else {
             conveyor.setLowerPower(conveyorPower);
             conveyor.setUpperPower(conveyorPower);

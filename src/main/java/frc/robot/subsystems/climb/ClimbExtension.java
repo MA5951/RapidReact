@@ -52,9 +52,12 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     extensionMotor.setVoltage(voltage);
   }
 
-  @Override
   public double getVoltage() {
     return extensionMotor.getOutput() * 12;
+  }
+
+  public boolean canMove(){
+    return true; //TODO
   }
 
   public double getCurrent() {

@@ -63,7 +63,10 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         leftRotationMotor.setVoltage(voltage);
     }
 
-    @Override
+    public boolean canMove(){
+        return true; //TODO
+      }
+
     public double getVoltage() {
         return leftRotationMotor.getOutput() * 12;
     }

@@ -59,7 +59,7 @@ public class RobotContainer {
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
     JoystickContainer.BButton.whenPressed(() -> Conveyor.getInstance().setLowerPower(0.3)) // A button
         .whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
-    JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setUpperPower(0.3)) // Y button
+    JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setUpperPower(-0.3)) // Y button
         .whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 
     // ---------------------------- Shooter ----------------------------
@@ -73,7 +73,7 @@ public class RobotContainer {
     JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
   }
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

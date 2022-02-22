@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.commands.chassis.TankDrive;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -113,7 +112,8 @@ public class Robot extends TimedRobot {
     ClimbExtension.getInstance();
     // ClimbPassive.getInstance();
     ClimbRotation.getInstance();
-    // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
+    // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
+    // TankDrive());
 
   }
 

@@ -17,9 +17,10 @@ import com.ma5951.utils.RobotConstants.ENCODER;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_SparkMax;
+import com.ma5951.utils.subsystem.ControlSubsystem;
 import com.ma5951.utils.subsystem.PistonSubsystem;
 
-public class Shooter extends SubsystemBase implements PistonSubsystem {
+public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSubsystem {
   /** Creates a new Shooter. */
   private MA_SparkMax shooterLeftMotor;
   private MA_SparkMax shooterRightMotor;
@@ -54,12 +55,11 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
     // shooterRightMotor.setInverted(true);
   }
 
-
-  public void resetPID(){
+  public void resetPID() {
     pidController.reset();
   }
 
-  public void setMotor(double power) {
+  public void setVoltage(double power) {
     shooterLeftMotor.setVoltage(power);
   }
 
@@ -73,7 +73,10 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
         * ShooterConstants.SHOOTER_VELOCITY_PID_KF);
   }
 
-  public double calculate(double input) {
+  public double calculate() {
+    return pidController.calculate(getVelocity());
+  
+public double calculate(double input) {
     return pidController.calculate(input);
   }
 
@@ -112,6 +115,20 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
       shooter = new Shooter();
     }
     return shooter;
+  }
+
+  @Override
+  public void reset() {
+  }
+
+  @Override
+  public boolean canMove() {
+    return true;
+  }
+
+  @Override
+  public void off() {
+    shooterPiston.off();
   }
 
   @Override

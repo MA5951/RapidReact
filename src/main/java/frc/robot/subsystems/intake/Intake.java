@@ -50,8 +50,17 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     return intake;
   }
 
-  public boolean canMove(){
+  public boolean canMove() {
     return true;
+  }
+
+  @Override
+  public void off() {
+    intakePiston.off();
+  }
+
+  @Override
+  public void reset() {
   }
 
   @Override

@@ -77,8 +77,12 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         return leftRotationMotor.getOutput() * 12;
     }
 
-    public boolean canMove(){
-        return true; //TODO
+    public boolean canMove() {
+        return true; // TODO
+    }
+
+    @Override
+    public void reset() {
     }
 
     @Override

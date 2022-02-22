@@ -59,9 +59,10 @@ public class RobotContainer {
 
     // // ---------------------------- Intake ----------------------------
     // JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
-    JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()))
-        .whenReleased(Intake.getinstance()::off);
-    JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(-.9)); // X button
+    JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()));
+
+        //.whenReleased(Intake.getinstance()::off);
+    JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(.9)); // X button
 
     // ---------------------------- Conveyor ----------------------------
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());

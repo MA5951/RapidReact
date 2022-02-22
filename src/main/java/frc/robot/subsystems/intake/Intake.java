@@ -54,12 +54,10 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     return true;
   }
 
-  @Override
   public void off() {
     intakePiston.off();
   }
 
-  @Override
   public void reset() {
   }
 

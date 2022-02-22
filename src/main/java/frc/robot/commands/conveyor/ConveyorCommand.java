@@ -1,4 +1,4 @@
-package frc.robot.commands.Conveyor;
+package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,26 +12,26 @@ public class ConveyorCommand extends CommandBase {
 
 
   public ConveyorCommand() {
-    conveyor = Conveyor.getinstance();
+    conveyor = Conveyor.getInstance();
     addRequirements(conveyor);
   }
 
   @Override
   public void initialize() {
-    if (conveyor.getIR1()){
-      conveyor.amoutOfBalls = 1;
+    if (conveyor.isBallInLower()){
+      conveyor.setAmountOfBalls(1);
     }
 
   }
 
   @Override
   public void execute() {
-    if (conveyor.amoutOfBalls == 2)
+    if (conveyor.getAmountOfBalls() == 2)
       conveyor.setLowerPower(0); //0
     else
       conveyor.setLowerPower(0.75);
 
-    if (conveyor.getIR2()){
+    if (conveyor.isBallInUpper()){
       conveyor.setUpperPower(0); //0
     }
     else{
@@ -42,17 +42,17 @@ public class ConveyorCommand extends CommandBase {
   
 
 
-    if (conveyor.getIR1()) {
+    if (conveyor.isBallInLower()) {
       ballIn = true;
     }
     
     else if (ballIn) {
-      conveyor.amoutOfBalls++;
+      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls()+1);
       ballIn = false;
     }
 
 
-    SmartDashboard.putNumber("amoutOfBalls", conveyor.amoutOfBalls);
+    SmartDashboard.putNumber("amoutOfBalls", conveyor.getAmountOfBalls());
   }
 
   @Override
@@ -63,6 +63,6 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return conveyor.amoutOfBalls == 2;
+    return conveyor.getAmountOfBalls() == 2;
   }
 }

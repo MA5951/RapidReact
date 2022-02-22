@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Chassis;
+package frc.robot.commands.chassis;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 

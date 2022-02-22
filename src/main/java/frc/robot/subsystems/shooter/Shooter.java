@@ -75,6 +75,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
   public double calculate() {
     return pidController.calculate(getVelocity());
+  }
   
 public double calculate(double input) {
     return pidController.calculate(input);

@@ -22,12 +22,13 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void initialize() {
     shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD); // Launch Pad: 3275 Fender: 2500
+    shooter.resetPID();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setMotor(4);
+    shooter.setMotor(shooter.calculate(shooter.getVelocity()));
   }
 
   // Called once the command ends or is interrupted.

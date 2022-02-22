@@ -42,6 +42,17 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
     shooterShuffleboard = new Shuffleboard(ShooterConstants.SYSTEM_NAME);
 
     shooterRightMotor.follow(shooterLeftMotor);
+
+    shooterLeftMotor.resetEncoder();
+    shooterRightMotor.resetEncoder();
+
+    // shooterLeftMotor.setInverted(true);
+    // shooterRightMotor.setInverted(true);
+  }
+
+
+  public void resetPID(){
+    pidController.reset();
   }
 
   public void setMotor(double power) {
@@ -53,12 +64,13 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
   }
 
   public void setSetpoint(double setpoint) {
-    pidController.setF(((pidController.getSetpoint() / RobotConstants.KMAX_RPM_NEO) * 12)
-        * ShooterConstants.SHOOTER_VELOCITY_PID_KF);
     pidController.setSetpoint(setpoint);
+    pidController.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12)
+        * ShooterConstants.SHOOTER_VELOCITY_PID_KF);
   }
 
   public double calculate(double input) {
+    System.out.println(pidController.calculate(input));
     return pidController.calculate(input);
   }
 
@@ -87,6 +99,8 @@ public class Shooter extends SubsystemBase implements PistonSubsystem {
 
   @Override
   public void periodic() {
+    shooterShuffleboard.addNum("pid value", pidController.calculate(getVelocity()));
+    shooterShuffleboard.addNum("shooter", shooterLeftMotor.getPosition());
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
   }

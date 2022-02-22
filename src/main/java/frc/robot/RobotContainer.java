@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.automations.IntakeAutomation;
 import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
@@ -27,14 +30,18 @@ import com.ma5951.utils.commands.TogglePistonCommand;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  public static boolean robotControlMode;
+  JoystickButton controlModeToogle;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
+    boolean robotControlMode = true;
     configureButtonBindings();
   }
 
@@ -47,10 +54,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // ---------------------------- Intake ----------------------------
-    JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
+    JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
+    //controlModeToogle.whenPressed(new InstantCommand(RobotContainer::toogleControlMode));
+
+    // // ---------------------------- Intake ----------------------------
+    // JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
     JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()))
         .whenReleased(Intake.getinstance()::off);
+    JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(-.9)); // X button
 
     // ---------------------------- Conveyor ----------------------------
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());

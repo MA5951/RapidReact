@@ -5,10 +5,13 @@
 package frc.robot.subsystems.climb;
 
 import com.revrobotics.CANSparkMaxLowLevel;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
 import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
@@ -19,21 +22,24 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
      */
     private static ClimbRotation climbRotation;
     private MA_SparkMax leftRotationMotor, rightRotationMotor;
+    private DigitalInput hallEffect;
     private PIDController rotationPID;
+    private Shuffleboard shuffleboard;
 
     public ClimbRotation() {
-        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.LIMIT_SWITCH.forward, RobotConstants.ENCODER.No_Encoder,
-                CANSparkMaxLowLevel.MotorType.kBrushless);
-        // leftRotationMotor.enableLimitSwitchF(true);
+        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE, 
+        RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+                RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
+
+        hallEffect = new DigitalInput(2);
 
         rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
                 ClimbConstants.ROTATION_KD,
                 0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
+        shuffleboard = new Shuffleboard("ClimbRotation");
     }
 
     public static ClimbRotation getInstance() {
@@ -41,6 +47,10 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
             climbRotation = new ClimbRotation();
         }
         return climbRotation;
+    }
+
+    public boolean getHallEffect() {
+        return !hallEffect.get();
     }
 
     @Override
@@ -74,5 +84,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
+        shuffleboard.addNum("encoder right", rightRotationMotor.getPosition());
     }
 }

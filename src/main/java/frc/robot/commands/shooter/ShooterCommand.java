@@ -4,6 +4,7 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
@@ -11,10 +12,13 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 public class ShooterCommand extends CommandBase {
   /** Creates a new ShooterCommand. */
   private Shooter shooter;
+  private Timer timer;
+  private boolean print;
 
   public ShooterCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = Shooter.getinstance();
+    timer = new Timer();
     addRequirements(shooter);
   }
 
@@ -23,12 +27,19 @@ public class ShooterCommand extends CommandBase {
   public void initialize() {
     shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD); // Launch Pad: 3275 Fender: 2500
     shooter.resetPID();
+    timer.reset();
+    timer.start();
+    print = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     shooter.setMotor(shooter.calculate(shooter.getVelocity()));
+    if (!print && shooter.atSetpoint()) {
+      print = true;
+      System.out.println("time: " + timer.get());
+    }
   }
 
   // Called once the command ends or is interrupted.

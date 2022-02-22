@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ma5951.utils.Limelight;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -62,6 +64,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
+    Limelight.periodic();
     CommandScheduler.getInstance().run();
   }
 
@@ -107,7 +110,7 @@ public class Robot extends TimedRobot {
     Shooter.getinstance();
     Conveyor.getInstance();
     ClimbExtension.getInstance();
-    ClimbPassive.getInstance();
+    // ClimbPassive.getInstance();
     ClimbRotation.getInstance();
     // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
     // TankDrive());

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
@@ -17,13 +18,15 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   private static ClimbPassive climbPassive;
   private MA_SparkMax leftPassiveMotor;
   private PIDController passivePID;
+  private Shuffleboard shuffleboard;
 
   public ClimbPassive() {
     leftPassiveMotor = new MA_SparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE,
-        RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     passivePID = new PIDController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD,
         ClimbConstants.PASSIVE_TOLERANCE);
+    shuffleboard = new Shuffleboard("ClimbPassive");
   }
 
   public static ClimbPassive getInstance() {
@@ -68,5 +71,6 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // shuffleboard.addNum("encoder", leftPassiveMotor.getPosition());
   }
 }

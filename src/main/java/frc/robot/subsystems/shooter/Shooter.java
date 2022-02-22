@@ -9,6 +9,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
+import frc.robot.Limelight;
+
+import com.ma5951.utils.Calculations;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.RobotConstants.ENCODER;
 import com.ma5951.utils.controllers.PIDController;
@@ -29,6 +32,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   private Shuffleboard shooterShuffleboard;
 
   private static Shooter shooter;
+
 
   public Shooter() {
     shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
@@ -71,10 +75,27 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
   public double calculate() {
     return pidController.calculate(getVelocity());
+  
+public double calculate(double input) {
+    return pidController.calculate(input);
   }
 
   public boolean atSetpoint() {
     return pidController.atSetpoint();
+  }
+
+  public double calculateVelocityMPS() {
+    double dx = Limelight.distance();
+    double radiansAngle = Math.toRadians(ShooterConstants.SHOOTER_ANGLE);
+    return Math.sqrt(
+      ((-4.9 * Math.pow(dx, 2))) / 
+      ((ShooterConstants.K_DELTA_Y - (dx * Math.tan(radiansAngle))) * Math.pow(Math.cos(radiansAngle), 2))
+    );
+  }
+
+  public double getRPMVelocity() {
+    double gear = 2.0 / 3.0;
+    return ((60 / (2 * Math.PI * 0.12)) * calculateVelocityMPS()) / gear;
   }
 
   public void open() {
@@ -116,5 +137,8 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
     shooterShuffleboard.addNum("shooter", shooterLeftMotor.getPosition());
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
+    shooterShuffleboard.addNum("RPM Setpoint", getRPMVelocity());
+
+    // System.out.println("RPM " + getRPMVelocity());
   }
 }

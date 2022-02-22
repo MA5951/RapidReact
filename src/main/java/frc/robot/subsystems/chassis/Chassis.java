@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -80,7 +79,6 @@ public class Chassis extends SubsystemBase {
 
     colorSensorLeft = new ColorSensorV3(I2C.Port.kMXP);
     colorSensorRight = new ColorSensorV3(I2C.Port.kOnboard);
-
 
     resetSensors();
     m_field = new Field2d();
@@ -264,12 +262,11 @@ public class Chassis extends SubsystemBase {
     return odometryHandler;
   }
 
-
-  public int getLeftColorSensor(){
+  public int getLeftColorSensor() {
     return colorSensorLeft.getIR();
   }
 
-  public int getRightColorSensor(){
+  public int getRightColorSensor() {
     return colorSensorRight.getIR();
   }
 
@@ -289,7 +286,6 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("left rear encoder", leftRearMotor.getSelectedSensorPosition());
     chassisShuffleboard.addNum("right front encoder", rightFrontMotor.getSelectedSensorPosition());
     chassisShuffleboard.addNum("left front encoder", leftFrontMotor.getSelectedSensorPosition());
-
 
     chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
     chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());

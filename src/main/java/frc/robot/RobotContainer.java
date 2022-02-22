@@ -5,22 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.automations.ShootingAutomation;
-import frc.robot.commands.conveyor.ConveyBallsCommand;
-import frc.robot.commands.shooter.ShooterCommand;
-import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
-import frc.robot.subsystems.climb.ClimbRotation;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterConstants;
+
 import com.ma5951.utils.JoystickContainer;
+import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.TogglePistonCommand;
-import com.ma5951.utils.subsystem.MotorSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -53,7 +49,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // ---------------------------- Intake ----------------------------
     JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
-    JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()));
+    JoystickContainer.POVUp.whenPressed(new TogglePistonCommand(Intake.getinstance()))
+        .whenReleased(Intake.getinstance()::off);
 
     // ---------------------------- Conveyor ----------------------------
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
@@ -63,17 +60,22 @@ public class RobotContainer {
         .whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 
     // ---------------------------- Shooter ----------------------------
-    JoystickContainer.XButton.whileActiveContinuous(new ShooterCommand()); // B button
+    JoystickContainer.XButton.whileActiveContinuous(
+        new ControlCommand(Shooter.getinstance(), ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD, false, true)); // B
+                                                                                                               // button
     // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
-    JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
+    JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()))
+        .whenReleased(Shooter.getinstance()::off);
 
     // ---------------------------- Climb ----------------------------
-    // JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.1));
-    // JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.1));
+    // JoystickContainer.POVUp.whileActiveContinuous(new
+    // MotorCommand(ClimbRotation.getInstance(), 0.1));
+    // JoystickContainer.POVDown.whileActiveContinuous(new
+    // MotorCommand(ClimbExtension.getInstance(), 0.1));
     JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
   }
-  
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

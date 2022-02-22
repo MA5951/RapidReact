@@ -4,9 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
-import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.motor.MA_TalonSRX;
-import com.ma5951.utils.motor.MA_VictorSPX;
 
 public class Conveyor extends SubsystemBase {
 

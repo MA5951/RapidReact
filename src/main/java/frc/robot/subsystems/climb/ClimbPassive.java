@@ -15,7 +15,7 @@ import com.ma5951.utils.subsystem.ControlSubsystem;
 public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   /** Climb Passive Arms */
   private static ClimbPassive climbPassive;
-  private MA_SparkMax leftPassiveMotor, rightPassiveMotor;
+  private MA_SparkMax leftPassiveMotor;
   private PIDController passivePID;
 
   public ClimbPassive() {
@@ -57,8 +57,12 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
     return leftPassiveMotor.getOutput() * 12;
   }
 
-  public boolean canMove(){
-    return true; //TODO
+  public boolean canMove() {
+    return true; // TODO
+  }
+
+  @Override
+  public void reset() {
   }
 
   @Override

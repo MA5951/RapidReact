@@ -4,14 +4,13 @@
 
 package frc.robot.commands.automations;
 
+import com.ma5951.utils.commands.PistonCommand;
+
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
-import frc.robot.utils.Limelight;
-import frc.robot.utils.commands.MApistonCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,7 +23,7 @@ public class ShooterAutomation extends SequentialCommandGroup {
   public ShooterAutomation(double distance, double setpoint) {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
-      new MApistonCommand(Shooter.getinstance(), distance < DISTANCE_THRESHOLD),
+      new PistonCommand(Shooter.getinstance(), () -> distance < DISTANCE_THRESHOLD),
       new ShooterCommand(setpoint, false),
       new ParallelDeadlineGroup(
         new UpperConveyorCommand(),

@@ -109,6 +109,7 @@ public class Robot extends TimedRobot {
     Chassis.getinstance();
     Shooter.getinstance();
     Conveyor.getInstance();
+    Conveyor.getInstance().setAmountOfBalls(0);
     ClimbExtension.getInstance();
     // ClimbPassive.getInstance();
     ClimbRotation.getInstance();

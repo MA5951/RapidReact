@@ -2,6 +2,7 @@ package frc.robot.subsystems.conveyor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.motor.MA_TalonSRX;
@@ -10,6 +11,8 @@ public class Conveyor extends SubsystemBase {
 
     private MA_TalonSRX lowerVictor;
     private MA_TalonSRX upperVictor;
+
+    public boolean isUpperIR = true;
 
     private DigitalInput lowerIR;
     private DigitalInput upperIR;
@@ -30,14 +33,16 @@ public class Conveyor extends SubsystemBase {
         lowerVictor.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 
         conveyorShuffleboard = new Shuffleboard("conveyor");
+
+        amountOfBalls = 0;
     }
 
     public boolean isBallInLower() {
-        return lowerIR.get();
+        return !lowerIR.get();
     }
 
     public boolean isBallInUpper() {
-        return upperIR.get();
+        return !upperIR.get();
     }
 
     public void setLowerPower(double velocity) {
@@ -49,9 +54,10 @@ public class Conveyor extends SubsystemBase {
     }
 
     public void setAmountOfBalls(int numBalls) {
-        if ((getAmountOfBalls() + numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS) {
-            amountOfBalls = numBalls;
-        }
+        // if ((numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS) {
+        //     amountOfBalls = numBalls;
+        // }
+        amountOfBalls = numBalls;
     }
 
     public int getAmountOfBalls() {
@@ -67,9 +73,13 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        conveyorShuffleboard.addBoolean("ir1", isBallInLower());
-
-        conveyorShuffleboard.addBoolean("ir2", isBallInUpper());
+        // if (isUpperIR == isBallInUpper()){
+        //     isUpperIR = !isBallInUpper();
+        //     System.out.println("h");
+        //     amountOfBalls--;
+        // }
+        conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
+        conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
+        conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
     }
 }

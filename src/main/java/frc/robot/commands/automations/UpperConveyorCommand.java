@@ -15,7 +15,7 @@ public class UpperConveyorCommand extends CommandBase {
      */
     private Conveyor conveyor;
 
-    private boolean isBallAtTop = false;
+    private boolean isBallAtTop = true;
 
     private ConveyBallsCommand conveyBallsCommand;
 
@@ -30,23 +30,22 @@ public class UpperConveyorCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        conveyBallsCommand.initialize();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        isBallAtTop = conveyor.isBallInUpper();
-
         if (Shooter.getinstance().atSetpoint()) {
-            conveyor.setLowerPower(-0.6);
-            conveyor.setUpperPower(0.6);
+            conveyor.setUpperPower(0.8);
+            if (conveyor.getAmountOfBalls() != 2){
+                conveyor.setLowerPower(-0.6);
+            }
 
-            if (!conveyor.isBallInUpper() && isBallAtTop) {
+            if (!conveyor.isBallInUpper() && (conveyor.isBallInUpper() != isBallAtTop)) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-                isBallAtTop = false;
             }
         }
+        isBallAtTop = conveyor.isBallInUpper();
     }
 
     // Called once the command ends or is interrupted.

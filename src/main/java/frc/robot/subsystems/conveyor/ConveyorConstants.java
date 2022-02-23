@@ -6,7 +6,7 @@ package frc.robot.subsystems.conveyor;
 
 /** Add your docs here. */
 public class ConveyorConstants {
-    public static final double CONVEYOR_POWER = 0.1;
-    public static final double CONVEYOR_LOWER_RAMP_RATE = 0.1;
+    public static final double CONVEYOR_POWER = 0.5;
+    public static final double CONVEYOR_LOWER_RAMP_RATE = 0.5;
     public static final int CONVEYOR_MAX_BALLS = 2;
 }

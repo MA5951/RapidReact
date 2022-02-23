@@ -26,19 +26,20 @@ public class ConveyBallsCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (conveyor.isBallInLower()) {
-            conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-        }
+        // if (conveyor.isBallInLower()) {
+        //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
+        // }
 
-        if (conveyor.isBallInUpper()) {
-            conveyor.setLowerPower(conveyorPower);
-            conveyor.setUpperPower(0);
-        } else {
-            conveyor.setLowerPower(conveyorPower);
-            conveyor.setUpperPower(conveyorPower);
-        }
+        // if (conveyor.isBallInUpper()) {
+        //     conveyor.setLowerPower(conveyorPower);
+        //     conveyor.setUpperPower(0.5);
+        // } else {
+        //     conveyor.setLowerPower(conveyorPower);
+        //     conveyor.setUpperPower(conveyorPower);
+        // }
 
-        SmartDashboard.putNumber("amountOfBalls", conveyor.getAmountOfBalls());
+        // SmartDashboard.putNumber("amountOfBalls", conveyor.getAmountOfBalls());
+        conveyor.setUpperPower(0.75);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class ConveyBallsCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getAmountOfBalls() == ConveyorConstants.CONVEYOR_MAX_BALLS;
+        //return conveyor.getAmountOfBalls() == ConveyorConstants.CONVEYOR_MAX_BALLS;
+        return false;
     }
 }

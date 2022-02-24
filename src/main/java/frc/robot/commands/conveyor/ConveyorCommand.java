@@ -13,8 +13,9 @@ public class ConveyorCommand extends CommandBase {
 
   private Conveyor conveyor;
 
-  private double time;
-
+  private double time1;
+  private double time2;
+  private double time3;
 
   public  ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -23,7 +24,9 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    time = Timer.getFPGATimestamp();
+    time1 = Timer.getFPGATimestamp();
+    time2 = Timer.getFPGATimestamp();
+    time3 = Timer.getFPGATimestamp();
     //conveyor.setAmountOfBalls(0);
   }
 
@@ -31,9 +34,9 @@ public class ConveyorCommand extends CommandBase {
   public void execute() {
     if (conveyor.isBallInLower()) {
       ballIn = true;
-    } else if (ballIn && Timer.getFPGATimestamp() - time >= 0.5) {
+    } else if (ballIn && Timer.getFPGATimestamp() - time1 >= 0.5) {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-      time = Timer.getFPGATimestamp();
+      time1 = Timer.getFPGATimestamp();
       ballIn = false;
     }
     if (conveyor.getAmountOfBalls() == 2){
@@ -43,8 +46,14 @@ public class ConveyorCommand extends CommandBase {
     }
     if (conveyor.isBallInUpper()){
       conveyor.setUpperPower(0);
+    // } else if (conveyor.getUpperCurrent() > 45 && 
+    //     Timer.getFPGATimestamp() - time2 <= 0.5 && 
+    //     Timer.getFPGATimestamp() - time3 >= 0.5){
+    //   conveyor.setUpperPower(-0.4);
+    //   time3 = Timer.getFPGATimestamp();
     } else {
-      conveyor.setUpperPower(0.5);
+      time2 = Timer.getFPGATimestamp();
+      conveyor.setUpperPower(0.6);
     }
   }
 

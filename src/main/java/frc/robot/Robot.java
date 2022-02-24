@@ -66,6 +66,8 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     Limelight.periodic();
     CommandScheduler.getInstance().run();
+
+    System.out.println("Hazi is black \n I love Naveh \n Ayache love a stick in his ass");
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

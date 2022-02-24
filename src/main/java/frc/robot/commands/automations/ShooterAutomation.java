@@ -4,9 +4,12 @@
 
 package frc.robot.commands.automations;
 
+import java.util.function.Supplier;
+
 import com.ma5951.utils.commands.PistonCommand;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
@@ -17,17 +20,15 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShooterAutomation extends SequentialCommandGroup {
   /** Creates a new ShooterAutomation. */
-
-  private static final double DISTANCE_THRESHOLD = 100; // TODO
-
-  public ShooterAutomation(double distance, double setpoint) {
+  
+  public ShooterAutomation(Supplier<Boolean> hood, Supplier<Double> setpoint) {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
-      new PistonCommand(Shooter.getinstance(), () -> distance < DISTANCE_THRESHOLD),
+      new PistonCommand(Shooter.getinstance(), hood),
       new ShooterCommand(setpoint, false),
       new ParallelDeadlineGroup(
         new UpperConveyorCommand(),
-        new ShooterCommand(setpoint)
+        new PerpetualCommand(new ShooterCommand(setpoint))
       )
     );
   }

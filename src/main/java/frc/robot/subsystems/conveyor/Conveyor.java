@@ -54,10 +54,9 @@ public class Conveyor extends SubsystemBase {
     }
 
     public void setAmountOfBalls(int numBalls) {
-        // if ((numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS) {
-        //     amountOfBalls = numBalls;
-        // }
-        amountOfBalls = numBalls;
+        if ((numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS && numBalls >= 0) {
+            amountOfBalls = numBalls;
+        }
     }
 
     public int getAmountOfBalls() {
@@ -71,6 +70,10 @@ public class Conveyor extends SubsystemBase {
         return conveyor;
     }
 
+    public double getUpperCurrent(){
+        return upperVictor.getStatorCurrent();
+    }
+
     @Override
     public void periodic() {
         // if (isUpperIR == isBallInUpper()){
@@ -78,6 +81,7 @@ public class Conveyor extends SubsystemBase {
         //     System.out.println("h");
         //     amountOfBalls--;
         // }
+        conveyorShuffleboard.addNum("Curent", getUpperCurrent());
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);

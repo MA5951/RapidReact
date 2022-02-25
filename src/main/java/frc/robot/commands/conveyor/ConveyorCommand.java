@@ -42,7 +42,7 @@ public class ConveyorCommand extends CommandBase {
     if (isBallInUpper) {
       conveyor.setUpperPower(0);
     } else {
-      conveyor.setUpperPower(0.7);
+      conveyor.setUpperPower(0.6);
     }
     switch (conveyor.getAmountOfBalls()) {
       case 0:

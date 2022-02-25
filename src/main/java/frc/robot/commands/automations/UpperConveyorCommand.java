@@ -40,16 +40,17 @@ public class UpperConveyorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Shooter.getinstance().atSetpoint()) {
-            if (stator == 0){
+        System.out.println();
+        if (Timer.getFPGATimestamp() - time <= 0.4) {
+            conveyor.setUpperPower(-0.4);
+        }
+        else if (Shooter.getinstance().atSetpoint()) {
+            if (stator == 0) {
                 stator = Shooter.getinstance().getStator();
             }
 
-            if (Timer.getFPGATimestamp() - time <= 0.6){
-                conveyor.setUpperPower(-0.4);
-            } else {
-                conveyor.setUpperPower(0.9);
-            }
+            conveyor.setUpperPower(0.9);
+
             if (conveyor.getAmountOfBalls() != 2) {
                 conveyor.setLowerPower(-0.6);
             }
@@ -57,7 +58,7 @@ public class UpperConveyorCommand extends CommandBase {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
             }
             isBallAtTop = conveyor.isBallInUpper();
-        } else 
+        } else
             conveyor.setUpperPower(0);
     }
 
@@ -71,6 +72,6 @@ public class UpperConveyorCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;//conveyor.getAmountOfBalls() == 0;
+        return false;// conveyor.getAmountOfBalls() == 0;
     }
 }

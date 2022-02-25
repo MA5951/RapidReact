@@ -8,17 +8,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
 public class ConveyorCommand extends CommandBase {
-
-  boolean ballIn = false;
-
   private Conveyor conveyor;
 
+  private boolean isBallInlower;
   private double time1;
   private double time2;
   private double time3;
-  private boolean isBallInUpper = false;
+  private boolean isBallInUpper;
 
-  public  ConveyorCommand() {
+  public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
     addRequirements(conveyor);
   }
@@ -28,37 +26,33 @@ public class ConveyorCommand extends CommandBase {
     time1 = Timer.getFPGATimestamp();
     time2 = Timer.getFPGATimestamp();
     time3 = Timer.getFPGATimestamp();
-    //conveyor.setAmountOfBalls(0);
+    isBallInlower = false;
+    isBallInUpper = false;
+    // conveyor.setAmountOfBalls(0);
   }
 
   @Override
   public void execute() {
+    if (conveyor.isBallInLower() && !isBallInlower){
+      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
+    }
     if (conveyor.isBallInUpper()){
       isBallInUpper = true;
     }
-    if (conveyor.isBallInLower()) {
-      ballIn = true;
-    } else if (ballIn && Timer.getFPGATimestamp() - time1 >= 0.5) {
-      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-      time1 = Timer.getFPGATimestamp();
-      ballIn = false;
-    }
-    if (conveyor.getAmountOfBalls() == 2){
-      conveyor.setLowerPower(0);
-    } else {
-      conveyor.setLowerPower(-0.6);
-    }
-    if (isBallInUpper){
+    if (isBallInUpper) {
       conveyor.setUpperPower(0);
-    // } else if (conveyor.getUpperCurrent() > 45 && 
-    //     Timer.getFPGATimestamp() - time2 <= 0.5 && 
-    //     Timer.getFPGATimestamp() - time3 >= 0.5){
-    //   conveyor.setUpperPower(-0.4);
-    //   time3 = Timer.getFPGATimestamp();
     } else {
-      time2 = Timer.getFPGATimestamp();
-      conveyor.setUpperPower(0.6);
+      conveyor.setUpperPower(0.7);
     }
+    switch (conveyor.getAmountOfBalls()) {
+      case 0:
+      case 1:
+      conveyor.setLowerPower(-0.6);
+        break;
+      case 2:
+        conveyor.setLowerPower(0);
+    }
+    isBallInlower = conveyor.isBallInLower();
   }
 
   @Override

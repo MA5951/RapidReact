@@ -77,11 +77,11 @@ public class RobotContainer {
     andThen( new MotorCommand(Intake.getinstance(), 0.7).
       alongWith(new ConveyorCommand()))
       ); // X button
-    JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setLowerPower(1))
-                              .whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
+    // JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setLowerPower(1))
+    //                           .whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
 
-    JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setUpperPower(-1))
-                              .whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
+    // JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setUpperPower(-1))
+    //                           .whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 
     // ---------------------------- Conveyor ----------------------------
     // JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
@@ -92,8 +92,8 @@ public class RobotContainer {
     //JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
 
     // ---------------------------- Shooter ----------------------------
-    // JoystickContainer.XButton.whileActiveContinuous(
-    //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)); // B
+    JoystickContainer.YButton.whileActiveContinuous(
+        new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)); // B
     //                                                                                                            // button    // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
     //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
     // JoystickContainer.XButton.whileActiveContinuous( 

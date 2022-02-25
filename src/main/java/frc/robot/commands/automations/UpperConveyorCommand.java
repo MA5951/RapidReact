@@ -15,6 +15,7 @@ public class UpperConveyorCommand extends CommandBase {
      * Creates a new UpperConveyorCommand.
      */
     private Conveyor conveyor;
+    private double stator = 0;
 
     private boolean isBallAtTop = true;
     private boolean isStuck = false;
@@ -40,27 +41,19 @@ public class UpperConveyorCommand extends CommandBase {
     @Override
     public void execute() {
         if (Shooter.getinstance().atSetpoint()) {
-            // if (!isStuck) {
-            //     time = Timer.getFPGATimestamp();
-            // }
+            if (stator == 0){
+                stator = Shooter.getinstance().getStator();
+            }
+
             if (Timer.getFPGATimestamp() - time <= 0.6){
                 conveyor.setUpperPower(-0.4);
             } else {
                 conveyor.setUpperPower(0.9);
             }
-            // // if (conveyor.getUpperCurrent() > 50) {// && (Timer.getFPGATimestamp() -
-            // time <= 1)){
-            // // isStuck = true;
-            // // conveyor.setUpperPower(-0.4);
-            // // time = Timer.getFPGATimestamp();
-            // } else {
-            // isStuck = false;
-            // conveyor.setUpperPower(0.9);
-            // }
             if (conveyor.getAmountOfBalls() != 2) {
                 conveyor.setLowerPower(-0.6);
             }
-            if (!conveyor.isBallInUpper() && (conveyor.isBallInUpper() != isBallAtTop)) {
+            if (Shooter.getinstance().getStator() - stator >= 10) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
             }
             isBallAtTop = conveyor.isBallInUpper();

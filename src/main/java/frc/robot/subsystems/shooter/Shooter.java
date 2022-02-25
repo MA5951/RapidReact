@@ -128,6 +128,10 @@ public double calculate(double input) {
     return true;
   }
 
+  public double getStator(){
+    return shooterRightMotor.getStatorCurrent();
+  }
+
   @Override
   public void off() {
     shooterPiston.off();
@@ -135,12 +139,11 @@ public double calculate(double input) {
 
   @Override
   public void periodic() {
+    shooterShuffleboard.addNum("Current", shooterRightMotor.getStatorCurrent());
     shooterShuffleboard.addNum("pid value", pidController.calculate(getVelocity()));
     shooterShuffleboard.addNum("shooter", shooterLeftMotor.getPosition());
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
     shooterShuffleboard.addNum("RPM Setpoint", getRPMVelocity());
-
-    System.out.println("RPM " + calculateVelocityMPS());
   }
 }

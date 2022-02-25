@@ -93,7 +93,7 @@ public class RobotContainer {
 
     // ---------------------------- Shooter ----------------------------
     // JoystickContainer.XButton.whileActiveContinuous(
-    //     new ControlCommand(Shooter.getinstance(), ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD, false, true)); // B
+    //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)); // B
     //                                                                                                            // button    // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
     //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
     // JoystickContainer.XButton.whileActiveContinuous( 
@@ -107,12 +107,13 @@ public class RobotContainer {
     //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
     //   )));
 
-    // JoystickContainer.XButton.whileActiveContinuous(
-    // //new PistonCommand(Shooter.getinstance(), () -> 150 < 100).alongWith(
-    //   new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD).alongWith(new UpperConveyorCommand()));
     JoystickContainer.XButton.whileActiveContinuous(
-      new ShooterAutomation(() -> true, () -> ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
-      ).whenInactive(() -> Shooter.getinstance().setPower(0));
+      //new PistonCommand(Shooter.getinstance(), () -> 150 < 100).alongWith(
+      new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
+      .alongWith(new UpperConveyorCommand()));
+    // JoystickContainer.XButton.whileActiveContinuous(
+    //   new ShooterAutomation(() -> true, () -> ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
+    //   ).whenInactive(() -> Shooter.getinstance().setPower(0));
     // ---------------------------- Climb ----------------------------
     // JoystickContainer.POVUp.whileActiveContinuous(new
     // MotorCommand(.getInstance(), 0.1));

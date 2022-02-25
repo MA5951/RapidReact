@@ -16,6 +16,7 @@ public class ConveyorCommand extends CommandBase {
   private double time1;
   private double time2;
   private double time3;
+  private boolean isBallInUpper = false;
 
   public  ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -32,6 +33,9 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void execute() {
+    if (conveyor.isBallInUpper()){
+      isBallInUpper = true;
+    }
     if (conveyor.isBallInLower()) {
       ballIn = true;
     } else if (ballIn && Timer.getFPGATimestamp() - time1 >= 0.5) {
@@ -42,9 +46,9 @@ public class ConveyorCommand extends CommandBase {
     if (conveyor.getAmountOfBalls() == 2){
       conveyor.setLowerPower(0);
     } else {
-      conveyor.setLowerPower(-0.4);
+      conveyor.setLowerPower(-0.6);
     }
-    if (conveyor.isBallInUpper()){
+    if (isBallInUpper){
       conveyor.setUpperPower(0);
     // } else if (conveyor.getUpperCurrent() > 45 && 
     //     Timer.getFPGATimestamp() - time2 <= 0.5 && 

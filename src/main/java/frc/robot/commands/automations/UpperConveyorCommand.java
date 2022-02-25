@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.shooter.Shooter;
 
 public class UpperConveyorCommand extends CommandBase {
     /**
@@ -38,35 +39,45 @@ public class UpperConveyorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (!isStuck) {
-            time = Timer.getFPGATimestamp();
-        }
-        // // if (conveyor.getUpperCurrent() > 50) {// && (Timer.getFPGATimestamp() - time <= 1)){
-        // //     isStuck = true;
-        // //     conveyor.setUpperPower(-0.4);
-        // //     time = Timer.getFPGATimestamp();
-        // } else {
-        //     isStuck = false;
-        //     conveyor.setUpperPower(0.9);
-        // }
-        if (conveyor.getAmountOfBalls() != 2) {
-            conveyor.setLowerPower(-0.6);
-        }
-        if (!conveyor.isBallInUpper() && (conveyor.isBallInUpper() != isBallAtTop)) {
-            conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-        }
-        isBallAtTop = conveyor.isBallInUpper();
+        if (Shooter.getinstance().atSetpoint()) {
+            // if (!isStuck) {
+            //     time = Timer.getFPGATimestamp();
+            // }
+            if (Timer.getFPGATimestamp() - time <= 0.6){
+                conveyor.setUpperPower(-0.4);
+            } else {
+                conveyor.setUpperPower(0.9);
+            }
+            // // if (conveyor.getUpperCurrent() > 50) {// && (Timer.getFPGATimestamp() -
+            // time <= 1)){
+            // // isStuck = true;
+            // // conveyor.setUpperPower(-0.4);
+            // // time = Timer.getFPGATimestamp();
+            // } else {
+            // isStuck = false;
+            // conveyor.setUpperPower(0.9);
+            // }
+            if (conveyor.getAmountOfBalls() != 2) {
+                conveyor.setLowerPower(-0.6);
+            }
+            if (!conveyor.isBallInUpper() && (conveyor.isBallInUpper() != isBallAtTop)) {
+                conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+            }
+            isBallAtTop = conveyor.isBallInUpper();
+        } else 
+            conveyor.setUpperPower(0);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        conveyBallsCommand.end(true);
+        conveyor.setLowerPower(0);
+        conveyor.setUpperPower(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return conveyor.getAmountOfBalls() == 0;
+        return false;//conveyor.getAmountOfBalls() == 0;
     }
 }

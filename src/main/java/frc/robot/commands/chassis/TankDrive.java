@@ -53,8 +53,7 @@ public class TankDrive extends CommandBase {
     // chassis.setLeftPercent(0);
     // }
 
-    chassis.setLeftPercent(JoystickContainer.leftJoystick.getY());
-    chassis.setRightPercent(JoystickContainer.rightJoystick.getY());
+      chassis.arcadeDrive(JoystickContainer.leftJoystick.getX()*10, JoystickContainer.leftJoystick.getY()*10);
   }
 
   @Override

@@ -150,5 +150,6 @@ public double calculate(double input) {
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
     shooterShuffleboard.addNum("RPM Setpoint", getRPMVelocity());
+    shooterShuffleboard.addNum("Shooter Calc", getShooterPower());
   }
 }

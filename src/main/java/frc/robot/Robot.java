@@ -5,11 +5,13 @@
 package frc.robot;
 
 import com.ma5951.utils.Limelight;
+import com.ma5951.utils.autonomous.Paths;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.ChasisPID;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -90,6 +92,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    CommandScheduler.getInstance().schedule(new AutonomousCommand(frc.robot.commands.chassis.Paths.CHECKING_PATH));
   }
 
   /** This function is called periodically during autonomous. */
@@ -114,8 +117,8 @@ public class Robot extends TimedRobot {
     ClimbExtension.getInstance();
     // ClimbPassive.getInstance();
     ClimbRotation.getInstance();
-    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
-    ChasisPID());
+    // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
+    // ChasisPID());
 
   }
 

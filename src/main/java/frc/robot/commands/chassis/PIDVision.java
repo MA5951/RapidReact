@@ -26,9 +26,6 @@ public class PIDVision extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Limelight.camMode(0);
-    Limelight.pipeline(0);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +38,6 @@ public class PIDVision extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Limelight.camMode(1);
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
     chassis.resetPID();

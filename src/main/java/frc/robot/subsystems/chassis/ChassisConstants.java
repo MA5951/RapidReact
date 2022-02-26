@@ -24,22 +24,22 @@ public class ChassisConstants {
     public static final double KI_MAPATH_RIGHT_VELOCITY = 0;
     public static final double KD_MAPATH_RIGHT_VELOCITY = 0;
     public static final double KF_MAPATH_RIGHT_VELOCITY = 1;
-    public static final double KV_MAPATH_RIGHT_VELOCITY = 0.05;
+    public static final double KV_MAPATH_RIGHT_VELOCITY = 0.06;
 
     // ------------------left pid velocity-------------
     public static final double KP_MAPATH_LEFT_VELOCITY = 0.3;
     public static final double KI_MAPATH_LEFT_VELOCITY = 0;
     public static final double KD_MAPATH_LEFT_VELOCITY = 0;
     public static final double KF_MAPATH_LEFT_VELOCITY = 1;
-    public static final double KV_MAPATH_LEFT_VELOCITY = 0.05;
+    public static final double KV_MAPATH_LEFT_VELOCITY = 0.06;
 
     public static final double KP_MAPATH_ANGLE = 0.3;
     public static final double KI_MAPATH_ANGLE = 0;
     public static final double KD_MAPATH_ANGLE = 0.02;
 
-    public static final double KP_VISION_ANGLE = 2.5e-2;
-    public static final double KI_VISION_ANGLE = 8e-4;
-    public static final double KD_VISION_ANGLE = 0.5e-3;
+    public static final double KP_VISION_ANGLE = 2.5e-1;
+    public static final double KI_VISION_ANGLE = 0;
+    public static final double KD_VISION_ANGLE = 0;
 
     public static final double KP_VISION_DISTANCE = 1.6e-2;
     public static final double KI_VISION_DISTANCE = 0;
@@ -56,7 +56,7 @@ public class ChassisConstants {
     public static final double KwhellRadius = 0.508;
 
     public static final double KSUB_MAS = 26;
-    public static final int KTICKS_PER_METER = 45377;
+    public static final int KTICKS_PER_METER = 54150;
     public final static double KMOTOR_GEAR_RATIO = 1.0 / 9;
     public static final int KTICKS_PER_REVOLUTION = 2048;
     public static final double KMETER_PER_TICKS = (2 * Math.PI * KwhellRadius)

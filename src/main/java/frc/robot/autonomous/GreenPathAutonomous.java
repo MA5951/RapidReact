@@ -25,7 +25,7 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new AutonomousCommand(Paths.greenPath),
+        new AutonomousCommand(Paths.getingOutOfLunchPad),
         new ParallelCommandGroup(
           new ControlCommand(Shooter.getinstance(), () -> Shooter.getinstance().getRPMVelocity(), false, true)), 
           new UpperConveyorCommand()

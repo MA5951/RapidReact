@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.automations.IntakeAutomation;
 import frc.robot.commands.automations.ShooterAutomation;
 import frc.robot.commands.automations.UpperConveyorCommand;
+import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.conveyor.ConveyorCommand;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -92,10 +93,10 @@ public class RobotContainer {
     //JoystickContainer.BButton.whileActiveContinuous(new ConveyBallsCommand());
 
     // ---------------------------- Shooter ----------------------------
+    // JoystickContainer.YButton.whileActiveContinuous(
+    //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)); // B
     JoystickContainer.YButton.whileActiveContinuous(
-        new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)); // B
-    //                                                                                                            // button    // JoystickContainer.YButton.whileActiveContinuous(new ShootingAutomation());
-    //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
+        new PIDVision(0)); // B    //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
     // JoystickContainer.XButton.whileActiveContinuous( 
     //   new ShooterAutomation(100, ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
     // );

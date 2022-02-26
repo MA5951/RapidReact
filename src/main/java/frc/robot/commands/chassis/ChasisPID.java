@@ -4,6 +4,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
+import frc.robot.subsystems.chassis.ChassisConstants;
+
 import com.ma5951.utils.RobotConstants;
 
 public class ChasisPID extends CommandBase {
@@ -27,7 +29,7 @@ public class ChasisPID extends CommandBase {
   @Override
   public void execute() {
     //chassis.setLeftVelocitySetpoint(2);
-    chassis.setRightVelocitySetpoint(2);
+    //chassis.setRightVelocitySetpoint(2);
     // if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
     //   chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7 * 0.4);
     //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7 * 0.4);
@@ -36,8 +38,10 @@ public class ChasisPID extends CommandBase {
     //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7);
     // }
 
-    chassis.setRightPercent(chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());
-    //chassis.setLeftPercent(chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF());
+    chassis.setRightPercent(ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + 
+      chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());
+    chassis.setLeftPercent(ChassisConstants.KV_MAPATH_LEFT_VELOCITY + 
+      chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF());
   }
 
   @Override

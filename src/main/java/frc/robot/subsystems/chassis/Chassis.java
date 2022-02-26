@@ -88,11 +88,11 @@ public class Chassis extends SubsystemBase {
   }
 
   public void setLeftVoltage(double voltage) {
-    leftFrontMotor.set(ControlMode.PercentOutput, voltage / 12);
+    leftFrontMotor.set(ControlMode.PercentOutput, voltage / 12.0);
   }
 
   public void setRightVoltage(double voltage) {
-    rightFrontMotor.set(ControlMode.PercentOutput, voltage / 12);
+    rightFrontMotor.set(ControlMode.PercentOutput, voltage / 12.0);
   }
 
   public void setRightPercent(double power) {
@@ -107,7 +107,9 @@ public class Chassis extends SubsystemBase {
     double w = (100 - Math.abs(angle * 100)) * (distance) + distance * 100;
     double v = (100 - Math.abs(distance * 100)) * (angle) + angle * 100;
     double leftVoltage = (-(v + w) / 200);
+    System.out.println("Left Voltage" + leftVoltage);
     double rightVoltage = ((v - w) / 200);
+    System.out.println("Right Voltage" + rightVoltage);
     setLeftVoltage(leftVoltage);
     setRightVoltage(rightVoltage);
   }
@@ -275,8 +277,8 @@ public class Chassis extends SubsystemBase {
   public void periodic() {
     odometryHandler.update();
     // System.out.println("Distance " + frc.robot.Limelight);
-    // chassisShuffleboard.addNum("right distance", getRightDistance());
-    // chassisShuffleboard.addNum("left distance", getLeftDistance());
+    chassisShuffleboard.addNum("right distance", getRightDistance());
+    chassisShuffleboard.addNum("left distance", getLeftDistance());
     chassisShuffleboard.addNum("right velocity", getRightVelocity());
     //chassisShuffleboard.addNum("left velocity", getLeftVelocity());
     //chassisShuffleboard.addNum("left motor power", getLeftPID(getLeftVelocity()) + getLeftF());
@@ -295,7 +297,7 @@ public class Chassis extends SubsystemBase {
 
     chassisShuffleboard.addNum("left f", getLeftF());
     // chassisShuffleboard.addNum("right F", getRightF());
-    // chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
+    chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 
     // chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
     // chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());

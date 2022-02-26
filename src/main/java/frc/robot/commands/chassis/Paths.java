@@ -3,9 +3,9 @@ package frc.robot.commands.chassis;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.ma5951.utils.autonomous.Path;
-import com.ma5951.utils.autonomous.Waypoint;
-import com.ma5951.utils.autonomous.Path.PathBuilder;
+import frc.robot.autonomous.Path;
+import frc.robot.autonomous.Waypoint;
+import frc.robot.autonomous.Path.PathBuilder;
 
 public class Paths {
     private static final PathBuilder builder = new Path.PathBuilder();
@@ -47,7 +47,9 @@ public class Paths {
                                             .addPoint(0, 1, false)
                                             .build();
 
-    public static Path CHECKING_PATH = new Path( Arrays.asList(new Waypoint(0, 1))
-                                            , 0, 0, 0, 0, 0, 0);
+    public static Path CHECKING_PATH = new Path( Arrays.asList(new Waypoint(0, 0, true), new Waypoint(0, -1))
+                                            , 0.1, 1, 2.2, 0.33, 0.2, 0.01);
+    public static Path CHECKING_PATH1 = new Path(Arrays.asList(new Waypoint(0, 0), new Waypoint(0.3, 1))
+                                            , 0.1, 1, 2.2, 0.33, 0.2, 0.01);
     
 }

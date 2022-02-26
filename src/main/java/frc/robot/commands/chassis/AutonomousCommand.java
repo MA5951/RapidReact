@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.chassis.ChassisConstants;
 
-import com.ma5951.utils.autonomous.OdometryHandler;
-import com.ma5951.utils.autonomous.Path;
-import com.ma5951.utils.autonomous.PathFollower;
-import com.ma5951.utils.autonomous.PathGenerator;
-import com.ma5951.utils.autonomous.Waypoint;
+import frc.robot.autonomous.OdometryHandler;
+import frc.robot.autonomous.Path;
+import frc.robot.autonomous.PathFollower;
+import frc.robot.autonomous.PathGenerator;
+import frc.robot.autonomous.Waypoint;
 
 public class AutonomousCommand extends CommandBase {
 
@@ -31,14 +31,14 @@ public class AutonomousCommand extends CommandBase {
 
   private Chassis chassis;
 
-  public AutonomousCommand(Path path) {
+  public AutonomousCommand(Path cHECKING_PATH) {
     chassis = Chassis.getinstance();
     odometry = chassis.getOdomoteryHandler();
 
-    pathGenerator = new PathGenerator(path.spacing, path.k, path.maxVelocity, path.maxAcceleration);
-    List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(path.points);
-    pathFollower = new PathFollower(waypoints, odometry, path.lookaheadDistance,
-        path.maxRate, ChassisConstants.TRACK_WIDTH);
+    pathGenerator = new PathGenerator(cHECKING_PATH.spacing, cHECKING_PATH.k, cHECKING_PATH.maxVelocity, cHECKING_PATH.maxAcceleration);
+    List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(cHECKING_PATH.points);
+    pathFollower = new PathFollower(waypoints, odometry, cHECKING_PATH.lookaheadDistance,
+        cHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
     addRequirements(chassis);
   }
 

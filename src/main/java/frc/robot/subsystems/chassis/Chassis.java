@@ -15,7 +15,7 @@ import frc.robot.PortMap;
 
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Limelight;
-import com.ma5951.utils.autonomous.OdometryHandler;
+import frc.robot.autonomous.OdometryHandler;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
@@ -276,42 +276,13 @@ public class Chassis extends SubsystemBase {
   @Override
   public void periodic() {
     odometryHandler.update();
-    // System.out.println("Distance " + frc.robot.Limelight);
     chassisShuffleboard.addNum("right distance", getRightDistance());
     chassisShuffleboard.addNum("left distance", getLeftDistance());
-    chassisShuffleboard.addNum("right velocity", getRightVelocity());
-    //chassisShuffleboard.addNum("left velocity", getLeftVelocity());
-    //chassisShuffleboard.addNum("left motor power", getLeftPID(getLeftVelocity()) + getLeftF());
-    chassisShuffleboard.addNum("right motor power", getRightPID(getRightVelocity()) + getRightF());
-    // chassisShuffleboard.addNum("right velocity setpoint", rightVelocityPID.getSetpoint());
-    // chassisShuffleboard.addNum("left velocity setpoint", leftVelocityPID.getSetpoint());
-    // chassisShuffleboard.addNum("angle", getAngle());
-
-    // chassisShuffleboard.addNum("right rear encoder", rightRearMotor.getSelectedSensorPosition());
-    // chassisShuffleboard.addNum("left rear encoder", leftRearMotor.getSelectedSensorPosition());
-    // chassisShuffleboard.addNum("right front encoder", rightFrontMotor.getSelectedSensorPosition());
-    // chassisShuffleboard.addNum("left front encoder", leftFrontMotor.getSelectedSensorPosition());
-
-    // chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
-    // chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());
-
-    chassisShuffleboard.addNum("left f", getLeftF());
-    // chassisShuffleboard.addNum("right F", getRightF());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 
     // chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
     // chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
-
-    // SmartDashboard.putData("Field", m_field);
-    // m_field.setRobotPose(currentPose);
-
-    // chassisShuffleboard.addNum("Left MPS", leftMPS());
-    // chassisShuffleboard.addNum("Right MPS", rightMPS());
-    // System.out.println("Left Speed: " +
-    // leftRearMotor.getSelectedSensorVelocity());
-    // System.out.println("Right Speed " +
-    // rightRearMotor.getSelectedSensorVelocity());
   }
 }

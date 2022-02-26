@@ -5,7 +5,7 @@
 package frc.robot;
 
 import com.ma5951.utils.Limelight;
-import com.ma5951.utils.autonomous.Paths;
+import frc.robot.autonomous.Paths;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    CommandScheduler.getInstance().schedule(new AutonomousCommand(frc.robot.commands.chassis.Paths.CHECKING_PATH));
   }
 
   /** This function is called periodically during autonomous. */

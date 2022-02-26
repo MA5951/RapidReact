@@ -28,15 +28,13 @@ public class ChasisPID extends CommandBase {
 
   @Override
   public void execute() {
-    //chassis.setLeftVelocitySetpoint(2);
-    //chassis.setRightVelocitySetpoint(2);
-    // if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
-    //   chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7 * 0.4);
-    //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7 * 0.4);
-    // } else {
-    //   chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7);
-    //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7);
-    // }
+    if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
+      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+    } else {
+      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+    }
 
     chassis.setRightPercent(ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + 
       chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());

@@ -11,10 +11,10 @@ public class ConveyorCommand extends CommandBase {
   private Conveyor conveyor;
 
   private boolean isBallInlower;
-  private double time1;
-  private double time2;
-  private double time3;
   private boolean isBallInUpper;
+  private double time;
+  private boolean wasItStack;
+  private boolean giveMorePower;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -23,31 +23,43 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    time1 = Timer.getFPGATimestamp();
-    time2 = Timer.getFPGATimestamp();
-    time3 = Timer.getFPGATimestamp();
     isBallInlower = false;
     isBallInUpper = false;
+    time = Timer.getFPGATimestamp();
+    wasItStack = false;
+    giveMorePower = false;
     // conveyor.setAmountOfBalls(0);
   }
 
   @Override
   public void execute() {
-    if (conveyor.isBallInLower() && !isBallInlower){
+    if (conveyor.isBallInLower() && !isBallInlower) {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
-    if (conveyor.isBallInUpper()){
+    if (conveyor.isBallInUpper()) {
       isBallInUpper = true;
     }
     if (isBallInUpper) {
       conveyor.setUpperPower(0);
+    } else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
+      conveyor.setUpperPower(1);
+      System.out.println("1");
+      wasItStack = true;
+
     } else {
-      conveyor.setUpperPower(0.6);
+      if (conveyor.getUpperStator() > 40 && !wasItStack){
+        giveMorePower = true;
+      } else {
+        giveMorePower = false;
+      }
+      conveyor.setUpperPower(0.5);
+      System.out.println("2");
+      time = Timer.getFPGATimestamp();
     }
     switch (conveyor.getAmountOfBalls()) {
       case 0:
-      case 1:
-      conveyor.setLowerPower(-0.6);
+      case 1:  
+        conveyor.setLowerPower(-0.6);
         break;
       case 2:
         conveyor.setLowerPower(0);

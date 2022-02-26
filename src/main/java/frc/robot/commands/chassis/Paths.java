@@ -14,4 +14,14 @@ public class Paths {
                                             .setSpacing(0.1)
                                             .addPoint(0, -1, true)
                                             .build();
+
+    public static final Path CHECKING_PATH = builder
+                                                .setLookaheadDistance(5)
+                                                .setMaxRate(0.05)
+                                                .setMaxAcceleration(0.33)
+                                                .setSpacing(0.1)
+                                                .addPoint(0, 1)
+                                                .addPoint(1, 2)
+                                                .addPoint(1, 0)
+                                                .build();
 }

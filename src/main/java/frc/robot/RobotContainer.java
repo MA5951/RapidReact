@@ -109,7 +109,7 @@ public class RobotContainer {
 
     JoystickContainer.XButton.whileActiveContinuous(
       //new PistonCommand(Shooter.getinstance(), () -> 150 < 100).alongWith(
-      new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
+      new ShooterCommand(-1000)//Shooter.getinstance()::getShooterPower)
       .alongWith(new UpperConveyorCommand()));
     // JoystickContainer.XButton.whileActiveContinuous(
     //   new ShooterAutomation(() -> true, () -> ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)

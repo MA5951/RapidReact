@@ -70,7 +70,7 @@ public class Conveyor extends SubsystemBase {
         return conveyor;
     }
 
-    public double getUpperCurrent(){
+    public double getUpperStator(){
         return upperVictor.getStatorCurrent();
     }
 
@@ -81,7 +81,7 @@ public class Conveyor extends SubsystemBase {
         //     System.out.println("h");
         //     amountOfBalls--;
         // }
-        conveyorShuffleboard.addNum("Curent", getUpperCurrent());
+        conveyorShuffleboard.addNum("statur", getUpperStator());
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);

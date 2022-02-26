@@ -20,8 +20,8 @@ public class PortMap {
     // Shooter
     public static final int shooterLeftMotor = 9;
     public static final int shooterRightMotor = 10;
-    public static final int shooterPistonForward = 2;
-    public static final int shooterPistonReverse = 3;
+    public static final int shooterPistonForward = 6;//2;
+    public static final int shooterPistonReverse = 7;//3;
 
     // Climb
     public static final int climbExtensionMotor = 11;

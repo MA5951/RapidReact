@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -65,9 +66,9 @@ public class Chassis extends SubsystemBase {
     odometryHandler = new OdometryHandler(this::getLeftDistance, this::getRightDistance, this::getAngle);
 
     rightVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_RIGHT_VELOCITY,
-        ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RIGHT_VELOCITY, 0, 20, -12, 12);
+        ChassisConstants.KI_MAPATH_RIGHT_VELOCITY, ChassisConstants.KD_MAPATH_RIGHT_VELOCITY, 0, 0, -1, 1);
     leftVelocityPID = new PIDController(ChassisConstants.KP_MAPATH_LEFT_VELOCITY,
-        ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 20, -12, 12);
+        ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 0, -1, 1);
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
         ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
@@ -251,11 +252,11 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getLeftF() {
-    return leftVelocityPID.getSetpoint() * ChassisConstants.KF_MAPATH_LEFT_VELOCITY;
+    return (leftVelocityPID.getSetpoint() / ChassisConstants.MAX_VELOCITY_MPS) * ChassisConstants.KF_MAPATH_LEFT_VELOCITY;
   }
 
   public double getRightF() {
-    return rightVelocityPID.getSetpoint() * ChassisConstants.KF_MAPATH_RIGHT_VELOCITY;
+    return (rightVelocityPID.getSetpoint()/ChassisConstants.MAX_VELOCITY_MPS) * ChassisConstants.KF_MAPATH_RIGHT_VELOCITY;
   }
 
   public OdometryHandler getOdomoteryHandler() {
@@ -276,8 +277,10 @@ public class Chassis extends SubsystemBase {
     // System.out.println("Distance " + frc.robot.Limelight);
     // chassisShuffleboard.addNum("right distance", getRightDistance());
     // chassisShuffleboard.addNum("left distance", getLeftDistance());
-    // chassisShuffleboard.addNum("right velocity", getRightVelocity());
-    // chassisShuffleboard.addNum("left velocity", getLeftVelocity());
+    chassisShuffleboard.addNum("right velocity", getRightVelocity());
+    //chassisShuffleboard.addNum("left velocity", getLeftVelocity());
+    //chassisShuffleboard.addNum("left motor power", getLeftPID(getLeftVelocity()) + getLeftF());
+    chassisShuffleboard.addNum("right motor power", getRightPID(getRightVelocity()) + getRightF());
     // chassisShuffleboard.addNum("right velocity setpoint", rightVelocityPID.getSetpoint());
     // chassisShuffleboard.addNum("left velocity setpoint", leftVelocityPID.getSetpoint());
     // chassisShuffleboard.addNum("angle", getAngle());
@@ -290,7 +293,7 @@ public class Chassis extends SubsystemBase {
     // chassisShuffleboard.addNum("right power", rightFrontMotor.getMotorOutputPercent());
     // chassisShuffleboard.addNum("left power", leftRearMotor.getMotorOutputPercent());
 
-    // chassisShuffleboard.addNum("left f", getLeftF());
+    chassisShuffleboard.addNum("left f", getLeftF());
     // chassisShuffleboard.addNum("right F", getRightF());
     // chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 

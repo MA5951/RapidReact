@@ -24,4 +24,5 @@ public class Paths {
                                                 .addPoint(1, 2)
                                                 .addPoint(1, 0)
                                                 .build();
+    
 }

@@ -17,17 +17,20 @@ public class ChassisConstants {
     public static final double MAX_VELOCITY = 8;
     public static final double MAX_ACCELERATION = 8;
     public static final double TRACK_WIDTH = 0.75; // cm
+    public static final double MAX_VELOCITY_MPS= 3.5;
 
-    public static final double KP_MAPATH_RIGHT_VELOCITY = 0.09;
+    // ------------------right pid velocity-------------
+    public static final double KP_MAPATH_RIGHT_VELOCITY = 0.3;
     public static final double KI_MAPATH_RIGHT_VELOCITY = 0;
     public static final double KD_MAPATH_RIGHT_VELOCITY = 0;
-    public static final double KF_MAPATH_RIGHT_VELOCITY = 1.0 / 4;
+    public static final double KF_MAPATH_RIGHT_VELOCITY = 1;
     public static final double KV_MAPATH_RIGHT_VELOCITY = 0.05;
 
-    public static final double KP_MAPATH_LEFT_VELOCITY = 0.06;
+    // ------------------left pid velocity-------------
+    public static final double KP_MAPATH_LEFT_VELOCITY = 0.3;
     public static final double KI_MAPATH_LEFT_VELOCITY = 0;
     public static final double KD_MAPATH_LEFT_VELOCITY = 0;
-    public static final double KF_MAPATH_LEFT_VELOCITY = 1.0 / 7.2;
+    public static final double KF_MAPATH_LEFT_VELOCITY = 1;
     public static final double KV_MAPATH_LEFT_VELOCITY = 0.05;
 
     public static final double KP_MAPATH_ANGLE = 0.3;

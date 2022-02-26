@@ -1,5 +1,6 @@
 package frc.robot.commands.chassis;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
@@ -25,16 +26,18 @@ public class ChasisPID extends CommandBase {
 
   @Override
   public void execute() {
-    if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
-      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7 * 0.4);
-      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7 * 0.4);
-    } else {
-      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7);
-      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7);
-    }
+    //chassis.setLeftVelocitySetpoint(2);
+    chassis.setRightVelocitySetpoint(2);
+    // if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
+    //   chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7 * 0.4);
+    //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7 * 0.4);
+    // } else {
+    //   chassis.setRightVelocitySetpoint(-rightJoystick.getY() * 7);
+    //   chassis.setLeftVelocitySetpoint(leftJoystick.getY() * 7);
+    // }
 
-    chassis.setRightPercent(chassis.getRightPID(chassis.getRightEncoder()) + chassis.getRightF());
-    chassis.setLeftPercent(chassis.getLeftPID(chassis.getRightEncoder()) + chassis.getLeftF());
+    chassis.setRightPercent(chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());
+    //chassis.setLeftPercent(chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF());
   }
 
   @Override

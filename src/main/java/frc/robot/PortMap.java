@@ -4,8 +4,8 @@ public class PortMap {
     // Chassis
     public static final int chassisLeftFrontMotor = 2;
     public static final int chassisRightFrontMotor = 3;
-    public static final int chassisLeftRearMotor = 5;
-    public static final int chassisRightRearMotor = 4;
+    public static final int chassisLeftRearMotor = 4;
+    public static final int chassisRightRearMotor = 5;
 
     // Intake
     public static final int intakeMotor = 6;

@@ -4,6 +4,8 @@
 
 package frc.robot.autonomous;
 
+import java.util.Arrays;
+
 import frc.robot.autonomous.Path.PathBuilder;
 
 /**
@@ -11,14 +13,8 @@ import frc.robot.autonomous.Path.PathBuilder;
  */
 public class Paths {
     public static PathBuilder builder = new Path.PathBuilder();
-    public static Path testPath = builder
-            .setSpacing(0.1)
-            .setK(1)
-            .setMaxVelocity(1)
-            .setMaxAcceleration(0.2)
-            .setLookaheadDistance(0.1)
-            .setMaxRate(0.05)
-            .addPoint(-1, 0, true)
-            .build();
+    
+    public static final Path getingOutOfLunchPad = new Path(
+        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.75)), 0.1, 1.5, 0.8, 0.2, 0.2, 0.03);  
 
 }

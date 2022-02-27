@@ -16,7 +16,7 @@ public class ChassisConstants {
 
     public static final double MAX_VELOCITY = 8;
     public static final double MAX_ACCELERATION = 8;
-    public static final double TRACK_WIDTH = 0.75; // cm
+    public static final double TRACK_WIDTH = 0.70; // cm
     public static final double MAX_VELOCITY_MPS= 3.5;
 
     // ------------------right pid velocity-------------

@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.automations.IntakeAutomation;
-import frc.robot.commands.automations.ShooterAutomation;
-import frc.robot.commands.automations.UpperConveyorCommand;
+import frc.robot.commands.Automations.IntakeAutomation;
+import frc.robot.commands.Automations.ShooterAutomation;
+import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.conveyor.ConveyorCommand;
@@ -71,13 +71,11 @@ public class RobotContainer {
     // // ---------------------------- Intake ----------------------------
     // JoystickContainer.AButton.whileActiveContinuous(new MotorCommand(Intake.getinstance(), -0.9)); // X button
     JoystickContainer.BButton.whenPressed(new TogglePistonCommand(Intake.getinstance()));
+    //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
 
         //.whenReleased(Intake.getinstance()::off);
     // JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(.9)); // X button
-    JoystickContainer.AButton.whileActiveContinuous(new PistonCommand(Intake.getinstance(), true).
-    andThen( new MotorCommand(Intake.getinstance(), 0.7).
-      alongWith(new ConveyorCommand()))
-      ); // X button
+    JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation()); // X button
     // JoystickContainer.YButton.whenPressed(() -> Conveyor.getInstance().setLowerPower(1))
     //                           .whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
 
@@ -100,10 +98,8 @@ public class RobotContainer {
     // JoystickContainer.XButton.whileActiveContinuous( 
     //   new ShooterAutomation(100, ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
     // );
-<<<<<<< HEAD
     // JoystickContainer.POVUp.whileActiveContinuous( 
     //   new TogglePistonCommand(Shooter.getinstance()));
-=======
     // JoystickContainer.XButton.whileActiveContinuous( 
     // new PistonCommand(Shooter.getinstance(), 100 < 100).alongWith(
     //   new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD, false)).alongWith(
@@ -111,8 +107,8 @@ public class RobotContainer {
     //     new UpperConveyorCommand(),
     //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
     //   )));
->>>>>>> parent of 801f8c6 (autonomous paths)
 
+    //JoystickContainer.XButton.whileActiveContinuous( new ShooterAutomation(, setpoint)
     JoystickContainer.XButton.whileActiveContinuous(
       //new PistonCommand(Shooter.getinstance(), () -> 150 < 100).alongWith(
       new ShooterCommand(-1000)//Shooter.getinstance()::getShooterPower)
@@ -126,13 +122,11 @@ public class RobotContainer {
     // JoystickContainer.POVDown.whileActiveContinuous(new
     // MotorCommand(ClimbExtension.getInstance(), 0.1));
 
-<<<<<<< HEAD
+
     JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));
     JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.3));
-=======
     // JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));
     // JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.3));
->>>>>>> parent of 801f8c6 (autonomous paths)
     JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.22));
     JoystickContainer.POVRight.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), -0.22));
 

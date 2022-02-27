@@ -9,11 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.chassis.ChassisConstants;
 
-import frc.robot.autonomous.OdometryHandler;
-import frc.robot.autonomous.Path;
-import frc.robot.autonomous.PathFollower;
-import frc.robot.autonomous.PathGenerator;
-import frc.robot.autonomous.Waypoint;
+import com.ma5951.utils.autonomous.*;
 
 public class AutonomousCommand extends CommandBase {
 
@@ -31,7 +27,7 @@ public class AutonomousCommand extends CommandBase {
 
   private Chassis chassis;
 
-  public AutonomousCommand(Path cHECKING_PATH) {
+  public AutonomousCommand(Path cHECKING_PATH, boolean revarse) {
     chassis = Chassis.getinstance();
     odometry = chassis.getOdomoteryHandler();
 
@@ -40,6 +36,7 @@ public class AutonomousCommand extends CommandBase {
     pathFollower = new PathFollower(waypoints, odometry, cHECKING_PATH.lookaheadDistance,
         cHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
     addRequirements(chassis);
+    chassis.setInverted(revarse);
   }
 
   @Override
@@ -54,12 +51,17 @@ public class AutonomousCommand extends CommandBase {
 
     chassis.chassisShuffleboard.addNum("linear left speed", speeds[0]);
     chassis.chassisShuffleboard.addNum("linear right speed", speeds[1]);
+    chassis.chassisShuffleboard.addNum("curvature", pathFollower.getLookaheadPoint().curvature);
 
     leftSetPointVelocity = speeds[0];
     rightSetPointVelocity = speeds[1];
 
     chassis.chassisShuffleboard.addNum("left speed", leftSetPointVelocity);
     chassis.chassisShuffleboard.addNum("right speed", rightSetPointVelocity);
+
+    chassis.chassisShuffleboard.addString("lookhaed point", "(" +
+     pathFollower.getLookaheadPoint().x + "," +
+      pathFollower.getLookaheadPoint().y + ")");
 
     // chassis.setLeftVelocitySetpoint(leftSetPointVelocity);
     // chassis.setRightVelocitySetpoint(-rightSetPointVelocity);
@@ -84,6 +86,7 @@ public class AutonomousCommand extends CommandBase {
   public void end(boolean interrupted) {
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
+    chassis.setInverted(false);
   }
 
   @Override

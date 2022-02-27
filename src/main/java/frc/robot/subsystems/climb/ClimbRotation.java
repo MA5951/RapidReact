@@ -34,7 +34,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
                 RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
 
-        hallEffect = new DigitalInput(2);
+        hallEffect = new DigitalInput(1);
 
         rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
                 ClimbConstants.ROTATION_KD,

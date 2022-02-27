@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.automations;
+package frc.robot.commands.Automations;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -47,7 +47,6 @@ public class UpperConveyorCommand extends CommandBase {
             if (stator == 0) {
                 stator = Shooter.getinstance().getStator();
             }
-
             conveyor.setUpperPower(0.9);
 
             if (conveyor.getAmountOfBalls() != 2) {
@@ -71,6 +70,7 @@ public class UpperConveyorCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;// conveyor.getAmountOfBalls() == 0;
+        // return conveyor.getAmountOfBalls() == 0;
+        return false;
     }
 }

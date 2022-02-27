@@ -116,13 +116,12 @@ public class PathFollower {
     public double[] getSpeeds() {
         Waypoint closestPoint = getClosestPoint();
         Waypoint lookaheadPoint = getLookaheadPoint();
-        sign = closestPoint.reverse ? -1 : 1;
         updateCurvature(lookaheadPoint);
-        System.out.println("sign: " + closestPoint.reverse);
+        System.out.println("curvature: " + lookaheadPoint.curvature);
         double velocity = closestPoint.targetVelocity;
         velocity = rateLimiter.calculate(closestPoint.targetVelocity);
-        return new double[] { (velocity * (2 + lookaheadPoint.curvature * robotWidth) / 2) * sign,
-                (velocity * (2 - lookaheadPoint.curvature * robotWidth) / 2) * sign };
+        return new double[] { (velocity * (2 + lookaheadPoint.curvature * robotWidth) / 2),
+                (velocity * (2 - lookaheadPoint.curvature * robotWidth) / 2)};
     }
 
     public boolean isDone() {

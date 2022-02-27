@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.ma5951.utils.autonomous.Path;
-
 public class PathGenerator {
 
     private double spacing;
@@ -33,7 +31,7 @@ public class PathGenerator {
         }
         newPath.add(path.get(path.size() - 1));
         System.out.println("inject");
-        // smooth(newPath);
+        smooth(newPath);
         System.out.println("smooth");
         updateDistances(newPath);
         System.out.println("distance");
@@ -57,7 +55,7 @@ public class PathGenerator {
         List<Waypoint> injectedPoints = new ArrayList<>();
         for (int i = 0; i < newPointsCount; i++) {
             injectedPoints.add(new Waypoint(startPoint.x + dx * i,
-                    startPoint.y + dy * i, startPoint.reverse));
+                    startPoint.y + dy * i));
         }
         return injectedPoints;
     }
@@ -65,10 +63,8 @@ public class PathGenerator {
     private void smooth(List<Waypoint> path) {
         double dataWeight = 1 - smoothWeight;
         double[][] newPath = new double[path.size()][2];
-        boolean[] reversePath = new boolean[path.size()];
         for (int i = 0; i < path.size(); i++) {
             newPath[i] = path.get(i).toArray();
-            reversePath[i] = path.get(i).reverse;
         }
         double[][] ogPath = new double[path.size()][2];
         for (int i = 0; i < ogPath.length; i++) {
@@ -91,7 +87,7 @@ public class PathGenerator {
         }
 
         for (int i = 0; i < newPath.length; i++) {
-            path.set(i, new Waypoint(newPath[i][0], newPath[i][1], reversePath[i]));
+            path.set(i, new Waypoint(newPath[i][0], newPath[i][1]));
         }
     }
 

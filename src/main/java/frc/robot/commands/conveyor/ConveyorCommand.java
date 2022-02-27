@@ -11,12 +11,13 @@ public class ConveyorCommand extends CommandBase {
   private Conveyor conveyor;
 
   private boolean isBallInlower;
-  private boolean isBallInUpper;
-  private double time;
-  private boolean giveMorePower;
+  private boolean isBallInUpper;;
   private double lastCurrent;
+  private double time;
+  private boolean wasItStack;
+  private boolean giveMorePower;
   private boolean isBallMovedFromLower;
-  private final double currentDiff = 4;
+  private final double currentDiff = 45;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -30,12 +31,18 @@ public class ConveyorCommand extends CommandBase {
     giveMorePower = false;
     isBallMovedFromLower = false;
     lastCurrent = 0;
+    if (conveyor.getAmountOfBalls() == 1){
+      isBallInUpper = true;
+    } else if (conveyor.getAmountOfBalls() == 2){
+      isBallInUpper = true;
+      isBallInlower = true;
+    }
     // conveyor.setAmountOfBalls(0);
   }
 
   @Override
   public void execute() {
-    System.out.println("Diff " + (lastCurrent - conveyor.getUpperStator()));
+    //System.out.println(conveyor.getUpperStator());
     
     // if (conveyor.isBallInUpper()) {
     //   isBallInUpper = true;
@@ -45,39 +52,34 @@ public class ConveyorCommand extends CommandBase {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
 
-    if (((lastCurrent - conveyor.getUpperStator()) >= currentDiff) && !isBallMovedFromLower) {
-      isBallMovedFromLower = true;
-      time = Timer.getFPGATimestamp();
+    if (conveyor.isBallInUpper()) {
+      isBallInUpper = true;
     }
-
     if (isBallInUpper) {
       conveyor.setUpperPower(0);
-    } else if (!isBallMovedFromLower || (Timer.getFPGATimestamp() - time) <= 0.1) {
-      conveyor.setUpperPower(0.9);
-    } else {
-      conveyor.setUpperPower(0);
-    }
-    // else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
-    //   conveyor.setUpperPower(1);
-    //   wasItStack = true;
-    // } else {
-    //   if (conveyor.getUpperStator() > 40 && !wasItStack) {
-    //     giveMorePower = true;
-    //   } else {
-    //     giveMorePower = false;
-    //   }
-    //   conveyor.setUpperPower(0.5);
-    //   time = Timer.getFPGATimestamp();
-    // }
-    lastCurrent = conveyor.getUpperStator();
+    } else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
+      conveyor.setUpperPower(1);
+      System.out.println("1");
+      wasItStack = true;
 
+    } else {
+      conveyor.setUpperPower(0.6);
+      if (conveyor.getUpperStator() > 40 && !wasItStack){
+        giveMorePower = true;
+      } else {
+        giveMorePower = false;
+      }
+      conveyor.setUpperPower(0.5);
+      time = Timer.getFPGATimestamp();
+    }
     switch (conveyor.getAmountOfBalls()) {
       case 0:
       case 1:
-        conveyor.setLowerPower(-0.6);
-        break;
+      conveyor.setLowerPower(-0.6);
+      break;
       case 2:
         conveyor.setLowerPower(0);
+        break;
     }
     isBallInlower = conveyor.isBallInLower();
   }
@@ -90,6 +92,6 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return conveyor.isBallInUpper() && (conveyor.getAmountOfBalls() == 2);
+    return (conveyor.getAmountOfBalls() == 2);
   }
 }

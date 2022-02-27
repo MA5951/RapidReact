@@ -15,7 +15,7 @@ import frc.robot.PortMap;
 
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Limelight;
-import frc.robot.autonomous.OdometryHandler;
+import com.ma5951.utils.autonomous.OdometryHandler;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
@@ -41,6 +41,8 @@ public class Chassis extends SubsystemBase {
 
   private OdometryHandler odometryHandler;
   public Field2d m_field;
+
+  private double revarse = 1;
 
   private ColorSensorV3 colorSensorLeft;
   private ColorSensorV3 colorSensorRight;
@@ -85,6 +87,23 @@ public class Chassis extends SubsystemBase {
     m_field = new Field2d();
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
     rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+  }
+
+  public void setInverted(boolean revarse){
+    if (revarse){
+      this.revarse = 1.0;
+      rightFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
+      rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+      leftFrontMotor.setInverted(TalonFXInvertType.Clockwise);
+      leftRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+    } else {
+      this.revarse = -1.0;
+      rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
+      rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+      leftFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
+      leftRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+    }
+
   }
 
   public void setLeftVoltage(double voltage) {
@@ -184,7 +203,7 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getAngle() {
-    return navx.getAngle();
+    return (navx.getYaw() * this.revarse);
   }
 
   // reset the value of the encoder and the navx
@@ -284,5 +303,10 @@ public class Chassis extends SubsystemBase {
     // chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
+    //chassisShuffleboard.addNum("Yaw", getAngle());
+    chassisShuffleboard.addNum("y", navx.getYaw());
+    chassisShuffleboard.addNum("z", navx.getRoll());
+    chassisShuffleboard.addNum("y", navx.getPitch());
+
   }
 }

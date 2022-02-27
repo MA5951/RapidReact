@@ -97,7 +97,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
+    //CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
+    CommandScheduler.getInstance().schedule(new AutonomousCommand(frc.robot.commands.chassis.Paths.getingOutOfLunchPad));
   }
 
   /** This function is called periodically during autonomous. */

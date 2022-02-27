@@ -83,8 +83,8 @@ public class RobotContainer {
     // JoystickContainer.XButton.whileActiveContinuous( 
     //   new ShooterAutomation(100, ShooterConstants.SHOOTER_VELOCITY_LAUNCH_PAD)
     // );
-    JoystickContainer.POVUp.whileActiveContinuous( 
-      new TogglePistonCommand(Shooter.getinstance()));
+    // JoystickContainer.POVUp.whileActiveContinuous( 
+    //   new TogglePistonCommand(Shooter.getinstance()));
 
     JoystickContainer.XButton.whileActiveContinuous(
       new PIDVision(0).andThen(
@@ -93,13 +93,13 @@ public class RobotContainer {
 
     // ---------------------------- Climb ----------------------------
 
-    // JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));
-    // JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.3));
-    // JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.22));
-    // JoystickContainer.POVRight.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), -0.22));
+    JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));
+    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.3));
+    JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.22));
+    JoystickContainer.POVRight.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), -0.22));
 
-    // JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
-    // JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
+    JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
+    JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
   }
 

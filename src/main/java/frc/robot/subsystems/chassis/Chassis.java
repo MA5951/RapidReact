@@ -107,9 +107,9 @@ public class Chassis extends SubsystemBase {
     double w = (100 - Math.abs(angle * 100)) * (distance) + distance * 100;
     double v = (100 - Math.abs(distance * 100)) * (angle) + angle * 100;
     double leftVoltage = (-(v + w) / 200);
-    System.out.println("Left Voltage" + leftVoltage);
+    // System.out.println("Left Voltage" + leftVoltage);
     double rightVoltage = ((v - w) / 200);
-    System.out.println("Right Voltage" + rightVoltage);
+    // System.out.println("Right Voltage" + rightVoltage);
     setLeftVoltage(leftVoltage);
     setRightVoltage(rightVoltage);
   }

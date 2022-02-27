@@ -13,8 +13,9 @@ public class ConveyorCommand extends CommandBase {
   private boolean isBallInlower;
   private boolean isBallInUpper;
   private double time;
-  private boolean wasItStack;
   private boolean giveMorePower;
+  private double lastCurrent = 100;
+  private final double currentDiff = 20;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -26,7 +27,6 @@ public class ConveyorCommand extends CommandBase {
     isBallInlower = false;
     isBallInUpper = false;
     time = Timer.getFPGATimestamp();
-    wasItStack = false;
     giveMorePower = false;
     // conveyor.setAmountOfBalls(0);
   }
@@ -36,29 +36,36 @@ public class ConveyorCommand extends CommandBase {
     if (conveyor.isBallInLower() && !isBallInlower) {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
-    if (conveyor.isBallInUpper()) {
+
+    // if (isBallInUpper) {
+    //   conveyor.setUpperPower(0);
+    // } 
+    if ((lastCurrent - conveyor.getUpperStator()) >= currentDiff) {
       isBallInUpper = true;
     }
-    if (isBallInUpper) {
-      conveyor.setUpperPower(0);
-    } else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
-      conveyor.setUpperPower(1);
-      System.out.println("1");
-      wasItStack = true;
 
+    if (!isBallInUpper) {
+      conveyor.setUpperPower(0.9);
     } else {
-      if (conveyor.getUpperStator() > 40 && !wasItStack){
-        giveMorePower = true;
-      } else {
-        giveMorePower = false;
-      }
-      conveyor.setUpperPower(0.5);
-      System.out.println("2");
-      time = Timer.getFPGATimestamp();
+      conveyor.setUpperPower(0.4);
     }
+    // else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
+    //   conveyor.setUpperPower(1);
+    //   wasItStack = true;
+    // } else {
+    //   if (conveyor.getUpperStator() > 40 && !wasItStack) {
+    //     giveMorePower = true;
+    //   } else {
+    //     giveMorePower = false;
+    //   }
+    //   conveyor.setUpperPower(0.5);
+    //   time = Timer.getFPGATimestamp();
+    // }
+    lastCurrent = conveyor.getUpperStator();
+
     switch (conveyor.getAmountOfBalls()) {
       case 0:
-      case 1:  
+      case 1:
         conveyor.setLowerPower(-0.6);
         break;
       case 2:

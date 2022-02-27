@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
+import com.ma5951.utils.Limelight;
 
 public class PIDVision extends CommandBase {
   private Chassis chassis;
@@ -30,7 +31,7 @@ public class PIDVision extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = chassis.getVisionAnglePIDOutput(angle) + 0.0 * 12;
+    double output = chassis.getVisionAnglePIDOutput(angle);
     chassis.arcadeDrive(output, 0);
   }
 

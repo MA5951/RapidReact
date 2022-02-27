@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ma5951.utils.Limelight;
-
-import frc.robot.autonomous.GreenPathAutonomous;
 import frc.robot.autonomous.Paths;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.ChasisPID;
-import frc.robot.commands.chassis.TankDrive;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -78,7 +74,6 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    Chassis.getinstance().setIdleMode(NeutralMode.Coast);
   }
 
   @Override
@@ -97,8 +92,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+<<<<<<< HEAD
     //CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
     CommandScheduler.getInstance().schedule(new AutonomousCommand(frc.robot.commands.chassis.Paths.getingOutOfLunchPad));
+=======
+>>>>>>> parent of 801f8c6 (autonomous paths)
   }
 
   /** This function is called periodically during autonomous. */
@@ -123,8 +121,8 @@ public class Robot extends TimedRobot {
     ClimbExtension.getInstance();
     // ClimbPassive.getInstance();
     ClimbRotation.getInstance();
-    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
-     TankDrive());
+    // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
+    // ChasisPID());
 
   }
 

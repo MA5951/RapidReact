@@ -16,6 +16,7 @@ public class ConveyorCommand extends CommandBase {
   private boolean giveMorePower;
   private double lastCurrent = 100;
   private final double currentDiff = 20;
+  private boolean isBallMovedFromLower = false;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -37,14 +38,14 @@ public class ConveyorCommand extends CommandBase {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
 
-    // if (isBallInUpper) {
-    //   conveyor.setUpperPower(0);
-    // } 
+    if (isBallInUpper) {
+      conveyor.setUpperPower(0);
+    } 
     if ((lastCurrent - conveyor.getUpperStator()) >= currentDiff) {
-      isBallInUpper = true;
+      isBallMovedFromLower = true;
     }
 
-    if (!isBallInUpper) {
+    if (!isBallMovedFromLower) {
       conveyor.setUpperPower(0.9);
     } else {
       conveyor.setUpperPower(0.4);

@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ma5951.utils.Limelight;
+import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
 import frc.robot.autonomous.GreenPathAutonomous;
 import frc.robot.autonomous.Paths;
@@ -129,6 +130,8 @@ public class Robot extends TimedRobot {
     // ClimbRotation.getInstance();
     // // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
     // ChasisPID());
+
+    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
 
   }
 

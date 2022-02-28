@@ -70,7 +70,7 @@ public class UpperConveyorCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // return conveyor.getAmountOfBalls() == 0;
-        return false;
+        return conveyor.getAmountOfBalls() == 0;
+        //return false;
     }
 }

@@ -22,11 +22,12 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
 
   public ClimbPassive() {
     leftPassiveMotor = new MA_SparkMax(PortMap.climbPassiveMotor, false, RobotConstants.KMOTOR_BRAKE,
-        RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     passivePID = new PIDController(ClimbConstants.PASSIVE_KP, ClimbConstants.PASSIVE_KI, ClimbConstants.PASSIVE_KD,
         ClimbConstants.PASSIVE_TOLERANCE);
     shuffleboard = new Shuffleboard("ClimbPassive");
+    leftPassiveMotor.resetEncoder();
   }
 
   public static ClimbPassive getInstance() {
@@ -61,7 +62,7 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   }
 
   public boolean canMove() {
-    return true; // TODO
+    return leftPassiveMotor.getPosition() < 10; // TODO
   }
 
   @Override
@@ -70,6 +71,7 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public void periodic() {
+    shuffleboard.addNum("ClimbPassive encoder", leftPassiveMotor.getPosition());
     // This method will be called once per scheduler run
     // shuffleboard.addNum("encoder", leftPassiveMotor.getPosition());
   }

@@ -27,10 +27,9 @@ public class ShooterAutomation extends SequentialCommandGroup {
     addCommands(
       new PistonCommand(Shooter.getinstance(), hood),
       new PIDVision(0),
-      new ShooterCommand(setpoint, false),
       new ParallelDeadlineGroup(
         new UpperConveyorCommand(),
-        new ShooterCommand(setpoint).perpetually()
+        new ShooterCommand(setpoint)
       )
     );
   }

@@ -27,6 +27,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
         ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
     shuffleboard = new Shuffleboard("ClimbExtension");
 
+    extensionMotor.resetEncoder();
   }
 
   public static ClimbExtension getInstance() {

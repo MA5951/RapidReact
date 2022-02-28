@@ -87,6 +87,11 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public void periodic() {
+
+        if(getHallEffect()){
+            leftRotationMotor.resetEncoder();
+            rightRotationMotor.resetEncoder();
+        }
         // This method will be called once per scheduler run
         shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
         shuffleboard.addNum("encoder right", rightRotationMotor.getPosition());

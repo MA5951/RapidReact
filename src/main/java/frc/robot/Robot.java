@@ -6,9 +6,11 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ma5951.utils.Limelight;
+import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
 import frc.robot.autonomous.GreenPathAutonomous;
+import frc.robot.autonomous.BluePathAutonomous;
 import frc.robot.autonomous.Paths;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.ChasisPID;
+import frc.robot.commands.chassis.TankDrive;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -100,7 +103,7 @@ public class Robot extends TimedRobot {
 
     //CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
     CommandScheduler.getInstance().schedule(
-      new GreenPathAutonomous());
+      new BluePathAutonomous());
     
     Conveyor.getInstance().setAmountOfBalls(1);
 
@@ -124,14 +127,16 @@ public class Robot extends TimedRobot {
     Chassis.getinstance();
     Shooter.getinstance();
     Conveyor.getInstance();
-    Conveyor.getInstance().setAmountOfBalls(0);
+    Conveyor.getInstance().setAmountOfBalls(1);
     // ClimbExtension.getInstance();
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();
     // // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
     // ChasisPID());
+    Conveyor.getInstance().setAmountOfBalls(0);
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
+    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
 
   }
 

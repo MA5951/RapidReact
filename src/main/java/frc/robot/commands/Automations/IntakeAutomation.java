@@ -18,13 +18,13 @@ import frc.robot.subsystems.intake.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeAutomation extends SequentialCommandGroup {
   /** Creates a new IntakeAutomation. */
-  public IntakeAutomation() {
+  public IntakeAutomation(double power) {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
       new PistonCommand(Intake.getinstance(), true),
       new ParallelDeadlineGroup(
         new ConveyorCommand(),
-        new MotorCommand(Intake.getinstance(), 0.5)
+        new MotorCommand(Intake.getinstance(), power)
       )
     );
   }

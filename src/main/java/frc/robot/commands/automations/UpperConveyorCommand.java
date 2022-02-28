@@ -19,6 +19,7 @@ public class UpperConveyorCommand extends CommandBase {
 
     private boolean isBallAtTop = true;
     private boolean isStuck = false;
+    private boolean ballCounted = false;
 
     private double time;
 
@@ -52,8 +53,13 @@ public class UpperConveyorCommand extends CommandBase {
             if (conveyor.getAmountOfBalls() != 2) {
                 conveyor.setLowerPower(-0.6);
             }
-            if (Shooter.getinstance().getStator() - stator >= 10) {
+            if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+                ballCounted = true;
+            }
+
+            if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
+                ballCounted = false;
             }
             isBallAtTop = conveyor.isBallInUpper();
         } else

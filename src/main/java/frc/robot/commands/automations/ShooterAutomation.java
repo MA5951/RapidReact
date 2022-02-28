@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import com.ma5951.utils.commands.PistonCommand;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -22,14 +23,13 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 public class ShooterAutomation extends SequentialCommandGroup {
   /** Creates a new ShooterAutomation. */
   
-  public ShooterAutomation(Supplier<Boolean> hood, Supplier<Double> setpoint) {
+  public ShooterAutomation(boolean hood) {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
-      new PistonCommand(Shooter.getinstance(), hood),
       new PIDVision(0),
-      new ParallelDeadlineGroup(
-        new UpperConveyorCommand(),
-        new ShooterCommand(setpoint)
+        new ParallelCommandGroup(
+          new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
+          new UpperConveyorCommand()
       )
     );
   }

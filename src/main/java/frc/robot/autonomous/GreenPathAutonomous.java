@@ -59,7 +59,7 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
     addCommands(
         new ParallelDeadlineGroup(
             new AutonomousCommand(Paths.getingOutOfLunchPad, true),
-            new IntakeAutomation()
+            new IntakeAutomation(0.5)
         ),
         new PIDVision(0),
         new ParallelCommandGroup(

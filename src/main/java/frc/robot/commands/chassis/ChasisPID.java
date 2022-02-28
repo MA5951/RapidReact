@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.chassis.ChassisConstants;
 
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
 
 public class ChasisPID extends CommandBase {
@@ -28,18 +29,25 @@ public class ChasisPID extends CommandBase {
 
   @Override
   public void execute() {
-    if (rightJoystick.getRawButton(1) || leftJoystick.getRawButton(1)) {
-      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
-      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+    if (JoystickContainer.rightJoystick.getRawButton(1)) {
+        chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+        chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
     } else {
-      chassis.setRightVelocitySetpoint(-rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
-      chassis.setLeftVelocitySetpoint(leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+      chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+      chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
     }
-
-    chassis.setRightPercent(ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + 
+    if (Math.abs(JoystickContainer.rightJoystick.getY()) > 0.1){
+      chassis.setRightPercent(ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + 
       chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());
-    chassis.setLeftPercent(ChassisConstants.KV_MAPATH_LEFT_VELOCITY + 
+    }else{
+      chassis.setRightPercent(0);
+    }
+    if (Math.abs(JoystickContainer.leftJoystick.getY()) > 0.1){
+      chassis.setLeftPercent(ChassisConstants.KV_MAPATH_LEFT_VELOCITY + 
       chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF());
+    }else{
+      chassis.setLeftPercent(0);
+    }
   }
 
   @Override

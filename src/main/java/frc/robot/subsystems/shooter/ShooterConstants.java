@@ -10,7 +10,7 @@ public class ShooterConstants {
     public static final double SHOOTER_VELOCITY_PID_TOLERANCE = 100;//50;
 
     public static final double SHOOTER_VELOCITY_LAUNCH_PAD = -2600;
-    public static final double SHOOTER_VELOCITY_FENDER = -2400;
+    public static final double SHOOTER_VELOCITY_FENDER = -2500;
 
     public static final double SHOOTER_ANGLE = 43.64;
     public static final double K_DELTA_Y = 1.64;

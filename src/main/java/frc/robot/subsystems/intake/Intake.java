@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems.intake;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.RobotConstants;
@@ -15,24 +18,24 @@ import com.ma5951.utils.subsystem.PistonSubsystem;
 public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsystem {
   /** Creates a new Instake. */
   private MA_TalonSRX intakeMotor;
-  private Piston intakePiston;
+  private DoubleSolenoid intakePiston;
   private static Intake intake;
 
   public Intake() {
     intakeMotor = new MA_TalonSRX(PortMap.intakeMotor, false, RobotConstants.KMOTOR_COAST);
-    intakePiston = new Piston(PortMap.intakePistonForward, PortMap.intakePistonReverse);
+    intakePiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, PortMap.intakePistonForward, PortMap.intakePistonReverse);
   }
 
   public void open() {
-    intakePiston.set(true);
+    intakePiston.set(Value.kForward);
   }
 
   public void close() {
-    intakePiston.set(false);
+    intakePiston.set(Value.kReverse);
   }
 
   public boolean isOpen() {
-    return intakePiston.get();
+    return intakePiston.get() == Value.kForward;
   }
 
   public void setVoltage(double voltege) {
@@ -55,7 +58,7 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
   }
 
   public void off() {
-    intakePiston.off();
+    intakePiston.set(Value.kReverse);
   }
 
   public void reset() {

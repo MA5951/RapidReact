@@ -9,18 +9,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.ShooterAutomation;
 import frc.robot.commands.Automations.UpperConveyorCommand;
-import frc.robot.commands.Automations.climbAutomation;
-import frc.robot.commands.chassis.PIDVision;
-import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.commands.conveyor.CovenyorOutCommand;
 import frc.robot.commands.shooter.ShooterCommand;
-import frc.robot.commands.shooter.ShooterPiston;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.climb.ClimbRotation;
@@ -31,10 +28,8 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
-import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
-import com.ma5951.utils.commands.RunCommand;
 import com.ma5951.utils.commands.TogglePistonCommand;
 
 /**
@@ -77,15 +72,22 @@ public class RobotContainer {
     JoystickContainer.AButton.whenPressed(new TogglePistonCommand(Intake.getinstance()));
     new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1)).whileActiveContinuous(new IntakeAutomation(0.8)); // X button
 
+    // JoystickContainer.YButton.whileActiveContinuous(new ParallelCommandGroup(
+    //                                                 new MotorCommand(Intake.getinstance(), -0.8),
+    //                                                 new CovenyorOutCommand()
+    // ));
+
     // ---------------------------- Conveyor ----------------------------
 
     // ---------------------------- Shooter ------------  ----------------
     JoystickContainer.XButton.whileActiveContinuous(
+        new PistonCommand(Shooter.getinstance(), true).andThen(
         new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).
-        alongWith(new UpperConveyorCommand())); // B
-    JoystickContainer.YButton.whenPressed(new TogglePistonCommand(Shooter.getinstance())); // B    //JoystickContainer.POVDown.whenPressed(new TogglePistonCommand(Shooter.getinstance()));
+        alongWith(new UpperConveyorCommand())));
 
-    JoystickContainer.BButton.whileActiveContinuous( new ShooterAutomation(true));
+    JoystickContainer.BButton.whileActiveContinuous(new ShooterAutomation(true));
+
+    JoystickContainer.YButton.whenPressed(new PistonCommand(Shooter.getinstance(), false));
     // ---------------------------- Climb ----------------------------
   
     JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));

@@ -61,7 +61,6 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     return true; // TODO
   }
 
-  @Override
   public void reset() {
   }
 

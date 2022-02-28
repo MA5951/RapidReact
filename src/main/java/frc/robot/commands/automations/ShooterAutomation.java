@@ -6,12 +6,16 @@ package frc.robot.commands.Automations;
 
 import java.util.function.Supplier;
 
+import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.PistonCommand;
+import com.ma5951.utils.motor.Piston;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.pistonCommand2;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
@@ -26,11 +30,14 @@ public class ShooterAutomation extends SequentialCommandGroup {
   public ShooterAutomation(boolean hood) {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
+      new InstantCommand(()-> Shooter.getinstance().close()),
+      new InstantCommand(()-> Limelight.camMode(0)),
       new PIDVision(0),
         new ParallelCommandGroup(
           new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
           new UpperConveyorCommand()
-      )
+      ),
+      new InstantCommand(()-> Limelight.camMode(1))
     );
   }
 }

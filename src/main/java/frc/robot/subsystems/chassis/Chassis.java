@@ -40,7 +40,6 @@ public class Chassis extends SubsystemBase {
   public Shuffleboard chassisShuffleboard;
 
   private OdometryHandler odometryHandler;
-  public Field2d m_field;
 
   private double revarse = 1;
 
@@ -84,7 +83,6 @@ public class Chassis extends SubsystemBase {
     colorSensorRight = new ColorSensorV3(I2C.Port.kOnboard);
 
     resetSensors();
-    m_field = new Field2d();
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
     rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
   }

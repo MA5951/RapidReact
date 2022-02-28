@@ -65,7 +65,6 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
     return leftPassiveMotor.getPosition() < 10; // TODO
   }
 
-  @Override
   public void reset() {
   }
 

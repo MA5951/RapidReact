@@ -6,11 +6,16 @@ package frc.robot.subsystems.shooter;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import frc.robot.Limelight;
 
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.RobotConstants.ENCODER;
@@ -18,6 +23,7 @@ import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
+import com.ma5951.utils.subsystem.MotorSubsystem;
 import com.ma5951.utils.subsystem.PistonSubsystem;
 
 public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSubsystem {
@@ -25,7 +31,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   private MA_SparkMax shooterLeftMotor;
   private MA_SparkMax shooterRightMotor;
 
-  private Piston shooterPiston;
+  private DoubleSolenoid shooterPiston;
 
   private PIDController pidController;
 
@@ -38,7 +44,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
     shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
     shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); // ID9
 
-    shooterPiston = new Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
+    shooterPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, PortMap.shooterPistonForward, PortMap.shooterPistonReverse);//Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
 
     pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP,
         ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0,
@@ -101,15 +107,15 @@ public double calculate(double input) {
   }
 
   public void open() {
-    shooterPiston.set(true);
+    shooterPiston.set(Value.kForward);
   }
 
   public void close() {
-    shooterPiston.set(false);
+    shooterPiston.set(Value.kReverse);
   }
 
   public boolean isOpen() {
-    return shooterPiston.get();
+    return shooterPiston.get() == Value.kForward;
   }
 
   public static Shooter getinstance() {
@@ -119,11 +125,9 @@ public double calculate(double input) {
     return shooter;
   }
 
-  @Override
   public void reset() {
   }
 
-  @Override
   public boolean canMove() {
     return true;
   }
@@ -133,13 +137,12 @@ public double calculate(double input) {
   }
 
   public double getShooterPower(){
-    return (107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
-        - 467.32 * frc.robot.Limelight.distance() + 3055.2) * -1;
+    return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
+        - 467.32 * frc.robot.Limelight.distance() + 3055.2) * -1) * 1.05;
   }
 
-  @Override
-  public void off() {
-    shooterPiston.off();
+  public double getVoltage(){
+    return shooterLeftMotor.getOutput();
   }
 
   @Override
@@ -151,5 +154,9 @@ public double calculate(double input) {
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
     shooterShuffleboard.addNum("RPM Setpoint", getRPMVelocity());
     shooterShuffleboard.addNum("Shooter Calc", getShooterPower());
+  }
+
+  public void off() {
+    shooterPiston.set(Value.kReverse);
   }
 }

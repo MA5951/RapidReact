@@ -75,9 +75,9 @@ public class RobotContainer {
 
     // // ---------------------------- Intake ----------------------------
     JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
-    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1)).whileActiveContinuous(new TogglePistonCommand(Intake.getinstance())); 
-    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setInverted(!Chassis.getinstance().getInverted()));
-    new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setInverted(!Chassis.getinstance().getInverted()));
+    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1)).whenActive(new TogglePistonCommand(Intake.getinstance())); 
+    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setJoystickInverte(!Chassis.getinstance().getJoystickInverte()));
+    new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setInverted(!Chassis.getinstance().getJoystickInverte()));
 
     // JoystickContainer.YButton.whileActiveContinuous(new ParallelCommandGroup(
     //                                                 new MotorCommand(Intake.getinstance(), -0.8),

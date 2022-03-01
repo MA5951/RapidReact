@@ -11,8 +11,9 @@ import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
 import frc.robot.autonomous.GreenPathAutonomous;
+import frc.robot.autonomous.OrangePathAutonomous;
 import frc.robot.autonomous.BluePathAutonomous;
-import frc.robot.autonomous.Paths;
+import frc.robot.autonomous.RedPathAutonomous;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -57,11 +58,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    autoChooser = new SendableChooser<Command>();
-    autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
-    autoChooser.addOption("Green Path", new GreenPathAutonomous());
-    Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-    .withPosition(3, 1).withSize(2, 2);
+    // autoChooser = new SendableChooser<Command>();
+    // autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
+    // autoChooser.addOption("Green Path", new GreenPathAutonomous());
+    // autoChooser.addOption("Red Path", new RedPathAutonomous());
+    // Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
+    // .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
     Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
@@ -117,7 +119,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    CommandScheduler.getInstance().schedule(autoChooser.getSelected());
+    CommandScheduler.getInstance().schedule(new OrangePathAutonomous());
     
     Conveyor.getInstance().setAmountOfBalls(1);
 

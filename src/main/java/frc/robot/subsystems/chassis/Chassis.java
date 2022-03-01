@@ -41,12 +41,12 @@ public class Chassis extends SubsystemBase {
 
   private OdometryHandler odometryHandler;
 
-  private double revarse = 1;
+  private double reverse = 1;
 
   private ColorSensorV3 colorSensorLeft;
   private ColorSensorV3 colorSensorRight;
 
-  private boolean inverted;
+  public double inverte;
 
   public static Chassis getinstance() {
     if (chassis == null) {
@@ -88,28 +88,36 @@ public class Chassis extends SubsystemBase {
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
     rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
 
+    inverte = 1;
+
   }
 
-  public void setInverted(boolean revarse){
-    if (revarse){
-      this.revarse = 1.0;
+  public void setInverted(boolean reverse){
+    if (reverse){
+      this.reverse = 1.0;
       rightFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
       rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
       leftFrontMotor.setInverted(TalonFXInvertType.Clockwise);
       leftRearMotor.setInverted(TalonFXInvertType.FollowMaster);
     } else {
-      this.revarse = -1.0;
+      this.reverse = -1.0;
       rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
       rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
       leftFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
       leftRearMotor.setInverted(TalonFXInvertType.FollowMaster);
     }
-    inverted = revarse;
-
   }
 
-  public boolean getInverted(){
-    return inverted;
+  public void setJoystickInverte(boolean mode){
+    if (mode){
+      inverte = -1;
+    }else{
+      inverte = 1;
+    }
+  }
+
+  public boolean getJoystickInverte(){
+    return inverte == -1;
   }
 
   public void setLeftVoltage(double voltage) {
@@ -209,7 +217,7 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getAngle() {
-    return (navx.getYaw() * this.revarse);
+    return (navx.getYaw() * this.reverse);
   }
 
   // reset the value of the encoder and the navx
@@ -305,8 +313,8 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("left distance", getLeftDistance());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 
-    // chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
-    // chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
+    chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
+    chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
     //chassisShuffleboard.addNum("Yaw", getAngle());

@@ -1,5 +1,6 @@
 package frc.robot.commands.chassis;
 
+import java.security.DrbgParameters.Reseed;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -25,9 +26,11 @@ public class AutonomousCommand extends CommandBase {
   double maxVelocity = ChassisConstants.MAX_VELOCITY; // 2.3
   double maxAcceleration = ChassisConstants.MAX_ACCELERATION;
 
+  private boolean reverse;
+
   private Chassis chassis;
 
-  public AutonomousCommand(Path cHECKING_PATH, boolean revarse) {
+  public AutonomousCommand(Path cHECKING_PATH, boolean reverse) {
     chassis = Chassis.getinstance();
     odometry = chassis.getOdomoteryHandler();
 
@@ -35,14 +38,16 @@ public class AutonomousCommand extends CommandBase {
     List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(cHECKING_PATH.points);
     pathFollower = new PathFollower(waypoints, odometry, cHECKING_PATH.lookaheadDistance,
         cHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
+    this.reverse = reverse;
+
     addRequirements(chassis);
-    chassis.setInverted(revarse);
   }
 
   @Override
   public void initialize() {
     chassis.resetSensors();
     chassis.setIdleMode(NeutralMode.Brake);
+    chassis.setInverted(reverse);
   }
 
   @Override

@@ -37,14 +37,14 @@ public class ChasisPID extends CommandBase {
       chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
     }
     if (Math.abs(JoystickContainer.rightJoystick.getY()) > 0.1){
-      chassis.setRightPercent(ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + 
-      chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF());
+      double rightPower = ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF();
+      chassis.setRightPercent(rightPower * chassis.inverte);
     }else{
       chassis.setRightPercent(0);
     }
     if (Math.abs(JoystickContainer.leftJoystick.getY()) > 0.1){
-      chassis.setLeftPercent(ChassisConstants.KV_MAPATH_LEFT_VELOCITY + 
-      chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF());
+      double leftPower = ChassisConstants.KV_MAPATH_LEFT_VELOCITY + chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF();
+      chassis.setLeftPercent(leftPower * chassis.inverte);
     }else{
       chassis.setLeftPercent(0);
     }

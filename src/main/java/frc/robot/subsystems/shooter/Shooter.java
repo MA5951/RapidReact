@@ -119,7 +119,7 @@ public double calculate(double input) {
 
   public double getShooterPower(){
     return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
-        - 467.32 * frc.robot.Limelight.distance() + 3055.2) * -1) * 1.05;
+        - 467.32 * frc.robot.Limelight.distance() + 3125.2) * -1);
   }
 
   public double getVoltage(){

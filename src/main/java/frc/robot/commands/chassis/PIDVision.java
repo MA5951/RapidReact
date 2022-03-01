@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
-import com.ma5951.utils.Limelight;
+import frc.robot.Limelight;
 
 public class PIDVision extends CommandBase {
   private Chassis chassis;
@@ -32,7 +32,7 @@ public class PIDVision extends CommandBase {
   @Override
   public void execute() {
     double output = chassis.getVisionAnglePIDOutput(angle);
-    chassis.arcadeDrive(output, 0);
+    chassis.arcadeDrive(-output, 0);
   }
 
   // Called once the command ends or is interrupted.

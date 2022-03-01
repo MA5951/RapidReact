@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
 import com.ma5951.utils.RobotConstants;
-import com.ma5951.utils.Limelight;
+import frc.robot.Limelight;
 import com.ma5951.utils.autonomous.OdometryHandler;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.Shuffleboard;
@@ -45,6 +45,8 @@ public class Chassis extends SubsystemBase {
 
   private ColorSensorV3 colorSensorLeft;
   private ColorSensorV3 colorSensorRight;
+
+  private boolean inverted;
 
   public static Chassis getinstance() {
     if (chassis == null) {
@@ -85,6 +87,7 @@ public class Chassis extends SubsystemBase {
     resetSensors();
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
     rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
+
   }
 
   public void setInverted(boolean revarse){
@@ -101,7 +104,12 @@ public class Chassis extends SubsystemBase {
       leftFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
       leftRearMotor.setInverted(TalonFXInvertType.FollowMaster);
     }
+    inverted = revarse;
 
+  }
+
+  public boolean getInverted(){
+    return inverted;
   }
 
   public void setLeftVoltage(double voltage) {

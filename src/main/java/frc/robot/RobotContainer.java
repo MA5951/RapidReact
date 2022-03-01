@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,6 +20,7 @@ import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.conveyor.ConveyorCommand;
 import frc.robot.commands.conveyor.CovenyorOutCommand;
 import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.climb.ClimbRotation;
@@ -28,6 +30,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
 
 import com.ma5951.utils.JoystickContainer;
+import frc.robot.Limelight;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
@@ -47,6 +50,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static boolean robotControlMode;
   public static Joystick leftJoystick = new Joystick(RobotConstants.KLEFT_JOYSTICK_PORT);
+  public static Joystick righJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
   JoystickButton controlModeToogle;
 
   /**
@@ -70,8 +74,10 @@ public class RobotContainer {
     JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
 
     // // ---------------------------- Intake ----------------------------
-    JoystickContainer.AButton.whenPressed(new TogglePistonCommand(Intake.getinstance()));
-    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1)).whileActiveContinuous(new IntakeAutomation(0.8)); // X button
+    JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
+    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1)).whileActiveContinuous(new TogglePistonCommand(Intake.getinstance())); 
+    new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setInverted(!Chassis.getinstance().getInverted()));
+    new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(8)).whenActive(() -> Chassis.getinstance().setInverted(!Chassis.getinstance().getInverted()));
 
     // JoystickContainer.YButton.whileActiveContinuous(new ParallelCommandGroup(
     //                                                 new MotorCommand(Intake.getinstance(), -0.8),
@@ -100,6 +106,7 @@ public class RobotContainer {
     JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
     JoystickContainer.backButton.whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls()+1));
+    JoystickContainer.startButton.whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls()-1));
   }
 
   /**

@@ -87,21 +87,6 @@ public double calculate(double input) {
     return pidController.atSetpoint();
   }
 
-  public double calculateVelocityMPS() {
-    double dx = Limelight.distance();
-    dx = 3.0; 
-    double radiansAngle = Math.toRadians(ShooterConstants.SHOOTER_ANGLE);
-    return Math.sqrt(
-      ((-4.9 * Math.pow(dx, 2))) / 
-      ((ShooterConstants.K_DELTA_Y - (dx * Math.tan(radiansAngle))) * Math.pow(Math.cos(radiansAngle), 2))
-    );
-  }
-
-  public double getRPMVelocity() {  
-    double angularVelocity = calculateVelocityMPS() / 0.12;
-    return (angularVelocity * 60) / (2 * Math.PI);
-  }
-
   public void open() {
     shooterPiston.set(Value.kForward);
   }
@@ -148,7 +133,6 @@ public double calculate(double input) {
     shooterShuffleboard.addNum("shooter", shooterLeftMotor.getPosition());
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
-    shooterShuffleboard.addNum("RPM Setpoint", getRPMVelocity());
     shooterShuffleboard.addNum("Shooter Calc", getShooterPower());
   }
 

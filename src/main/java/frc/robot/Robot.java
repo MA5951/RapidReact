@@ -5,7 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ma5951.utils.Limelight;
+import frc.robot.Limelight;
 import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
@@ -66,8 +66,8 @@ public class Robot extends TimedRobot {
     Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getinstance(), false));
-    Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getinstance(), false));
-    Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getinstance(), true));
+    Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getinstance(), true));
+    Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getinstance(), false));
   }
 
   /**
@@ -145,13 +145,11 @@ public class Robot extends TimedRobot {
     // ClimbExtension.getInstance();
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();
-    // // CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new
-    // ChasisPID());
     Conveyor.getInstance().setAmountOfBalls(0);
 
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
-    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     Shuffleboard.selectTab("Teleop");
   }
 

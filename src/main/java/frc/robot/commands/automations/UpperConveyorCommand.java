@@ -77,6 +77,5 @@ public class UpperConveyorCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         return conveyor.getAmountOfBalls() == 0;
-        //return false;
     }
 }

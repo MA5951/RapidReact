@@ -10,6 +10,7 @@ import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.motor.Piston;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -31,13 +32,13 @@ public class ShooterAutomation extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
       new InstantCommand(()-> Shooter.getinstance().close()),
-      new InstantCommand(()-> Limelight.camMode(0)),
+      new InstantCommand(()-> NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0)),
       new PIDVision(0),
         new ParallelCommandGroup(
           new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
           new UpperConveyorCommand()
       ),
-      new InstantCommand(()-> Limelight.camMode(1))
+      new InstantCommand(()-> NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1))
     );
   }
 }

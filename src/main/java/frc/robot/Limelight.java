@@ -12,8 +12,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight {
-    public static double K_DELTA_Y = 1.64; // TODO
-    private static double K_LIMELIGHT_STATIC_ANGLE = 10; // TODO
+    public static double K_DELTA_Y = 1.64;
+    private static double K_LIMELIGHT_STATIC_ANGLE = 10;
     public static double x;
     public static double y;
     public static boolean v;

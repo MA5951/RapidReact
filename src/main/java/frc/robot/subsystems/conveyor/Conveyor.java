@@ -2,7 +2,6 @@ package frc.robot.subsystems.conveyor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.motor.MA_TalonSRX;

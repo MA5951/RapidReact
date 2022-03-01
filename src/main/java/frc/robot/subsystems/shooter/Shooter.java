@@ -15,7 +15,6 @@ import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import frc.robot.Limelight;
 
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
 import com.ma5951.utils.Calculations;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.RobotConstants.ENCODER;
@@ -56,9 +55,6 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
     shooterLeftMotor.resetEncoder();
     shooterRightMotor.resetEncoder();
-
-    // shooterLeftMotor.setInverted(true);
-    // shooterRightMotor.setInverted(true);
   }
 
   public void resetPID() {
@@ -93,7 +89,7 @@ public double calculate(double input) {
 
   public double calculateVelocityMPS() {
     double dx = Limelight.distance();
-    dx = 3.0; // TODO
+    dx = 3.0; 
     double radiansAngle = Math.toRadians(ShooterConstants.SHOOTER_ANGLE);
     return Math.sqrt(
       ((-4.9 * Math.pow(dx, 2))) / 

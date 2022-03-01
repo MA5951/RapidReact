@@ -7,13 +7,18 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.ControlCommand;
+import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
 import frc.robot.autonomous.GreenPathAutonomous;
 import frc.robot.autonomous.BluePathAutonomous;
 import frc.robot.autonomous.Paths;
-
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
@@ -25,6 +30,7 @@ import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.climb.ClimbRotation;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.intake.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +43,7 @@ import frc.robot.subsystems.conveyor.Conveyor;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private SendableChooser<Command> autoChooser;
   private RobotContainer m_robotContainer;
 
   /**
@@ -45,12 +51,23 @@ public class Robot extends TimedRobot {
    * for any
    * initialization code.
    */
+
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    autoChooser = new SendableChooser<Command>();
+    autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
+    autoChooser.addOption("Green Path", new GreenPathAutonomous());
+    Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
+    .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
+    Shuffleboard.selectTab("Pre-Match");
+    Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
+    Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getinstance(), false));
+    Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getinstance(), false));
+    Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getinstance(), true));
   }
 
   /**
@@ -100,9 +117,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    //CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
-    CommandScheduler.getInstance().schedule(
-      new BluePathAutonomous());
+    CommandScheduler.getInstance().schedule(autoChooser.getSelected());
     
     Conveyor.getInstance().setAmountOfBalls(1);
 
@@ -134,9 +149,10 @@ public class Robot extends TimedRobot {
     // ChasisPID());
     Conveyor.getInstance().setAmountOfBalls(0);
 
+
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
-
+    Shuffleboard.selectTab("Teleop");
   }
 
   /** This function is called periodically during operator control. */

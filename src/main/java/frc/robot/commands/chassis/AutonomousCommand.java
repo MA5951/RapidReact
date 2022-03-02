@@ -67,9 +67,6 @@ public class AutonomousCommand extends CommandBase {
      pathFollower.getLookaheadPoint().x + "," +
       pathFollower.getLookaheadPoint().y + ")");
 
-    // chassis.setLeftVelocitySetpoint(leftSetPointVelocity);
-    // chassis.setRightVelocitySetpoint(-rightSetPointVelocity);
-
     chassis.setLeftVelocitySetpoint(leftSetPointVelocity);
     chassis.setRightVelocitySetpoint(rightSetPointVelocity);
 

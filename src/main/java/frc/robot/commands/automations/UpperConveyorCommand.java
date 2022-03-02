@@ -41,9 +41,6 @@ public class UpperConveyorCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // if (Timer.getFPGATimestamp() - time <= 0.4) {
-        //     conveyor.setUpperPower(-0.4);
-        // }
         if (Shooter.getinstance().atSetpoint()) {
             if (stator == 0) {
                 stator = Shooter.getinstance().getStator();

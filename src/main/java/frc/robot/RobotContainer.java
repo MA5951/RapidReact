@@ -5,20 +5,15 @@
 package frc.robot;
 
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.ShooterAutomation;
 import frc.robot.commands.Automations.UpperConveyorCommand;
-import frc.robot.commands.conveyor.ConveyorCommand;
-import frc.robot.commands.conveyor.CovenyorOutCommand;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -30,7 +25,6 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
 
 import com.ma5951.utils.JoystickContainer;
-import frc.robot.Limelight;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;

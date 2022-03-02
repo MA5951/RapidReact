@@ -75,11 +75,6 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // if (isUpperIR == isBallInUpper()){
-        //     isUpperIR = !isBallInUpper();
-        //     System.out.println("h");
-        //     amountOfBalls--;
-        // }
         conveyorShuffleboard.addNum("statur", getUpperStator());
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());

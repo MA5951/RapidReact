@@ -5,27 +5,18 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import frc.robot.Limelight;
-import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.PistonCommand;
-import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
-
-import frc.robot.autonomous.GreenPathAutonomous;
-import frc.robot.autonomous.OrangePathAutonomous;
-import frc.robot.autonomous.BluePathAutonomous;
-import frc.robot.autonomous.RedPathAutonomous;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.commands.chassis.AutonomousCommand;
+import frc.robot.autonomous.BluePathAutonomous;
+import frc.robot.autonomous.GreenPathAutonomous;
+import frc.robot.autonomous.OrangePathAutonomous;
+import frc.robot.autonomous.RedPathAutonomous;
 import frc.robot.commands.chassis.ChasisPID;
-import frc.robot.commands.chassis.TankDrive;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -55,15 +46,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
-    // autoChooser = new SendableChooser<Command>();
-    // autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
-    // autoChooser.addOption("Green Path", new GreenPathAutonomous());
-    // autoChooser.addOption("Red Path", new RedPathAutonomous());
-    // Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-    // .withPosition(3, 1).withSize(2, 2);
+    autoChooser = new SendableChooser<Command>();
+    autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
+    autoChooser.addOption("Green Path", new GreenPathAutonomous());
+    autoChooser.addOption("Red Path", new RedPathAutonomous());
+    autoChooser.addOption("Orange Path", new OrangePathAutonomous());
+    Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
+    .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
     Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
@@ -119,7 +108,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    CommandScheduler.getInstance().schedule(new OrangePathAutonomous());
+    CommandScheduler.getInstance().schedule(autoChooser.getSelected());
     
     Conveyor.getInstance().setAmountOfBalls(1);
 

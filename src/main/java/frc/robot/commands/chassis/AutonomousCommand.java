@@ -1,6 +1,5 @@
 package frc.robot.commands.chassis;
 
-import java.security.DrbgParameters.Reseed;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -79,9 +78,6 @@ public class AutonomousCommand extends CommandBase {
     rightVelocity = MathUtil.clamp(
         chassis.rightVelocityMApathPIDOutput() + chassis.getRightF() + ChassisConstants.KV_MAPATH_RIGHT_VELOCITY, -1,
         1);
-
-    // System.out.println("left: " + []\
-    // leftVelocity + "right: " + rightVelocity);
 
     chassis.setLeftPercent(leftVelocity);
     chassis.setRightPercent(rightVelocity);

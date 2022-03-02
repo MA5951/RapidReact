@@ -7,7 +7,6 @@ package frc.robot.commands;
 import com.ma5951.utils.subsystem.PistonSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class pistonCommand2 extends CommandBase {
   /** Creates a new pistonCommand2. */

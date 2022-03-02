@@ -30,7 +30,6 @@ import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.Paths;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterConstants;
 
 // // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // // information, see:

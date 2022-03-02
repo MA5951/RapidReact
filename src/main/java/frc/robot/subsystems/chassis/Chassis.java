@@ -6,10 +6,8 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
@@ -140,9 +138,7 @@ public class Chassis extends SubsystemBase {
     double w = (100 - Math.abs(angle * 100)) * (distance) + distance * 100;
     double v = (100 - Math.abs(distance * 100)) * (angle) + angle * 100;
     double leftVoltage = (-(v + w) / 200);
-    // System.out.println("Left Voltage" + leftVoltage);
     double rightVoltage = ((v - w) / 200);
-    // System.out.println("Right Voltage" + rightVoltage);
     setLeftVoltage(leftVoltage);
     setRightVoltage(rightVoltage);
   }
@@ -198,14 +194,10 @@ public class Chassis extends SubsystemBase {
   }
 
   public double leftMPS() {
-    // System.out.println("LEFT " +
-    // falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity());
   }
 
   public double rightMPS() {
-    // System.out.println("RIGHT " +
-    // falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity());
   }
 

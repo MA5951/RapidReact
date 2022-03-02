@@ -17,8 +17,8 @@ public class OrangePathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousCommand(Paths.getingOutOfLunchPad, true),
-      new AutonomousCommand(Paths.goToHPBall, true)
+      //new AutonomousCommand(Paths.getingOutOfLunchPad, true),
+      new AutonomousCommand(Paths.goToHPBallPart1, true)
     );
   }
 }

@@ -55,17 +55,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
-    // autoChooser = new SendableChooser<Command>();
-    // autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
-    // autoChooser.addOption("Green Path", new GreenPathAutonomous());
-    // autoChooser.addOption("Red Path", new RedPathAutonomous());
-    // Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-    // .withPosition(3, 1).withSize(2, 2);
+    autoChooser = new SendableChooser<Command>();
+    autoChooser.setDefaultOption("Blue Path", new BluePathAutonomous());
+    autoChooser.addOption("Green Path", new GreenPathAutonomous());
+    autoChooser.addOption("Red Path", new RedPathAutonomous());
+    Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
+    .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
-    Shuffleboard.selectTab("Pre-Match");
+    // Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getinstance(), false));
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getinstance(), true));
@@ -119,7 +116,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    CommandScheduler.getInstance().schedule(new OrangePathAutonomous());
+    CommandScheduler.getInstance().schedule(new RedPathAutonomous());
     
     Conveyor.getInstance().setAmountOfBalls(1);
 
@@ -152,7 +149,7 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
-    Shuffleboard.selectTab("Teleop");
+    // Shuffleboard.selectTab("Teleop");
   }
 
   /** This function is called periodically during operator control. */

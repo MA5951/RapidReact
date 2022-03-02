@@ -57,8 +57,9 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
         new ParallelDeadlineGroup(
-            new AutonomousCommand(Paths.getingOutOfLunchPad, true),
+            new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
             new IntakeAutomation(0.5)
         ),
         new PIDVision(0),

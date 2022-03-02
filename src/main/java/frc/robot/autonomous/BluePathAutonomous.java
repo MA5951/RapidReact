@@ -25,7 +25,8 @@ public class BluePathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousCommand(Paths.getingOutOfLunchPad, true),
+      new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+      new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
       new PIDVision(0),
       new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(
           new UpperConveyorCommand())

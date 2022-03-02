@@ -4,8 +4,13 @@
 
 package frc.robot.autonomous;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Automations.IntakeAutomation;
+import frc.robot.commands.Automations.ShooterAutomation;
+import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
+import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.Paths;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,8 +22,21 @@ public class OrangePathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousCommand(Paths.getingOutOfLunchPad, true),
-      new AutonomousCommand(Paths.goToHPBall, true)
+      new AutonomousCommand(Paths.goToCloseBall, true),
+      new IntakeAutomation(0.5),
+      new PIDVision(0),
+      new ParallelDeadlineGroup(
+        new ShooterAutomation(true)
+      , new UpperConveyorCommand()),
+      new AutonomousCommand(Paths.goToStrightBall, true),
+      new IntakeAutomation(0.5),
+      new AutonomousCommand(Paths.goToHPBall, true),
+      new IntakeAutomation(0.5),
+      new AutonomousCommand(Paths.goToShootingPosition, false),
+      new PIDVision(0),
+      new ParallelDeadlineGroup(
+        new ShooterAutomation(true), 
+        new UpperConveyorCommand())
     );
   }
 }

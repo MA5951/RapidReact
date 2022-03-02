@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.RobotConstants;
-import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_TalonSRX;
 import com.ma5951.utils.subsystem.MotorSubsystem;
 import com.ma5951.utils.subsystem.PistonSubsystem;

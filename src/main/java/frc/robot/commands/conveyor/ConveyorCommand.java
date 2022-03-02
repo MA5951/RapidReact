@@ -1,9 +1,7 @@
 package frc.robot.commands.conveyor;
 
-import java.sql.Time;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
@@ -42,12 +40,6 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void execute() {
-    //System.out.println(conveyor.getUpperStator());
-    
-    // if (conveyor.isBallInUpper()) {
-    //   isBallInUpper = true;
-    // }
-
     if (conveyor.isBallInLower() && !isBallInlower) {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
@@ -59,7 +51,6 @@ public class ConveyorCommand extends CommandBase {
       conveyor.setUpperPower(0);
     } else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
       conveyor.setUpperPower(1);
-      System.out.println("1");
       wasItStack = true;
 
     } else {

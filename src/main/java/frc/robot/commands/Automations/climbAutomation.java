@@ -6,7 +6,6 @@ package frc.robot.commands.Automations;
 
 import com.ma5951.utils.commands.ControlCommand;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ClimbPassiveCommand;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -22,7 +21,6 @@ public class climbAutomation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ControlCommand(ClimbExtension.getInstance(), -130000, true, true),
-      //new ControlCommand(ClimbRotation.getInstance(), -1, true, true),
         new ControlCommand(ClimbExtension.getInstance(), 0, true, true).alongWith(
         new ControlCommand(ClimbRotation.getInstance(), -2, true, true)),
       new ClimbPassiveCommand(0.1)

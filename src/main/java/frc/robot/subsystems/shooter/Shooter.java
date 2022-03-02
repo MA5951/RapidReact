@@ -7,22 +7,16 @@ package frc.robot.subsystems.shooter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
-import frc.robot.Limelight;
-
-import com.ma5951.utils.Calculations;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.RobotConstants.ENCODER;
 import com.ma5951.utils.controllers.PIDController;
-import com.ma5951.utils.motor.Piston;
 import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
-import com.ma5951.utils.subsystem.MotorSubsystem;
 import com.ma5951.utils.subsystem.PistonSubsystem;
 
 public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSubsystem {

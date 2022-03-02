@@ -30,17 +30,11 @@ public class PathGenerator {
             newPath.addAll(injectedPoints);
         }
         newPath.add(path.get(path.size() - 1));
-        System.out.println("inject");
         smooth(newPath);
-        System.out.println("smooth");
         updateDistances(newPath);
-        System.out.println("distance");
         updateCurvatures(newPath);
-        System.out.println("curvature");
         updateMaximumVelocities(newPath);
-        System.out.println("max velocities");
         updateVelocities(newPath);
-        System.out.println("velocities");
         return newPath;
     }
 
@@ -73,11 +67,8 @@ public class PathGenerator {
         double change = tolerance;
         while (change >= tolerance) {
             change = 0;
-            System.out.println("3");
             for (int i = 1; i < newPath.length - 1; i++) {
-                System.out.println("4 " + i + " " + (newPath.length - 1));
                 for (int j = 0; j < newPath[i].length; j++) {
-                    System.out.println(i + " " + change);
                     double aux = newPath[i][j];
                     newPath[i][j] += dataWeight * (ogPath[i][j] - newPath[i][j])
                             + smoothWeight * (newPath[i - 1][j] + newPath[i + 1][j] - 2 * newPath[i][j]);
@@ -142,7 +133,6 @@ public class PathGenerator {
     public void updateMaximumVelocities(List<Waypoint> path) {
         for (Waypoint point : path) {
             point.targetVelocity = Math.min(maxVelocity, k / point.curvature);
-            System.out.println("max velocity " + point.targetVelocity);
         }
     }
 

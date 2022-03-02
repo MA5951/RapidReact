@@ -5,13 +5,9 @@
 package frc.robot.commands.shooter;
 
 import java.util.function.Supplier;
-
-import frc.robot.Limelight;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterConstants;
 
 public class ShooterCommand extends CommandBase {
   /** Creates a new ShooterCommand. */
@@ -60,8 +56,6 @@ public class ShooterCommand extends CommandBase {
   public void execute() {
     shooter.setSetpoint(setpoint.get()); //Launch Pad: 3275 Fender: 2500
     shooter.setVoltage(shooter.calculate(shooter.getVelocity()));
-    // if (!shooter.atSetpoint())
-    //   time = Timer.getFPGATimestamp();
   }
 
   // Called once the command ends or is interrupted.
@@ -73,7 +67,6 @@ public class ShooterCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return shooter.atSetpoint();//(shooter.atSetpoint() && Timer.getFPGATimestamp() - time >= timeOut);
     return false;
   }
 }

@@ -30,24 +30,8 @@ import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.Paths;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterConstants;
 
-// // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// // information, see:
-// // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-// public class GreenPathAutonomous extends SequentialCommandGroup {
-//   /** Creates a new GreenPathAutonomous. */
-//   public GreenPathAutonomous() {
-//     // Add your commands in the addCommands() call, e.g.
-//     // addCommands(new FooCommand(), new BarCommand());
-//     addCommands(
-//         new AutonomousCommand(Paths.getingOutOfLunchPad),
-//         new ParallelCommandGroup(
-//           new ControlCommand(Shooter.getinstance(), () -> Shooter.getinstance().getRPMVelocity(), false, true)), 
-//           new UpperConveyorCommand()
-//     );
-//   }
-// }
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html

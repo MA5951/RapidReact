@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Automations;
+package frc.robot.commands.automations;
 
 import com.ma5951.utils.commands.ControlCommand;
 
@@ -20,10 +20,9 @@ public class climbAutomation extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ControlCommand(ClimbExtension.getInstance(), -130000, true, true),
+        new ControlCommand(ClimbExtension.getInstance(), -130000, true, true),
         new ControlCommand(ClimbExtension.getInstance(), 0, true, true).alongWith(
-        new ControlCommand(ClimbRotation.getInstance(), -2, true, true)),
-      new ClimbPassiveCommand(0.1)
-    );
+            new ControlCommand(ClimbRotation.getInstance(), -2, true, true)),
+        new ClimbPassiveCommand(0.1));
   }
 }

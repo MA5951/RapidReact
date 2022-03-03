@@ -9,8 +9,8 @@
 package frc.robot.autonomous;
 
 // import frc.robot.Limelight;
-// import com.ma5951.utils.commands.ControlCommand;
 
+// import com.ma5951.utils.commands.ControlCommand;
 
 // import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -23,14 +23,13 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.UpperConveyorCommand;
+import frc.robot.commands.automations.IntakeAutomation;
+import frc.robot.commands.automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.Paths;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
-
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -41,15 +40,13 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+        new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
         new ParallelDeadlineGroup(
             new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-            new IntakeAutomation(0.5)
-        ),
+            new IntakeAutomation(0.5)),
         new PIDVision(0),
         new ParallelCommandGroup(
-          new ShooterCommand(() -> Shooter.getinstance().getShooterPower())).alongWith(
-          new UpperConveyorCommand())
-    );
+            new ShooterCommand(() -> Shooter.getinstance().getShooterPower())).alongWith(
+                new UpperConveyorCommand()));
   }
 }

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.automations.IntakeAutomation;
 import frc.robot.commands.automations.ShooterAutomation;
 import frc.robot.commands.automations.UpperConveyorCommand;
+import frc.robot.commands.automations.climbAutomation;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -27,6 +28,7 @@ import java.util.function.BooleanSupplier;
 
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
+import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.TogglePistonCommand;
@@ -98,8 +100,9 @@ public class RobotContainer {
     JoystickContainer.YButton.whenPressed(new PistonCommand(Shooter.getinstance(), false));
     // ---------------------------- Climb ----------------------------
 
-    JoystickContainer.POVUp.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), -0.3));
-    JoystickContainer.POVDown.whileActiveContinuous(new MotorCommand(ClimbExtension.getInstance(), 0.3));
+    JoystickContainer.POVUp
+        .whileActiveContinuous(new ControlCommand(ClimbExtension.getInstance(), -130000, true, true));
+    JoystickContainer.POVDown.whileActiveContinuous(new climbAutomation());
     JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), 0.22));
     JoystickContainer.POVRight.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), -0.22));
 

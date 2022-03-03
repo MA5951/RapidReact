@@ -23,6 +23,8 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
 
+import java.util.function.BooleanSupplier;
+
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.commands.MotorCommand;
@@ -44,6 +46,10 @@ public class RobotContainer {
   public static boolean robotControlMode;
   public static Joystick leftJoystick = new Joystick(RobotConstants.KLEFT_JOYSTICK_PORT);
   public static Joystick righJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
+  public static Trigger leftTrigger = new Trigger(
+      () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.L_TRIGER) > 0.5);
+  public static Trigger rightTrigger = new Trigger(
+      () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.R_TRIGER) > 0.5);
   JoystickButton controlModeToogle;
 
   /**
@@ -99,9 +105,6 @@ public class RobotContainer {
 
     JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
     JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
-
-    // JoystickContainer.triggerL.whenActive(new
-    // MotorCommand(ClimbExtension.getInstance(), 1d));
 
     JoystickContainer.backButton
         .whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() + 1));

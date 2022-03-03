@@ -35,7 +35,6 @@ public class ConveyorCommand extends CommandBase {
       isBallInUpper = true;
       isBallInlower = true;
     }
-    // conveyor.setAmountOfBalls(0);
   }
 
   @Override

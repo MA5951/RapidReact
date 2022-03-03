@@ -49,7 +49,6 @@ public class ConveyBallsCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        //return conveyor.getAmountOfBalls() == ConveyorConstants.CONVEYOR_MAX_BALLS;
         return false;
     }
 }

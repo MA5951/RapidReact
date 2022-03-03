@@ -37,16 +37,10 @@ public class ConveyorCommnadAutonomous extends CommandBase {
       isBallInUpper = true;
       isBallInlower = true;
     }
-    // conveyor.setAmountOfBalls(0);
   }
 
   @Override
   public void execute() {
-    //System.out.println(conveyor.getUpperStator());
-    
-    // if (conveyor.isBallInUpper()) {
-    //   isBallInUpper = true;
-    // }
     conveyor.setUpperPower(0.7);
     conveyor.setLowerPower(-0.6);
 

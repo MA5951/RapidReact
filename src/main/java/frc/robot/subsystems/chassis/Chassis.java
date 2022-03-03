@@ -317,7 +317,6 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
-    //chassisShuffleboard.addNum("Yaw", getAngle());
     chassisShuffleboard.addNum("yaw", navx.getYaw());
     chassisShuffleboard.addNum("roll", navx.getRoll());
     chassisShuffleboard.addNum("pitch", navx.getPitch());

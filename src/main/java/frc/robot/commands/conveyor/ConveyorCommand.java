@@ -39,9 +39,9 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void execute() {
-    // if (conveyor.isBallInLower() && !isBallInlower) {
-    //   conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-    // }
+    if (conveyor.isBallInLower() && !isBallInlower) {
+      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
+    }
 
 
     if (conveyor.isBallInUpper()) {

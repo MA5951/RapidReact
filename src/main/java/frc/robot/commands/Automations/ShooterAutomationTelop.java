@@ -24,7 +24,7 @@ public class ShooterAutomationTelop extends SequentialCommandGroup {
       new PIDVision(0),
       new ParallelCommandGroup(
           new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
-          new UpperConveyorCommand().perpetually())
+          new UpperConveyorcommandTelop().perpetually())
     );
   }
 }

@@ -29,12 +29,12 @@ public class ConveyorCommand extends CommandBase {
     giveMorePower = false;
     isBallMovedFromLower = false;
     lastCurrent = 0;
-    if (conveyor.getAmountOfBalls() == 1){
-      isBallInUpper = true;
-    } else if (conveyor.getAmountOfBalls() == 2){
-      isBallInUpper = true;
-      isBallInlower = true;
-    }
+    // if (conveyor.getAmountOfBalls() == 1){
+    //   isBallInUpper = true;
+    // } else if (conveyor.getAmountOfBalls() == 2){
+    //   isBallInUpper = true;
+    //   isBallInlower = true;
+    //}
   }
 
   @Override

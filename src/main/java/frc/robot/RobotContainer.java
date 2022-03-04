@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.automations.IntakeAutomation;
-import frc.robot.commands.automations.ShooterAutomation;
-import frc.robot.commands.automations.UpperConveyorCommand;
-import frc.robot.commands.automations.climbAutomation;
+import frc.robot.commands.Automations.IntakeAutomation;
+import frc.robot.commands.Automations.ShooterAutomation;
+import frc.robot.commands.Automations.UpperConveyorCommand;
+import frc.robot.commands.Automations.climbAutomation;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -109,9 +109,9 @@ public class RobotContainer {
     JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
     JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
 
-    JoystickContainer.backButton
-        .whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() + 1));
     JoystickContainer.startButton
+        .whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() + 1));
+    JoystickContainer.backButton
         .whenPressed(() -> Conveyor.getInstance().setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1));
   }
 

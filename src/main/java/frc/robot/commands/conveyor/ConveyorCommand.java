@@ -60,13 +60,10 @@ public class ConveyorCommand extends CommandBase {
       } else {
         giveMorePower = false;
       }
-      conveyor.setUpperPower(0.5);
       time = Timer.getFPGATimestamp();
     }
     switch (conveyor.getAmountOfBalls()) {
       case 0:
-        conveyor.setLowerPower(-0.6);
-        break;
       case 1:
         conveyor.setLowerPower(-0.6);
       break;

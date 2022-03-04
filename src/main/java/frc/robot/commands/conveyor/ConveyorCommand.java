@@ -39,9 +39,10 @@ public class ConveyorCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (conveyor.isBallInLower() && !isBallInlower) {
-      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-    }
+    // if (conveyor.isBallInLower() && !isBallInlower) {
+    //   conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
+    // }
+
 
     if (conveyor.isBallInUpper()) {
       isBallInUpper = true;
@@ -64,8 +65,10 @@ public class ConveyorCommand extends CommandBase {
     }
     switch (conveyor.getAmountOfBalls()) {
       case 0:
+        conveyor.setLowerPower(-0.6);
+        break;
       case 1:
-      conveyor.setLowerPower(-0.6);
+        conveyor.setLowerPower(-0.6);
       break;
       case 2:
         conveyor.setLowerPower(0);

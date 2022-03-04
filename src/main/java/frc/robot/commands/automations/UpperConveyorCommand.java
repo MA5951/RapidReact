@@ -42,9 +42,9 @@ public class UpperConveyorCommand extends CommandBase {
     @Override
     public void execute() {
         if (Shooter.getinstance().atSetpoint()) {
-            if (stator == 0) {
-                stator = Shooter.getinstance().getStator();
-            }
+            // if (stator == 0) {
+            //     stator = Shooter.getinstance().getStator();
+            // }
             conveyor.setUpperPower(0.9);
             conveyor.setLowerPower(-0.6);
 
@@ -58,10 +58,10 @@ public class UpperConveyorCommand extends CommandBase {
             //     ballCounted = false;
             // }
 
-            if (isBallAtTop && !conveyor.isBallInUpper()){
-                conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-            }
-            isBallAtTop = conveyor.isBallInUpper();
+            // if (isBallAtTop && !conveyor.isBallInUpper()){
+            //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+            // }
+            // isBallAtTop = conveyor.isBallInUpper();
         } else
             conveyor.setUpperPower(0);
             conveyor.setLowerPower(0);

@@ -46,21 +46,25 @@ public class UpperConveyorCommand extends CommandBase {
                 stator = Shooter.getinstance().getStator();
             }
             conveyor.setUpperPower(0.9);
+            conveyor.setLowerPower(-0.6);
 
-            if (conveyor.getAmountOfBalls() != 2) {
-                conveyor.setLowerPower(-0.6);
-            }
-            if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
+            // if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
+            //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+            //     ballCounted = true;
+            // }
+            
+
+            // if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
+            //     ballCounted = false;
+            // }
+
+            if (isBallAtTop && !conveyor.isBallInUpper()){
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-                ballCounted = true;
-            }
-
-            if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
-                ballCounted = false;
             }
             isBallAtTop = conveyor.isBallInUpper();
         } else
             conveyor.setUpperPower(0);
+            conveyor.setLowerPower(0);
     }
 
     // Called once the command ends or is interrupted.

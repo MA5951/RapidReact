@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.ShooterAutomation;
+import frc.robot.commands.Automations.ShooterAutomationTelop;
 import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.Automations.climbAutomation;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -91,11 +92,14 @@ public class RobotContainer {
     // ---------------------------- Conveyor ----------------------------
 
     // ---------------------------- Shooter ------------ ----------------
+    // JoystickContainer.triggerL.whileActiveContinuous(new PistonCommand(Shooter.getinstance(), true).andThen(
+    //     new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(new UpperConveyorCommand())));
     JoystickContainer.XButton.whileActiveContinuous(
         new PistonCommand(Shooter.getinstance(), true).andThen(
-            new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(new UpperConveyorCommand())));
+            new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(
+                new UpperConveyorCommand().perpetually())));
 
-    JoystickContainer.BButton.whileActiveContinuous(new ShooterAutomation(true));
+    JoystickContainer.BButton.whileActiveContinuous(new ShooterAutomationTelop());
 
     JoystickContainer.YButton.whenPressed(new PistonCommand(Shooter.getinstance(), false));
     // ---------------------------- Climb ----------------------------

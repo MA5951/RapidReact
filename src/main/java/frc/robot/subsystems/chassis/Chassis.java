@@ -92,8 +92,8 @@ public class Chassis extends SubsystemBase {
 
   }
 
-  public void setInverted(boolean reverse){
-    if (reverse){
+  public void setInverted(boolean reverse) {
+    if (reverse) {
       this.reverse = 1.0;
       rightFrontMotor.setInverted(TalonFXInvertType.CounterClockwise);
       rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
@@ -108,15 +108,15 @@ public class Chassis extends SubsystemBase {
     }
   }
 
-  public void setJoystickInverte(boolean mode){
-    if (mode){
+  public void setJoystickInverte(boolean mode) {
+    if (mode) {
       inverte = -1;
-    }else{
+    } else {
       inverte = 1;
     }
   }
 
-  public boolean getJoystickInverte(){
+  public boolean getJoystickInverte() {
     return inverte == -1;
   }
 
@@ -220,6 +220,14 @@ public class Chassis extends SubsystemBase {
     return (navx.getYaw() * this.reverse);
   }
 
+  public double getRoll() {
+    return (navx.getRoll());
+  }
+
+  public boolean canOpenPassiveArm() {
+    return getRoll() > 35;
+  }
+
   // reset the value of the encoder and the navx
   public void resetSensors() {
     navx.reset();
@@ -287,11 +295,13 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getLeftF() {
-    return (leftVelocityPID.getSetpoint() / ChassisConstants.MAX_VELOCITY_MPS) * ChassisConstants.KF_MAPATH_LEFT_VELOCITY;
+    return (leftVelocityPID.getSetpoint() / ChassisConstants.MAX_VELOCITY_MPS)
+        * ChassisConstants.KF_MAPATH_LEFT_VELOCITY;
   }
 
   public double getRightF() {
-    return (rightVelocityPID.getSetpoint()/ChassisConstants.MAX_VELOCITY_MPS) * ChassisConstants.KF_MAPATH_RIGHT_VELOCITY;
+    return (rightVelocityPID.getSetpoint() / ChassisConstants.MAX_VELOCITY_MPS)
+        * ChassisConstants.KF_MAPATH_RIGHT_VELOCITY;
   }
 
   public OdometryHandler getOdomoteryHandler() {

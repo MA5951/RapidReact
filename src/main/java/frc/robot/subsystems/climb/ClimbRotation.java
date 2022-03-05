@@ -25,10 +25,12 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     private DigitalInput hallEffect;
     private PIDController rotationPID;
     private Shuffleboard shuffleboard;
+    public double feedforward;
+    public double setPoint = 0;
 
     public ClimbRotation() {
-        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE, 
-        RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE,
+                RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
                 RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -40,6 +42,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
                 ClimbConstants.ROTATION_KD,
                 0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
         shuffleboard = new Shuffleboard("ClimbRotation");
+        feedforward = 1;
     }
 
     public static ClimbRotation getInstance() {
@@ -65,7 +68,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public double calculate() {
-        return rotationPID.calculate(leftRotationMotor.getPosition());
+        return rotationPID.calculate(leftRotationMotor.getPosition()) * feedforward;
     }
 
     @Override
@@ -77,8 +80,12 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         return leftRotationMotor.getOutput() * 12;
     }
 
+    public double getCurrent() {
+        return (leftRotationMotor.getStatorCurrent() + rightRotationMotor.getStatorCurrent()) / 2.0;
+    }
+
     public boolean canMove() {
-        return true; // TODO
+        return getCurrent() > 20;
     }
 
     public void reset() {
@@ -89,13 +96,16 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     @Override
     public void periodic() {
 
-        if(getHallEffect()){
+        if (getHallEffect()) {
             leftRotationMotor.resetEncoder();
             rightRotationMotor.resetEncoder();
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         // This method will be called once per scheduler run
+        shuffleboard.addNum("pid", calculate());
         shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
         shuffleboard.addNum("encoder right", rightRotationMotor.getPosition());
+        shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
+        feedforward = shuffleboard.getNum("F");
     }
 }

@@ -151,6 +151,7 @@ public class Robot extends TimedRobot {
     // ClimbRotation.getInstance();
     Conveyor.getInstance().setAmountOfBalls(0);
     ClimbRotation.getInstance().reset();
+    ClimbExtension.getInstance().reset();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(

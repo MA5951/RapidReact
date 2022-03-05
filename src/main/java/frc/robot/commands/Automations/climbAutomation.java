@@ -36,7 +36,7 @@ public class climbAutomation extends SequentialCommandGroup {
                 false,
                 true)),
         new ParallelDeadlineGroup(
-            new ClimbPassiveCommand(0.1),
+            new ClimbPassiveCommand(0.5),
             new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
             new ControlCommand(ClimbRotation.getInstance(), 1.55, false, true)),
         new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1));

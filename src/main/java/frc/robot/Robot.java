@@ -6,7 +6,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.Limelight;
+
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.commands.ControlCommand;
+import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
@@ -23,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.commands.MotorCommandSuplier;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.ChasisPID;
 import frc.robot.commands.chassis.TankDrive;
@@ -60,7 +64,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Green Path", new GreenPathAutonomous());
     autoChooser.addOption("Red Path", new RedPathAutonomous());
     Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-    .withPosition(3, 1).withSize(2, 2);
+        .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
     // Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
@@ -117,7 +121,7 @@ public class Robot extends TimedRobot {
     }
 
     CommandScheduler.getInstance().schedule(new RedPathAutonomous());
-    
+
     Conveyor.getInstance().setAmountOfBalls(1);
 
   }
@@ -140,15 +144,21 @@ public class Robot extends TimedRobot {
     Chassis.getinstance();
     Shooter.getinstance();
     Conveyor.getInstance();
+    ClimbExtension.getInstance();
     Conveyor.getInstance().setAmountOfBalls(1);
     // ClimbExtension.getInstance();
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();
     Conveyor.getInstance().setAmountOfBalls(0);
-
+    ClimbRotation.getInstance().reset();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
-    // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+    CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
+        ClimbExtension.getInstance(), () -> JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4));
+    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
+        ClimbRotation.getInstance(), () -> JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4));
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
+    // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     // Shuffleboard.selectTab("Teleop");
   }
 

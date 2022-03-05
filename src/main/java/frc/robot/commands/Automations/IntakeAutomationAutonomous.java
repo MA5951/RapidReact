@@ -4,12 +4,14 @@
 
 package frc.robot.commands.Automations;
 
+import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.IntakeCommandForAutonomous;
 import frc.robot.commands.conveyor.ConveyorCommand;
+import frc.robot.commands.conveyor.ConveyorCommand2;
 import frc.robot.subsystems.intake.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -23,7 +25,8 @@ public class IntakeAutomationAutonomous extends SequentialCommandGroup {
     addCommands(
         new PistonCommand(Intake.getinstance(), true),
         new ParallelDeadlineGroup(
-            new IntakeCommandForAutonomous(power),
-            new ConveyorCommand()));
+          new ConveyorCommand2(),
+          new MotorCommand(Intake.getinstance(), power)
+          ));
   }
 }

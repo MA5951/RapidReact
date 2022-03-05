@@ -76,5 +76,6 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   public void periodic() {
     // This method will be called once per scheduler run
     shuffleboard.addNum("encoder", extensionMotor.getPosition());
+    shuffleboard.addNum("pid value", calculate(extensionMotor.getPosition()));
   }
 }

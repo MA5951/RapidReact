@@ -11,10 +11,10 @@ public class Conveyor extends SubsystemBase {
     private MA_TalonSRX lowerVictor;
     private MA_TalonSRX upperVictor;
 
-    public boolean isUpperIR = true;
-
     private DigitalInput lowerIR;
     private DigitalInput upperIR;
+
+    public boolean isBallInUpper = false;
 
     private static Conveyor conveyor;
 

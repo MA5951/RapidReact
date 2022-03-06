@@ -24,7 +24,7 @@ public class climbAutomation extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new InstantCommand(() -> ClimbRotation.getInstance().feedforward = ClimbRotation.getInstance().feedforward),
+        new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 8.5),
         new ParallelDeadlineGroup(
             new ControlCommand(ClimbExtension.getInstance(), ClimbConstants.MAX_POSITION / 1.4, true, true),
             new ControlCommand(ClimbRotation.getInstance(), -0.25,

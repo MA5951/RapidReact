@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Automations.ClimbAutomationToThird;
+import frc.robot.commands.Automations.ClimbCloseAutomation;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.IntakeAutomationAutonomous;
 import frc.robot.commands.Automations.ShooterAutomation;
@@ -132,10 +133,10 @@ public class RobotContainer {
                 // MotorCommand(ClimbExtension.getInstance(), -0.2));
                 // JoystickContainer.POVDown.whileActiveContinuous(new
                 // MotorCommand(ClimbExtension.getInstance(), 0.2));
-                JoystickContainer.POVLeft.whileActiveContinuous(new MotorCommand(ClimbRotation.getInstance(), -0.22));
+                JoystickContainer.POVLeft.whenActive(new ClimbCloseAutomation());
                 // JoystickContainer.POVRight.whileActiveContinuous(new
                 // MotorCommand(ClimbRotation.getInstance(), 0.22));
-                JoystickContainer.POVRight.whileActiveContinuous(new ClimbAutomationToThird());
+                JoystickContainer.POVRight.whenActive(new ClimbAutomationToThird());
 
                 JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
                 JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));

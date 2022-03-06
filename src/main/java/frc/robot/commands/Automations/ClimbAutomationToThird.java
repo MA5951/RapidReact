@@ -25,10 +25,7 @@ public class ClimbAutomationToThird extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ControlCommand(ClimbExtension.getInstance(),
-            -123000, true, true),
-        new ControlCommand(ClimbRotation.getInstance(), 3, true, true),
-    new ParallelDeadlineGroup(
-    new WaitUntilCommand(Chassis.getinstance()::canOpenPassiveArm),
-    new MotorCommand(ClimbExtension.getInstance(), 0.4));// );
+            -135000, true, true),
+        new ControlCommand(ClimbRotation.getInstance(), 6, true, true));// );
   }
 }

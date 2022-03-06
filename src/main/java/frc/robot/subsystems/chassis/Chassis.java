@@ -225,7 +225,7 @@ public class Chassis extends SubsystemBase {
   }
 
   public boolean canOpenPassiveArm() {
-    return getRoll() > 35;
+    return getRoll() >= 4;
   }
 
   // reset the value of the encoder and the navx

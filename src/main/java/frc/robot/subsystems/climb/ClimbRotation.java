@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
+import frc.robot.subsystems.chassis.Chassis;
 
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Shuffleboard;
@@ -25,7 +26,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     private DigitalInput hallEffect;
     private PIDController rotationPID;
     private Shuffleboard shuffleboard;
-    public double feedforward;
+    public double feedforward = 1;
     public double setPoint = 0;
 
     public ClimbRotation() {
@@ -101,11 +102,13 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
             rightRotationMotor.resetEncoder();
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
+        shuffleboard.addBoolean("open passive?", Chassis.getinstance().canOpenPassiveArm());
+
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
         shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
         shuffleboard.addNum("encoder right", rightRotationMotor.getPosition());
         shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
-        feedforward = shuffleboard.getNum("F");
+        // feedforward = shuffleboard.getNum("F");
     }
 }

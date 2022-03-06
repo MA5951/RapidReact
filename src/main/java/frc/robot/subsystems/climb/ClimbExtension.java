@@ -59,7 +59,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   @Override
   public void setVoltage(double voltage) {
     if (voltage < 0) {
-      if (extensionMotor.getPosition() <= -110000) {
+      if (extensionMotor.getPosition() <= -150000) {
         extensionMotor.setVoltage(0);
         return;
       }

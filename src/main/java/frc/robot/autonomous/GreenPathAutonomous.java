@@ -20,6 +20,7 @@ package frc.robot.autonomous;
 // import frc.robot.commands.shooter.ShooterCommand;
 // import frc.robot.subsystems.shooter.Shooter;
 // import frc.robot.subsystems.shooter.ShooterConstants;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -35,18 +36,23 @@ import frc.robot.subsystems.shooter.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class GreenPathAutonomous extends SequentialCommandGroup {
-  /** Creates a new GreenPathAutonomous. */
-  public GreenPathAutonomous() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-        new ParallelDeadlineGroup(
-            new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-            new IntakeAutomation(0.5)),
-        new PIDVision(0),
-        new ParallelCommandGroup(
-            new ShooterCommand(() -> Shooter.getinstance().getShooterPower())).alongWith(
-                new UpperConveyorCommand()));
-  }
+    /**
+     * Creates a new GreenPathAutonomous.
+     */
+    public GreenPathAutonomous() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+                new ParallelDeadlineGroup(
+                        new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+                        new IntakeAutomation(0.5)),
+                new ParallelDeadlineGroup(
+                        new PIDVision(0),
+                        new ShooterCommand(-200)
+                ),
+                new ParallelCommandGroup(
+                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower())).alongWith(
+                        new UpperConveyorCommand()));
+    }
 }

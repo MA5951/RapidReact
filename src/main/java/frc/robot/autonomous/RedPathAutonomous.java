@@ -29,26 +29,32 @@ import frc.robot.commands.conveyor.ConveyorCommand;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RedPathAutonomous extends SequentialCommandGroup {
-  /** Creates a new RedPathAutonomous. */
-  public RedPathAutonomous() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-        new ParallelDeadlineGroup(
-            new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-            new IntakeAutomation(0.7)),
-        new PIDVision(0),
-        new ParallelDeadlineGroup(
-            new UpperConveyorCommand(),
-            new ShooterCommand(() -> Shooter.getinstance().getShooterPower())),
-        new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
-        new ParallelDeadlineGroup(
-            new AutonomousCommand(Paths.goToTheSecondBallPart2, true),
-            new IntakeAutomation(0.7)),
-        new ParallelDeadlineGroup(
-            new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
-            new ConveyorCommnadAutonomous()),
-        new ShooterCommand(-2400).alongWith(new UpperConveyorCommand()));
-  }
+    /**
+     * Creates a new RedPathAutonomous.
+     */
+    public RedPathAutonomous() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+                new ParallelDeadlineGroup(
+                        new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+                        new IntakeAutomation(0.7)),
+                new ParallelDeadlineGroup(
+                        new PIDVision(0),
+                        new ShooterCommand(-200)
+                ),
+                new ParallelDeadlineGroup(
+                        new UpperConveyorCommand(),
+                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower())),
+                new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
+                new ParallelDeadlineGroup(
+                        new AutonomousCommand(Paths.goToTheSecondBallPart2, true),
+                        new IntakeAutomation(0.7)),
+                new ParallelDeadlineGroup(
+                        new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
+                        new ConveyorCommnadAutonomous(),
+                        new ShooterCommand(-200)),
+                new ShooterCommand(-2400).alongWith(new UpperConveyorCommand()));
+    }
 }

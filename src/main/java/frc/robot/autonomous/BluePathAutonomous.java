@@ -4,6 +4,7 @@
 
 package frc.robot.autonomous;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
@@ -16,15 +17,20 @@ import frc.robot.subsystems.shooter.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class BluePathAutonomous extends SequentialCommandGroup {
-  /** Creates a new BluePathAutonomous. */
-  public BluePathAutonomous() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-        new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-        new PIDVision(0),
-        new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(
-            new UpperConveyorCommand()));
-  }
+    /**
+     * Creates a new BluePathAutonomous.
+     */
+    public BluePathAutonomous() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+                new ParallelDeadlineGroup(
+                        new PIDVision(0),
+                        new ShooterCommand(-200)
+                ),
+                new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(
+                        new UpperConveyorCommand()));
+    }
 }

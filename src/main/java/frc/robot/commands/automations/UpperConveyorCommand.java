@@ -53,7 +53,6 @@ public class UpperConveyorCommand extends CommandBase {
                 conveyor.isBallInUpper = false;
                 ballCounted = true;
             }
-            
 
             if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
                 ballCounted = false;

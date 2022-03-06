@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Automations.IntakeAutomation;
+import frc.robot.commands.Automations.IntakeAutomationAutonomous;
 import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
 import frc.robot.commands.chassis.AutonomousCommand;
@@ -44,7 +45,7 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
         addCommands(
                 new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true).andThen(
                 new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true).alongWith(
-                        new IntakeAutomation(0.6)
+                        new IntakeAutomationAutonomous(0.6)
                         )
                 ).andThen(
                         new PIDVision(0)

@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.UpperConveyorCommand;
+import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.Paths;
@@ -40,19 +41,18 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
      * Creates a new GreenPathAutonomous.
      */
     public GreenPathAutonomous() {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-                new ParallelDeadlineGroup(
-                        new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-                        new IntakeAutomation(0.5)),
-                new ParallelDeadlineGroup(
-                        new PIDVision(0),
-                        new ShooterCommand(-200)
-                ),
-                new ParallelCommandGroup(
-                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower())).alongWith(
-                        new UpperConveyorCommand()));
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true).andThen(
+                new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true).alongWith(
+                        new IntakeAutomation(0.6)
+                        )
+                ).andThen(
+                        new PIDVision(0)
+                ).andThen(
+                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(
+                                new UpperConveyorcommandAutonomous()
+                        )
+                )
+        );
     }
 }

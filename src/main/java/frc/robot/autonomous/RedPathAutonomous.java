@@ -16,6 +16,7 @@ import frc.robot.commands.IntakeCommandForAutonomous;
 import frc.robot.commands.Automations.IntakeAutomation;
 import frc.robot.commands.Automations.IntakeAutomationAutonomous;
 import frc.robot.commands.Automations.UpperConveyorCommand;
+import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -39,13 +40,14 @@ public class RedPathAutonomous extends SequentialCommandGroup {
                 new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
                 new ParallelDeadlineGroup(
                         new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-                        new IntakeAutomation(0.7)),
+                        new IntakeAutomation(0.7),
+                        new ShooterCommand(-200)),
                 new ParallelDeadlineGroup(
                         new PIDVision(0),
                         new ShooterCommand(-200)
                 ),
                 new ParallelDeadlineGroup(
-                        new UpperConveyorCommand(),
+                        new UpperConveyorcommandAutonomous(),
                         new ShooterCommand(() -> Shooter.getinstance().getShooterPower())),
                 new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
                 new ParallelDeadlineGroup(
@@ -55,6 +57,6 @@ public class RedPathAutonomous extends SequentialCommandGroup {
                         new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
                         new ConveyorCommnadAutonomous(),
                         new ShooterCommand(-200)),
-                new ShooterCommand(-2400).alongWith(new UpperConveyorCommand()));
+                new ShooterCommand(-2400).alongWith(new UpperConveyorcommandAutonomous()));
     }
 }

@@ -10,7 +10,7 @@ import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class UpperConveyorcommandTelop extends CommandBase {
+public class UpperConveyorcommandAutonomous extends CommandBase {
     /**
      * Creates a new UpperConveyorCommand.
      */
@@ -25,7 +25,7 @@ public class UpperConveyorcommandTelop extends CommandBase {
 
     private ConveyBallsCommand conveyBallsCommand;
 
-    public UpperConveyorcommandTelop() {
+    public UpperConveyorcommandAutonomous() {
         conveyor = Conveyor.getInstance();
         addRequirements(conveyor);
 
@@ -46,21 +46,20 @@ public class UpperConveyorcommandTelop extends CommandBase {
                 stator = Shooter.getinstance().getStator();
             }
             conveyor.setUpperPower(0.9);
-            conveyor.setLowerPower(-0.6);
 
-            // if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
-            //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-            //     ballCounted = true;
-            // }
+            if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
+                conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
+                conveyor.isBallInUpper = false;
+                ballCounted = true;
+            }
             
+            if (conveyor.getAmountOfBalls() < 2){
+                conveyor.setLowerPower(-0.5);
+            }
+
             if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
                 ballCounted = false;
             }
-
-            // if (isBallAtTop && !conveyor.isBallInUpper()){
-            //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-            // }
-            // isBallAtTop = conveyor.isBallInUpper();
         } else {
             conveyor.setUpperPower(0);
             conveyor.setLowerPower(0);

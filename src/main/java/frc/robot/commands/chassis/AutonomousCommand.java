@@ -44,6 +44,7 @@ public class AutonomousCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    chassis.chassisShuffleboard.addBoolean("Autonomus Test", true);
     chassis.resetSensors();
     chassis.setIdleMode(NeutralMode.Brake);
     chassis.setInverted(reverse);
@@ -82,6 +83,7 @@ public class AutonomousCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    chassis.chassisShuffleboard.addBoolean("Autonomus Test", false);
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
     chassis.setInverted(false);

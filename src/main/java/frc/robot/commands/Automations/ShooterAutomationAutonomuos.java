@@ -14,9 +14,9 @@ import frc.robot.subsystems.shooter.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShooterAutomationTelop extends SequentialCommandGroup {
+public class ShooterAutomationAutonomuos extends SequentialCommandGroup {
   /** Creates a new ShooterAutomationTelop. */
-  public ShooterAutomationTelop() {
+  public ShooterAutomationAutonomuos() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -24,7 +24,7 @@ public class ShooterAutomationTelop extends SequentialCommandGroup {
       new PIDVision(0),
       new ParallelCommandGroup(
           new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
-          new UpperConveyorcommandTelop().perpetually())
+          new UpperConveyorcommandAutonomous().perpetually())
     );
   }
 }

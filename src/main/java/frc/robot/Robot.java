@@ -155,12 +155,16 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
-        ClimbExtension.getInstance(), () -> JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4));
+        ClimbExtension.getInstance(), 
+        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3 ?
+         JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4 : 0));
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
-        ClimbRotation.getInstance(), () -> JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4));
+        ClimbRotation.getInstance(), () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3 ?
+        JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4 : 0));
+
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
-    // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
-    // Shuffleboard.selectTab("Teleop");
+    //   new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+    Shuffleboard.selectTab("Teleop");
   }
 
   /** This function is called periodically during operator control. */

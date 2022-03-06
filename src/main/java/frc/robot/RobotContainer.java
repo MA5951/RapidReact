@@ -125,18 +125,21 @@ public class RobotContainer {
                 JoystickContainer.BButton.whenPressed(() -> Conveyor.getInstance().isBallInUpper = false);
                 // ---------------------------- Climb ----------------------------
 
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
+                                .whileActiveContinuous(new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+
                 JoystickContainer.POVUp
                                 .whileActiveContinuous(new ControlCommand(ClimbExtension.getInstance(),
                                                 ClimbConstants.MAX_POSITION, true, true));
-                JoystickContainer.POVDown.whenActive(new climbAutomation());
+                JoystickContainer.POVDown.whileActiveContinuous(new climbAutomation());
                 // JoystickContainer.POVUp.whileActiveContinuous(new
                 // MotorCommand(ClimbExtension.getInstance(), -0.2));
                 // JoystickContainer.POVDown.whileActiveContinuous(new
                 // MotorCommand(ClimbExtension.getInstance(), 0.2));
-                JoystickContainer.POVLeft.whenActive(new ClimbCloseAutomation());
+                JoystickContainer.POVLeft.whileActiveContinuous(new ClimbCloseAutomation());
                 // JoystickContainer.POVRight.whileActiveContinuous(new
                 // MotorCommand(ClimbRotation.getInstance(), 0.22));
-                JoystickContainer.POVRight.whenActive(new ClimbAutomationToThird());
+                JoystickContainer.POVRight.whileActiveContinuous(new ClimbAutomationToThird());
 
                 JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
                 JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));

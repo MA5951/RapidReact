@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.ClimbPassiveCommand;
+import frc.robot.commands.climb.KeepExtensionInPlace;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -22,22 +23,25 @@ import frc.robot.subsystems.climb.ClimbRotation;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbCloseAutomation extends SequentialCommandGroup {
-  /** Creates a new ClimbCloseAutomation. */
-  public ClimbCloseAutomation() {
-    // Add the deadline command in the super() call. Add other commands using
-    // addCommands().
-    addCommands(
-        new ParallelDeadlineGroup(
-            new WaitUntilCommand(Chassis.getinstance()::canOpenPassiveArm),
-            new MotorCommand(ClimbExtension.getInstance(), 0.4)),
-        new ParallelDeadlineGroup(
-            new WaitCommand(2.5),
-            new MotorCommand(ClimbPassive.getInstance(), -0.5)),
-        new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 8.5),
-        new ParallelDeadlineGroup(
-            new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
-            new ControlCommand(ClimbRotation.getInstance(), 1.55,
-                false,
-                true)));
-  }
+    /** Creates a new ClimbCloseAutomation. */
+    public ClimbCloseAutomation() {
+        // Add the deadline command in the super() call. Add other commands using
+        // addCommands().
+        addCommands(
+                new ParallelDeadlineGroup(
+                        new WaitUntilCommand(Chassis.getinstance()::canOpenPassiveArm),
+                        new MotorCommand(ClimbExtension.getInstance(), 0.4)),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(2.5),
+                        new MotorCommand(ClimbPassive.getInstance(), -0.5)),
+                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 8.5),
+                new ParallelDeadlineGroup(
+                        new ControlCommand(ClimbRotation.getInstance(), 0, true, true),
+                        new KeepExtensionInPlace()),
+                new ParallelDeadlineGroup(
+                        new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
+                        new ControlCommand(ClimbRotation.getInstance(), 1.55,
+                                false,
+                                true)));
+    }
 }

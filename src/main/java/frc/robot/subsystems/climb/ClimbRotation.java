@@ -34,7 +34,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
                 RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+                RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightRotationMotor.follow(leftRotationMotor);
 
         hallEffect = new DigitalInput(1);
@@ -91,7 +91,6 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     public void reset() {
         leftRotationMotor.resetEncoder();
-        rightRotationMotor.resetEncoder();
     }
 
     @Override
@@ -99,7 +98,6 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
         if (getHallEffect()) {
             leftRotationMotor.resetEncoder();
-            rightRotationMotor.resetEncoder();
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         shuffleboard.addBoolean("open passive?", Chassis.getinstance().canOpenPassiveArm());
@@ -107,7 +105,6 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
         shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
-        shuffleboard.addNum("encoder right", rightRotationMotor.getPosition());
         shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
         // feedforward = shuffleboard.getNum("F");
     }

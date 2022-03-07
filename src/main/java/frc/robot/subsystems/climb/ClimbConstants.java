@@ -23,5 +23,5 @@ public class ClimbConstants {
     public static final double PASSIVE_KD = 0;
     public static final double PASSIVE_TOLERANCE = 0;
 
-    public static final double MAX_POSITION = -90845;
+    public static final double MAX_POSITION = -88775;
 }

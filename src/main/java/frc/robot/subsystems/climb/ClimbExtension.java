@@ -77,6 +77,10 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     return true; // TODO
   }
 
+  public void keepArmInPlace() {
+    extensionPID.setSetpoint(extensionMotor.getPosition());
+  }
+
   public void reset() {
     extensionMotor.resetEncoder();
   }

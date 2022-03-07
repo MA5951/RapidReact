@@ -19,26 +19,26 @@ import frc.robot.subsystems.climb.ClimbRotation;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class climbAutomation extends SequentialCommandGroup {
-  /** Creates a new climbAutomation. */
-  public climbAutomation() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 8.5),
-        new ParallelDeadlineGroup(
-            new ControlCommand(ClimbExtension.getInstance(), ClimbConstants.MAX_POSITION / 1.4, true, true),
-            new ControlCommand(ClimbRotation.getInstance(), -0.25,
-                false,
-                true)),
-        new ParallelDeadlineGroup(
-            new ControlCommand(ClimbExtension.getInstance(), 9400, true, true),
-            new ControlCommand(ClimbRotation.getInstance(), 1.55,
-                false,
-                true)),
-        new ParallelDeadlineGroup(
-            new ClimbPassiveCommand(0.5),
-            new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
-            new ControlCommand(ClimbRotation.getInstance(), 1.55, false, true)),
-        new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1));
-  }
+    /** Creates a new climbAutomation. */
+    public climbAutomation() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 6.5),
+                new ParallelDeadlineGroup(
+                        new ControlCommand(ClimbExtension.getInstance(), ClimbConstants.MAX_POSITION / 1.4, true, true),
+                        new ControlCommand(ClimbRotation.getInstance(), -0.25,
+                                false,
+                                true)),
+                new ParallelDeadlineGroup(
+                        new ControlCommand(ClimbExtension.getInstance(), 9400, true, true),
+                        new ControlCommand(ClimbRotation.getInstance(), 2.5,
+                                false,
+                                true)),
+                new ParallelDeadlineGroup(
+                        new ClimbPassiveCommand(0.5),
+                        new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
+                        new ControlCommand(ClimbRotation.getInstance(), 2.5, false, true)),
+                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1));
+    }
 }

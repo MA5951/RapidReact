@@ -52,8 +52,8 @@ public class UpperConveyorcommandAutonomous extends CommandBase {
                 conveyor.isBallInUpper = false;
                 ballCounted = true;
             }
-            
-            if (conveyor.getAmountOfBalls() < 2){
+
+            if (conveyor.getAmountOfBalls() < 2) {
                 conveyor.setLowerPower(-0.5);
             }
 

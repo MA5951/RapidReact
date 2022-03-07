@@ -11,6 +11,7 @@ public class ConveyorCommand2 extends CommandBase {
   /** Creates a new ConveyorCommand2. */
   private Conveyor conveyor;
   private boolean isBallInLower;
+
   public ConveyorCommand2() {
     conveyor = Conveyor.getInstance();
     addRequirements(conveyor);
@@ -24,23 +25,23 @@ public class ConveyorCommand2 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (conveyor.isBallInLower() && !isBallInLower){
+    if (conveyor.isBallInLower() && !isBallInLower) {
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
-    if (conveyor.isBallInUpper){
+    if (conveyor.isBallInUpper) {
       conveyor.setUpperPower(0);
     } else {
       conveyor.setUpperPower(0.6);
     }
-    if (conveyor.isBallInUpper()){
+    if (conveyor.isBallInUpper()) {
       conveyor.isBallInUpper = true;
     }
-    if (conveyor.getAmountOfBalls() == 2){
+    if (conveyor.getAmountOfBalls() == 2) {
       conveyor.setLowerPower(0);
     } else {
-      conveyor.setLowerPower(-0.5);
+      conveyor.setLowerPower(-0.4);
     }
-    
+
     isBallInLower = conveyor.isBallInLower();
   }
 

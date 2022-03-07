@@ -121,8 +121,8 @@ public class Robot extends TimedRobot {
     }
 
     Conveyor.getInstance().setAmountOfBalls(1);
-
-    CommandScheduler.getInstance().schedule(new RedPathAutonomous());
+    Shooter.getinstance().close();
+    CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
 
   }
 
@@ -155,15 +155,18 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
-        ClimbExtension.getInstance(), 
-        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3 ?
-         JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4 : 0));
+        ClimbExtension.getInstance(),
+        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
+            ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4
+            : 0));
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
-        ClimbRotation.getInstance(), () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3 ?
-        JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4 : 0));
+        ClimbRotation.getInstance(),
+        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
+            ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
+            : 0));
 
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
-    //   new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+    // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     Shuffleboard.selectTab("Teleop");
   }
 

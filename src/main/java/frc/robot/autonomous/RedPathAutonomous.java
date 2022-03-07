@@ -5,12 +5,14 @@
 package frc.robot.autonomous;
 
 import com.ma5951.utils.autonomous.Path;
+import com.ma5951.utils.commands.PistonCommand;
 import com.ma5951.utils.commands.TogglePistonCommand;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.ConveyorCommnadAutonomous;
 import frc.robot.commands.IntakeCommandForAutonomous;
 import frc.robot.commands.Automations.IntakeAutomation;
@@ -30,34 +32,39 @@ import frc.robot.commands.conveyor.ConveyorCommand;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RedPathAutonomous extends SequentialCommandGroup {
-    /**
-     * Creates a new RedPathAutonomous.
-     */
-    public RedPathAutonomous() {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
-        addCommands(
-                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-                new ParallelDeadlineGroup(
-                        new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-                        new IntakeAutomationAutonomous(0.8),
-                        new ShooterCommand(-200)),
-                new ParallelDeadlineGroup(
-                        new PIDVision(0),
-                        new ShooterCommand(-200)
-                ),
-                new ParallelDeadlineGroup(
-                        new UpperConveyorcommandAutonomous(),
-                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower())),
-                new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
-                new ParallelDeadlineGroup(
-                        new AutonomousCommand(Paths.goToTheSecondBallPart2, true),
-                        new IntakeAutomationAutonomous(0.8)),
-                new ParallelDeadlineGroup(
-                        new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
-                        new ConveyorCommnadAutonomous(),
-                        new ShooterCommand(-200)),
-                new InstantCommand(() -> Conveyor.getInstance().setAmountOfBalls(1)),
-                new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(new UpperConveyorcommandAutonomous()));
-    }
+	/**
+	 * Creates a new RedPathAutonomous.
+	 */
+	public RedPathAutonomous() {
+		// Add your commands in the addCommands() call, e.g.
+		// addCommands(new FooCommand(), new BarCommand());
+		addCommands(
+				new PistonCommand(Intake.getinstance(), true),
+				new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
+				new ParallelDeadlineGroup(
+						new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+						new IntakeAutomationAutonomous(0.8),
+						new ShooterCommand(-200)),
+				new ParallelDeadlineGroup(
+						new PIDVision(0),
+						new ShooterCommand(-200)),
+				new ParallelDeadlineGroup(
+						new WaitCommand(3),
+						new UpperConveyorcommandAutonomous(),
+						new ShooterCommand(() -> Shooter.getinstance().getShooterPower())),
+				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
+				new ParallelDeadlineGroup(
+						new AutonomousCommand(Paths.goToTheSecondBallPart2, true),
+						new IntakeAutomationAutonomous(0.8)),
+				new ParallelDeadlineGroup(
+						new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
+						new ConveyorCommnadAutonomous(),
+						new ShooterCommand(-200)),
+				new InstantCommand(() -> Conveyor.getInstance().setAmountOfBalls(1)),
+				new ParallelDeadlineGroup(
+						new PIDVision(0),
+						new ShooterCommand(-200)),
+				new ShooterCommand(() -> Shooter.getinstance().getShooterPower())
+						.alongWith(new UpperConveyorcommandAutonomous()));
+	}
 }

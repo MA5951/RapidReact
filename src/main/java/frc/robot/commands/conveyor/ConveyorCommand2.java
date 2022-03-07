@@ -13,7 +13,6 @@ public class ConveyorCommand2 extends CommandBase {
   private Conveyor conveyor;
   private boolean isBallInLower;
   private double detectedTime = 0;
-  private boolean ballDetected = false;
   private double currentTime;
 
   public ConveyorCommand2() {
@@ -31,12 +30,9 @@ public class ConveyorCommand2 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((currentTime - detectedTime) > 0.2) {
-      ballDetected = false;
-    }
+
     if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.2)) {
       detectedTime = Timer.getFPGATimestamp();
-      ballDetected = true;
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
     if (conveyor.isBallInUpper) {
@@ -54,10 +50,7 @@ public class ConveyorCommand2 extends CommandBase {
     }
 
     isBallInLower = conveyor.isBallInLower();
-
-    if (ballDetected) {
-      currentTime = Timer.getFPGATimestamp();
-    }
+    currentTime = Timer.getFPGATimestamp();
   }
 
   // Called once the command ends or is interrupted.

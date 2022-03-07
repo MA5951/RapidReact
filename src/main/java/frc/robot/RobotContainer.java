@@ -84,7 +84,7 @@ public class RobotContainer {
                 JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
 
                 // // ---------------------------- Intake ----------------------------
-                JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomationAutonomous(0.65));
+                JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomationAutonomous(0.7));
                 new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
                                 .whileActiveContinuous(new TogglePistonCommand(Intake.getinstance()));
                 JoystickContainer.XButton.whileActiveContinuous(
@@ -96,6 +96,25 @@ public class RobotContainer {
                 JoystickContainer.XButton.whenPressed(new InstantCommand(
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Intake.getinstance().setPower(-0.8));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setAmountOfBalls(0));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whenInactive(() -> Intake.getinstance().setPower(0));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whenInactive(() -> Conveyor.getInstance().isBallInUpper = false);
+                
+                
+
 
                 // JoystickContainer.YButton.whileActiveContinuous(new ParallelCommandGroup(
                 // new MotorCommand(Intake.getinstance(), -0.8),

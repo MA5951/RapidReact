@@ -38,7 +38,7 @@ public class ConveyorCommand2 extends CommandBase {
     if (conveyor.getAmountOfBalls() == 2){
       conveyor.setLowerPower(0);
     } else {
-      conveyor.setLowerPower(-0.6);
+      conveyor.setLowerPower(-0.5);
     }
     
     isBallInLower = conveyor.isBallInLower();

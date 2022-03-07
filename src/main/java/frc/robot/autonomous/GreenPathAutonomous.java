@@ -44,10 +44,9 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
     public GreenPathAutonomous() {
         addCommands(
                 new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true).andThen(
-                new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true).alongWith(
-                        new IntakeAutomationAutonomous(0.6)
-                        )
-                ).andThen(
+                        new ParallelDeadlineGroup(new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+                         new IntakeAutomationAutonomous(0.6)))
+                .andThen(
                         new PIDVision(0)
                 ).andThen(
                         new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(

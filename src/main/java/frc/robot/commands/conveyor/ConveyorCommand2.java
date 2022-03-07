@@ -4,6 +4,7 @@
 
 package frc.robot.commands.conveyor;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
@@ -11,6 +12,9 @@ public class ConveyorCommand2 extends CommandBase {
   /** Creates a new ConveyorCommand2. */
   private Conveyor conveyor;
   private boolean isBallInLower;
+  private double detectedTime = 0;
+  private boolean ballDetected = false;
+  private double currentTime;
 
   public ConveyorCommand2() {
     conveyor = Conveyor.getInstance();
@@ -20,12 +24,19 @@ public class ConveyorCommand2 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    currentTime = Timer.getFPGATimestamp();
+    detectedTime = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (conveyor.isBallInLower() && !isBallInLower) {
+    if ((currentTime - detectedTime) > 0.2) {
+      ballDetected = false;
+    }
+    if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.2)) {
+      detectedTime = Timer.getFPGATimestamp();
+      ballDetected = true;
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
     if (conveyor.isBallInUpper) {
@@ -43,6 +54,10 @@ public class ConveyorCommand2 extends CommandBase {
     }
 
     isBallInLower = conveyor.isBallInLower();
+
+    if (ballDetected) {
+      currentTime = Timer.getFPGATimestamp();
+    }
   }
 
   // Called once the command ends or is interrupted.

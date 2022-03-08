@@ -157,8 +157,8 @@ public class RobotContainer {
                 // MotorCommand(ClimbRotation.getInstance(), 0.22));
                 JoystickContainer.POVRight.whenActive(new ClimbAutomationToThird());
 
-                JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.1));
-                JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.1));
+                JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.50));
+                JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.50));
 
                 JoystickContainer.startButton
                                 .whenPressed(

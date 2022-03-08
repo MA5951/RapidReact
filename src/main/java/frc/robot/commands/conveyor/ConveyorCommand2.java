@@ -31,7 +31,7 @@ public class ConveyorCommand2 extends CommandBase {
   @Override
   public void execute() {
 
-    if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.2)) {
+    if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.45)) {
       detectedTime = Timer.getFPGATimestamp();
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }

@@ -58,17 +58,17 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public void setVoltage(double voltage) {
-    if (voltage < 0) {
-      if (extensionMotor.getPosition() <= -150000) {
-        extensionMotor.setVoltage(0);
-        return;
-      }
-      if (extensionMotor.getPosition() <= ClimbConstants.MAX_POSITION
-          && ClimbRotation.getInstance().getHallEffect()) { // TODO from encoder
-        extensionMotor.setVoltage(0);
-        return;
-      }
-    }
+    // if (voltage < 0) {
+    // if (extensionMotor.getPosition() <= -150000) {
+    // extensionMotor.setVoltage(0);
+    // return;
+    // }
+    // if (extensionMotor.getPosition() <= ClimbConstants.MAX_POSITION
+    // && ClimbRotation.getInstance().getHallEffect()) { // TODO from encoder
+    // extensionMotor.setVoltage(0);
+    // return;
+    // }
+    // }
 
     extensionMotor.setVoltage(voltage);
   }

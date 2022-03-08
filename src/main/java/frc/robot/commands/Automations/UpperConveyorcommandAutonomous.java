@@ -12,7 +12,7 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class UpperConveyorcommandAutonomous extends CommandBase {
     /**
-     * Creates a new UpperConveyorCommand.
+     * Upper Conveyor Command With Waiting
      */
     private Conveyor conveyor;
     private double stator = 0;
@@ -41,13 +41,13 @@ public class UpperConveyorcommandAutonomous extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Shooter.getinstance().atSetpoint()) {
+        if (Shooter.getInstance().atSetpoint()) {
             if (stator == 0) {
-                stator = Shooter.getinstance().getStator();
+                stator = Shooter.getInstance().getStator();
             }
             conveyor.setUpperPower(0.9);
 
-            if ((Shooter.getinstance().getStator() - stator >= 10) && !ballCounted) {
+            if ((Shooter.getInstance().getStator() - stator >= 10) && !ballCounted) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
                 conveyor.isBallInUpper = false;
                 ballCounted = true;
@@ -57,7 +57,7 @@ public class UpperConveyorcommandAutonomous extends CommandBase {
                 conveyor.setLowerPower(-0.5);
             }
 
-            if (ballCounted && (Shooter.getinstance().getStator() - stator <= 10)) {
+            if (ballCounted && (Shooter.getInstance().getStator() - stator <= 10)) {
                 ballCounted = false;
             }
         } else {

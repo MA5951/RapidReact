@@ -23,7 +23,7 @@ import frc.robot.subsystems.climb.ClimbRotation;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbCloseAutomation extends SequentialCommandGroup {
-    /** Creates a new ClimbCloseAutomation. */
+    /** Close Extension Arms Automation */
     public ClimbCloseAutomation() {
         // Add the deadline command in the super() call. Add other commands using
         // addCommands().

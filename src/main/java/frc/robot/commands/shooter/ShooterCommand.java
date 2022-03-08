@@ -19,7 +19,7 @@ public class ShooterCommand extends CommandBase {
 
   public ShooterCommand(double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter = Shooter.getinstance();
+    shooter = Shooter.getInstance();
     addRequirements(shooter);
     this.setpoint = () -> setpoint;
     this.stop = true;
@@ -27,7 +27,7 @@ public class ShooterCommand extends CommandBase {
 
   public ShooterCommand(Supplier <Double> setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter = Shooter.getinstance();
+    shooter = Shooter.getInstance();
     addRequirements(shooter);
     this.setpoint = setpoint;
     this.stop = true;

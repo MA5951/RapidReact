@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.chassis.Chassis;
 
 public class PIDVision extends CommandBase {
+  /**
+   *  Center In Front Of A Target
+   */
+
   private Chassis chassis;
   private double angle;
 

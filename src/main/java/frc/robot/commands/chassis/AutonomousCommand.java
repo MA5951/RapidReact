@@ -12,6 +12,9 @@ import frc.robot.subsystems.chassis.ChassisConstants;
 import com.ma5951.utils.autonomous.*;
 
 public class AutonomousCommand extends CommandBase {
+  /**
+   *  Autonomous Movement
+   */
 
   PathGenerator pathGenerator;
   PathFollower pathFollower;
@@ -29,14 +32,14 @@ public class AutonomousCommand extends CommandBase {
 
   private Chassis chassis;
 
-  public AutonomousCommand(Path cHECKING_PATH, boolean reverse) {
+  public AutonomousCommand(Path CHECKING_PATH, boolean reverse) {
     chassis = Chassis.getinstance();
     odometry = chassis.getOdomoteryHandler();
 
-    pathGenerator = new PathGenerator(cHECKING_PATH.spacing, cHECKING_PATH.k, cHECKING_PATH.maxVelocity, cHECKING_PATH.maxAcceleration);
-    List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(cHECKING_PATH.points);
-    pathFollower = new PathFollower(waypoints, odometry, cHECKING_PATH.lookaheadDistance,
-        cHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
+    pathGenerator = new PathGenerator(CHECKING_PATH.spacing, CHECKING_PATH.k, CHECKING_PATH.maxVelocity, CHECKING_PATH.maxAcceleration);
+    List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(CHECKING_PATH.points);
+    pathFollower = new PathFollower(waypoints, odometry, CHECKING_PATH.lookaheadDistance,
+        CHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
     this.reverse = reverse;
 
     addRequirements(chassis);

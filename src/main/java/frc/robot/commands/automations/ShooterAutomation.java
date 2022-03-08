@@ -15,15 +15,15 @@ import frc.robot.subsystems.shooter.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShooterAutomation extends SequentialCommandGroup {
-  /** Creates a new ShooterAutomation. */
+  /** Center In Front Of The Hub And Shoot Ball Automation */
 
   public ShooterAutomation() {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
-        new InstantCommand(() -> Shooter.getinstance().close()),
+        new InstantCommand(() -> Shooter.getInstance().close()),
         new PIDVision(0),
         new ParallelCommandGroup(
-            new ShooterCommand(() -> Shooter.getinstance().getShooterPower()),
+            new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
             new UpperConveyorcommandAutonomous()));
   }
 }

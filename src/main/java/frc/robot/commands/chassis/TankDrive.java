@@ -7,6 +7,9 @@ import frc.robot.subsystems.chassis.ChassisConstants;
 import com.ma5951.utils.JoystickContainer;
 
 public class TankDrive extends CommandBase {
+  /**
+   * Simple Tank Drive Command
+   */
   private Chassis chassis;
 
   public TankDrive() {

@@ -7,6 +7,9 @@ import com.ma5951.utils.autonomous.Path;
 import com.ma5951.utils.autonomous.Waypoint;
 
 public class Paths {
+        /**
+         * Autonomous Paths
+         */
 
         public static final Path getingOutOfLunchPadPart1 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.3)), 0.2, 1.5, 4, 2.7, 0.2, 0.02);

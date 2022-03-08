@@ -13,7 +13,7 @@ import frc.robot.subsystems.shooter.Shooter;
 public class ShooterPiston extends InstantCommand {
   Shooter shooter;
   public ShooterPiston() {
-    Shooter shooter = Shooter.getinstance();
+    Shooter shooter = Shooter.getInstance();
     addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }

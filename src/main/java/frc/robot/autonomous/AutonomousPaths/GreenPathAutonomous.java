@@ -6,7 +6,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 // package frc.robot.autonomous;
-package frc.robot.autonomous;
+package frc.robot.autonomous.AutonomousPaths;
 
 // import frc.robot.Limelight;
 
@@ -21,12 +21,9 @@ package frc.robot.autonomous;
 // import frc.robot.subsystems.shooter.Shooter;
 // import frc.robot.subsystems.shooter.ShooterConstants;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.IntakeAutomationAutonomous;
-import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
@@ -39,17 +36,17 @@ import frc.robot.subsystems.shooter.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class GreenPathAutonomous extends SequentialCommandGroup {
     /**
-     * Creates a new GreenPathAutonomous.
+     * Two Balls Autonomous
      */
     public GreenPathAutonomous() {
         addCommands(
                 new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true).andThen(
                         new ParallelDeadlineGroup(new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-                         new IntakeAutomationAutonomous(0.6)))
+                         new IntakeAutomation(0.6)))
                 .andThen(
                         new PIDVision(0)
                 ).andThen(
-                        new ShooterCommand(() -> Shooter.getinstance().getShooterPower()).alongWith(
+                        new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
                                 new UpperConveyorcommandAutonomous()
                         )
                 )

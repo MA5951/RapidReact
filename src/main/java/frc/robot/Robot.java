@@ -5,34 +5,23 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import frc.robot.Limelight;
 
 import com.ma5951.utils.JoystickContainer;
-import com.ma5951.utils.commands.ControlCommand;
-import com.ma5951.utils.commands.MotorCommand;
 import com.ma5951.utils.commands.PistonCommand;
-import com.ma5951.utils.commands.chassisCommands.ChassisPIDCommand;
 
-import frc.robot.autonomous.GreenPathAutonomous;
-import frc.robot.autonomous.OrangePathAutonomous;
-import frc.robot.autonomous.BluePathAutonomous;
-import frc.robot.autonomous.RedPathAutonomous;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.commands.MotorCommandSuplier;
-import frc.robot.commands.chassis.AutonomousCommand;
-import frc.robot.commands.chassis.ChasisPID;
-import frc.robot.commands.chassis.TankDrive;
+import frc.robot.commands.chassis.ChassisPID;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
-import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.climb.ClimbRotation;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
@@ -67,10 +56,10 @@ public class Robot extends TimedRobot {
         .withPosition(3, 1).withSize(2, 2);
     m_robotContainer = new RobotContainer();
     // Shuffleboard.selectTab("Pre-Match");
-    Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getinstance(), true));
-    Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getinstance(), false));
-    Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getinstance(), true));
-    Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getinstance(), false));
+    Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getInstance(), true));
+    Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
+    Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
+    Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
   }
 
   /**
@@ -121,7 +110,7 @@ public class Robot extends TimedRobot {
     }
 
     Conveyor.getInstance().setAmountOfBalls(1);
-    Shooter.getinstance().close();
+    Shooter.getInstance().close();
     CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
 
   }
@@ -142,7 +131,7 @@ public class Robot extends TimedRobot {
     }
 
     Chassis.getinstance();
-    Shooter.getinstance();
+    Shooter.getInstance();
     Conveyor.getInstance();
     ClimbExtension.getInstance();
     Conveyor.getInstance().setAmountOfBalls(1);
@@ -153,7 +142,7 @@ public class Robot extends TimedRobot {
     ClimbRotation.getInstance().reset();
     ClimbExtension.getInstance().reset();
 
-    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChasisPID());
+    CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new ChassisPID());
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
         ClimbExtension.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3

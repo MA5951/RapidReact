@@ -5,6 +5,9 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.ConveyorConstants;
 
 public class ConveyBallsCommand extends CommandBase {
+    /**
+     *
+     */
 
     private final double conveyorPower = ConveyorConstants.CONVEYOR_POWER;
     private Conveyor conveyor = Conveyor.getInstance();
@@ -25,19 +28,6 @@ public class ConveyBallsCommand extends CommandBase {
 
     @Override
     public void execute() {
-        // if (conveyor.isBallInLower()) {
-        //     conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-        // }
-
-        // if (conveyor.isBallInUpper()) {
-        //     conveyor.setLowerPower(conveyorPower);
-        //     conveyor.setUpperPower(0.5);
-        // } else {
-        //     conveyor.setLowerPower(conveyorPower);
-        //     conveyor.setUpperPower(conveyorPower);
-        // }
-
-        // SmartDashboard.putNumber("amountOfBalls", conveyor.getAmountOfBalls());
         conveyor.setUpperPower(0.75);
     }
 

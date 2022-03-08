@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     return intake.getVoltage();
   }
 
-  public static Intake getinstance() {
+  public static Intake getInstance() {
     if (intake == null) {
       intake = new Intake();
     }

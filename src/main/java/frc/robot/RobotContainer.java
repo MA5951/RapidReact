@@ -14,15 +14,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Automations.ClimbAutomationToThird;
 import frc.robot.commands.Automations.ClimbCloseAutomation;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.IntakeAutomationAutonomous;
 import frc.robot.commands.Automations.ShooterAutomation;
-import frc.robot.commands.Automations.ShooterAutomationAutonomuos;
 import frc.robot.commands.Automations.UpperConveyorCommand;
-import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
-import frc.robot.commands.Automations.climbAutomation;
-import frc.robot.commands.conveyor.ConveyorCommand2;
+import frc.robot.commands.Automations.climbAutomationToSecond;
 import frc.robot.commands.shooter.ShooterCommand;
-import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbConstants;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbPassive;
@@ -31,8 +26,6 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
-
-import java.util.function.BooleanSupplier;
 
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
@@ -83,55 +76,47 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
 
-                // // ---------------------------- Intake ----------------------------
-                JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomationAutonomous(0.7));
+                // ---------------------------- Intake & Conveyor ----------------------------
+                JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.7));
                 new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
-                                .whenActive(new TogglePistonCommand(Intake.getinstance()));
+                                .whenActive(new TogglePistonCommand(Intake.getInstance()));
+
                 JoystickContainer.XButton.whileActiveContinuous(
                                 () -> Conveyor.getInstance().setLowerPower(0.7));
                 JoystickContainer.XButton.whileActiveContinuous(
-                                () -> Intake.getinstance().setPower(-0.8));
-                JoystickContainer.XButton.whenReleased(() -> Intake.getinstance().setPower(0));
+                                () -> Intake.getInstance().setPower(-0.8));
+                JoystickContainer.XButton.whenReleased(() -> Intake.getInstance().setPower(0));
                 JoystickContainer.XButton.whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
                 JoystickContainer.XButton.whenPressed(new InstantCommand(
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
+
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                                .whileActiveContinuous(() -> Intake.getinstance().setPower(-0.8));
+                                .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.8));
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                                .whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                                .whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                                .whileActiveContinuous(() -> Conveyor.getInstance().setAmountOfBalls(0));
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                                .whenInactive(() -> Intake.getinstance().setPower(0));
+                                .whenInactive(() -> Intake.getInstance().setPower(0));
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whenInactive(() -> Conveyor.getInstance().isBallInUpper = false);
-
-                // JoystickContainer.YButton.whileActiveContinuous(new ParallelCommandGroup(
-                // new MotorCommand(Intake.getinstance(), -0.8),
-                // new CovenyorOutCommand()
-                // ));
-
-                // ---------------------------- Conveyor ----------------------------
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                        .whileActiveContinuous(() -> Conveyor.getInstance().setAmountOfBalls(0));
 
                 // ---------------------------- Shooter ------------ ----------------
-                // JoystickContainer.triggerL.whileActiveContinuous(new
-                // PistonCommand(Shooter.getinstance(), true).andThen(
-                // new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(new
-                // UpperConveyorCommand())));
-
                 rightTrigger.whileActiveContinuous(new ShooterAutomation());
-                leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getinstance(), true).andThen(
+
+                leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), true).andThen(
                                 new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(
                                                 new UpperConveyorCommand().perpetually())));
 
-                JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getinstance(), false));
+                JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));
+
                 JoystickContainer.BButton.whileActiveContinuous(new ShooterCommand(-1000));
                 JoystickContainer.BButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(0.9));
                 JoystickContainer.BButton.whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
@@ -139,25 +124,23 @@ public class RobotContainer {
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
                 JoystickContainer.BButton.whenPressed(() -> Conveyor.getInstance().isBallInUpper = false);
-                // ---------------------------- Climb ----------------------------
 
+                // ---------------------------- Climb ----------------------------
                 new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                                 .whileActiveContinuous(new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
 
                 JoystickContainer.POVUp
                                 .whenActive(new ControlCommand(ClimbExtension.getInstance(),
                                                 ClimbConstants.MAX_POSITION, true, true));
-                JoystickContainer.POVDown.whenActive(new climbAutomation());
-                // JoystickContainer.POVUp.whileActiveContinuous(new
-                // MotorCommand(ClimbExtension.getInstance(), -0.2));
-                // JoystickContainer.POVDown.whileActiveContinuous(new
-                // MotorCommand(ClimbExtension.getInstance(), 0.2));
+
+                JoystickContainer.POVDown.whenActive(new climbAutomationToSecond());
+
                 JoystickContainer.POVLeft.whenActive(new ClimbCloseAutomation());
-                // JoystickContainer.POVRight.whileActiveContinuous(new
-                // MotorCommand(ClimbRotation.getInstance(), 0.22));
+
                 JoystickContainer.POVRight.whenActive(new ClimbAutomationToThird());
 
                 JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.50));
+
                 JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.50));
 
                 JoystickContainer.startButton

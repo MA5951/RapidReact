@@ -13,7 +13,7 @@ public class IntakeCommandForAutonomous extends CommandBase {
   private Intake intake;
   private double power;
   public IntakeCommandForAutonomous(double power) {
-    intake = Intake.getinstance();
+    intake = Intake.getInstance();
     this.power = power;
     addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.

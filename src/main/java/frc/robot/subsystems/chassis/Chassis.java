@@ -6,10 +6,8 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
@@ -46,7 +44,7 @@ public class Chassis extends SubsystemBase {
   private ColorSensorV3 colorSensorLeft;
   private ColorSensorV3 colorSensorRight;
 
-  public double inverte;
+  public double invert;
 
   public static Chassis getinstance() {
     if (chassis == null) {
@@ -88,10 +86,14 @@ public class Chassis extends SubsystemBase {
     rightFrontMotor.setInverted(TalonFXInvertType.Clockwise);
     rightRearMotor.setInverted(TalonFXInvertType.FollowMaster);
 
-    inverte = 1;
+    invert = 1;
 
   }
 
+  /**
+   * Invert motors and navX
+   * @param reverse true to invert
+   */
   public void setInverted(boolean reverse) {
     if (reverse) {
       this.reverse = 1.0;
@@ -108,16 +110,24 @@ public class Chassis extends SubsystemBase {
     }
   }
 
-  public void setJoystickInverte(boolean mode) {
+  /**
+   * Invert joysticks
+   * @param mode true to invert
+   */
+  public void setJoystickInvert(boolean mode) {
     if (mode) {
-      inverte = -1;
+      invert = -1;
     } else {
-      inverte = 1;
+      invert = 1;
     }
   }
 
-  public boolean getJoystickInverte() {
-    return inverte == -1;
+  /**
+   * Get if joystick is inverted
+   * @return true if inverted
+   */
+  public boolean getJoystickInvert() {
+    return invert == -1;
   }
 
   public void setLeftVoltage(double voltage) {
@@ -136,21 +146,32 @@ public class Chassis extends SubsystemBase {
     leftFrontMotor.set(ControlMode.PercentOutput, power);
   }
 
+  /**
+   * Autonomous driving
+   * @param angle Desired angle
+   * @param distance Desired distance
+   */
   public void arcadeDrive(double angle, double distance) {
     double w = (100 - Math.abs(angle * 100)) * (distance) + distance * 100;
     double v = (100 - Math.abs(distance * 100)) * (angle) + angle * 100;
     double leftVoltage = (-(v + w) / 200);
-    // System.out.println("Left Voltage" + leftVoltage);
     double rightVoltage = ((v - w) / 200);
-    // System.out.println("Right Voltage" + rightVoltage);
     setLeftVoltage(leftVoltage);
     setRightVoltage(rightVoltage);
   }
 
+  /**
+   * Get the distance the left part of the robot had been moving
+   * @return The distance in meters
+   */
   public double getLeftDistance() {
     return leftRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER;
   }
 
+  /**
+   * Get the distance the right part of the robot had been moving
+   * @return The distance in meters
+   */
   public double getRightDistance() {
     return rightRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER;
   }
@@ -179,10 +200,20 @@ public class Chassis extends SubsystemBase {
     return (falconTicks * 600) / 2048;
   }
 
+  /**
+   * Get robot velocity in meter per second (MPS)
+   * @param falconTicks Encoder ticks
+   * @return Velocity in m/s
+   */
   private double falconTicksToWheelVelocity(double falconTicks) {
     return falconTicksToMeters(falconTicks);
   }
 
+  /**
+   * Get the distance the robot had been moving in meters
+   * @param ticks Encoder ticks
+   * @return The distance in meters
+   */
   private double falconTicksToMeters(double ticks) {
     return ticks * ChassisConstants.KMETER_PER_TICKS;
   }
@@ -198,16 +229,13 @@ public class Chassis extends SubsystemBase {
   }
 
   public double leftMPS() {
-    // System.out.println("LEFT " +
-    // falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(leftRearMotor.getSelectedSensorVelocity());
   }
 
   public double rightMPS() {
-    // System.out.println("RIGHT " +
-    // falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity()));
     return falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity());
   }
+
 
   public void setIdleMode(NeutralMode mode) {
     leftRearMotor.setNeutralMode(mode);
@@ -228,7 +256,6 @@ public class Chassis extends SubsystemBase {
     return getRoll() >= 4;
   }
 
-  // reset the value of the encoder and the navx
   public void resetSensors() {
     navx.reset();
     leftFrontMotor.setSelectedSensorPosition(0);

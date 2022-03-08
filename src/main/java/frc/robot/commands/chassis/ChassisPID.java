@@ -8,14 +8,17 @@ import frc.robot.subsystems.chassis.ChassisConstants;
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
 
-public class ChasisPID extends CommandBase {
+public class ChassisPID extends CommandBase {
+  /**
+   * Tank Drive With Velocity PID
+   */
 
   public static Joystick leftJoystick = new Joystick(RobotConstants.KLEFT_JOYSTICK_PORT);
   public static Joystick rightJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
 
   private Chassis chassis;
 
-  public ChasisPID() {
+  public ChassisPID() {
     chassis = Chassis.getinstance();
     addRequirements(chassis);
   }
@@ -37,13 +40,13 @@ public class ChasisPID extends CommandBase {
     }
     if (Math.abs(JoystickContainer.rightJoystick.getY()) > 0.1){
       double rightPower = ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF();
-      chassis.setRightPercent(rightPower * chassis.inverte);
+      chassis.setRightPercent(rightPower * chassis.invert);
     }else{
       chassis.setRightPercent(0);
     }
     if (Math.abs(JoystickContainer.leftJoystick.getY()) > 0.1){
       double leftPower = ChassisConstants.KV_MAPATH_LEFT_VELOCITY + chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF();
-      chassis.setLeftPercent(leftPower * chassis.inverte);
+      chassis.setLeftPercent(leftPower * chassis.invert);
     }else{
       chassis.setLeftPercent(0);
     }

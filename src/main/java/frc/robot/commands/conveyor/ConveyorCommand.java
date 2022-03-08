@@ -1,87 +1,68 @@
-package frc.robot.commands.conveyor;
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
+package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
 public class ConveyorCommand extends CommandBase {
+  /** Creates a new ConveyorCommand2. */
   private Conveyor conveyor;
-
-  private boolean isBallInlower;
-  private boolean isBallInUpper;;
-  private double lastCurrent;
-  private double time;
-  private boolean wasItStack;
-  private boolean giveMorePower;
-  private boolean isBallMovedFromLower;
-  private final double currentDiff = 45;
+  private boolean isBallInLower;
+  private double detectedTime = 0;
+  private double currentTime;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
     addRequirements(conveyor);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isBallInlower = false;
-    isBallInUpper = false;
-    giveMorePower = false;
-    isBallMovedFromLower = false;
-    lastCurrent = 0;
-    // if (conveyor.getAmountOfBalls() == 1){
-    //   isBallInUpper = true;
-    // } else if (conveyor.getAmountOfBalls() == 2){
-    //   isBallInUpper = true;
-    //   isBallInlower = true;
-    //}
+    currentTime = Timer.getFPGATimestamp();
+    detectedTime = 0;
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (conveyor.isBallInLower() && !isBallInlower) {
+
+    if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.45)) {
+      detectedTime = Timer.getFPGATimestamp();
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
-
-
-    if (conveyor.isBallInUpper()) {
-      isBallInUpper = true;
-    }
-    if (isBallInUpper) {
+    if (conveyor.isBallInUpper) {
       conveyor.setUpperPower(0);
-    } else if (giveMorePower && Timer.getFPGATimestamp() - time <= 0.15) {
-      conveyor.setUpperPower(1);
-      wasItStack = true;
-
     } else {
       conveyor.setUpperPower(0.6);
-      if (conveyor.getUpperStator() > 40 && !wasItStack){
-        giveMorePower = true;
-      } else {
-        giveMorePower = false;
-      }
-      time = Timer.getFPGATimestamp();
     }
-    switch (conveyor.getAmountOfBalls()) {
-      case 0:
-      case 1:
-        conveyor.setLowerPower(-0.6);
-      break;
-      case 2:
-        conveyor.setLowerPower(0);
-        break;
+    if (conveyor.isBallInUpper()) {
+      conveyor.isBallInUpper = true;
     }
-    isBallInlower = conveyor.isBallInLower();
+    if (conveyor.getAmountOfBalls() == 2) {
+      conveyor.setLowerPower(0);
+    } else {
+      conveyor.setLowerPower(-0.4);
+    }
+
+    isBallInLower = conveyor.isBallInLower();
+    currentTime = Timer.getFPGATimestamp();
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    conveyor.setLowerPower(0);
     conveyor.setUpperPower(0);
+    conveyor.setLowerPower(0);
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (conveyor.getAmountOfBalls() == 2);
+    return conveyor.getAmountOfBalls() == 2 && conveyor.isBallInUpper;
   }
 }

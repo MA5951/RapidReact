@@ -86,7 +86,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     }
 
     public boolean canMove() {
-        return getCurrent() > 20;
+        return getCurrent() > 20; // TODO
     }
 
     public void reset() {

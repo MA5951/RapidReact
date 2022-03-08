@@ -19,7 +19,7 @@ import frc.robot.subsystems.climb.ClimbRotation;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbAutomationToThird extends SequentialCommandGroup {
-  /** Creates a new ClimbAutomationToThird. */
+  /** Third Bar Automation */
   public ClimbAutomationToThird() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

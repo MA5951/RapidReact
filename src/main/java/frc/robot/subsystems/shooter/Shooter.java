@@ -93,7 +93,7 @@ public double calculate(double input) {
     return shooterPiston.get() == Value.kForward;
   }
 
-  public static Shooter getinstance() {
+  public static Shooter getInstance() {
     if (shooter == null) {
       shooter = new Shooter();
     }
@@ -111,7 +111,11 @@ public double calculate(double input) {
     return shooterRightMotor.getStatorCurrent();
   }
 
-  public double getShooterPower(){
+  /**
+   * Get shooter RPM according to the distance from the target
+   * @return RPM setpoint
+   */
+  public double calculateRPM(){
     return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
         - 467.32 * frc.robot.Limelight.distance() + 3075.2) * -1);
   }
@@ -127,7 +131,7 @@ public double calculate(double input) {
     shooterShuffleboard.addNum("shooter", shooterLeftMotor.getPosition());
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
-    shooterShuffleboard.addNum("Shooter Calc", getShooterPower());
+    shooterShuffleboard.addNum("Shooter Calc", calculateRPM());
   }
 
   public void off() {

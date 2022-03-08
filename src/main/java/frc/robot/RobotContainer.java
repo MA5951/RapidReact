@@ -87,7 +87,7 @@ public class RobotContainer {
                         .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
 
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
-                .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.8));
+                .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                 .whenInactive(() -> Intake.getInstance().setPower(0));
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))

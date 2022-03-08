@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
 
     Conveyor.getInstance().setAmountOfBalls(1);
     Shooter.getInstance().close();
-    CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
+    CommandScheduler.getInstance().schedule(new RedPathAutonomous());
 
   }
 

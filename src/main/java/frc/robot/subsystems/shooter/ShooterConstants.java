@@ -6,8 +6,8 @@ public class ShooterConstants {
     public static final double SHOOTER_VELOCITY_PID_KP = 0.0015;
     public static final double SHOOTER_VELOCITY_PID_KI = 0;
     public static final double SHOOTER_VELOCITY_PID_KD = 0;
-    public static final double SHOOTER_VELOCITY_PID_KF = 1.13;
-    public static final double SHOOTER_VELOCITY_PID_TOLERANCE = 150;
+    public static final double SHOOTER_VELOCITY_PID_KF = 1.1;
+    public static final double SHOOTER_VELOCITY_PID_TOLERANCE = 90;
 
     public static final double SHOOTER_VELOCITY_LAUNCH_PAD = -2600;
     public static final double SHOOTER_VELOCITY_FENDER = -2400;

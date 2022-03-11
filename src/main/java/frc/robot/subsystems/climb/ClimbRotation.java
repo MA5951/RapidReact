@@ -74,7 +74,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public void setVoltage(double voltage) {
-        leftRotationMotor.setVoltage(voltage);
+        leftRotationMotor.setVoltage(0);//leftRotationMotor.setVoltage(voltage);
     }
 
     public double getVoltage() {

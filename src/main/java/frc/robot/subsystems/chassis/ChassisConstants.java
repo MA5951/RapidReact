@@ -37,7 +37,7 @@ public class ChassisConstants {
     public static final double KI_MAPATH_ANGLE = 0;
     public static final double KD_MAPATH_ANGLE = 0.02;
 
-    public static final double KP_VISION_ANGLE = 2.5e-1;
+    public static final double KP_VISION_ANGLE = 2.3e-1;
     public static final double KI_VISION_ANGLE = 1.2e-3;
     public static final double KD_VISION_ANGLE = 0;
 

@@ -26,7 +26,7 @@ public class climbAutomationToSecond extends SequentialCommandGroup {
 				new ParallelDeadlineGroup(
 						new ControlCommand(ClimbExtension.getInstance(),
 								ClimbConstants.MAX_POSITION / 1.4, true, true),
-						new ControlCommand(ClimbRotation.getInstance(), -0.25,
+						new ControlCommand(ClimbRotation.getInstance(), -0.28,
 								false,
 								true)),
 				new ParallelDeadlineGroup(

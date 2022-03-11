@@ -6,6 +6,7 @@ package frc.robot.autonomous.AutonomousPaths;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
@@ -24,12 +25,12 @@ public class BluePathAutonomous extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
-                new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
+                new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
                 new ParallelDeadlineGroup(
                         new PIDVision(0),
                         new ShooterCommand(-200)
                 ),
+                new WaitCommand(3.5),
                 new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
                         new UpperConveyorcommandAutonomous()));
     }

@@ -57,6 +57,10 @@ public class Limelight {
         return ty.getDouble(0.0);
     }
 
+    public static double getX() {
+        return tx.getDouble(0.0);
+    }
+
     public static void ledMode(int ledMode) {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ledMode);
     }

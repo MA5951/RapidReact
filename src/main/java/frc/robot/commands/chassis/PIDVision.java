@@ -36,6 +36,7 @@ public class PIDVision extends CommandBase {
   public void execute() {
     double output = chassis.getVisionAnglePIDOutput(angle);
     chassis.arcadeDrive(output, 0);
+    System.out.println("Limeluight");
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +46,7 @@ public class PIDVision extends CommandBase {
     chassis.setRightVoltage(0);
     chassis.resetPID();
     chassis.setIdleMode(NeutralMode.Brake);
+    System.out.println("END");
   }
 
   // Returns true when the command should end.

@@ -274,7 +274,7 @@ public class Chassis extends SubsystemBase {
   }
 
   public double getVisionAnglePIDOutput(double setpoint) {
-    return anglePIDVision.calculate(Limelight.x * -1, setpoint);
+    return anglePIDVision.calculate(Limelight.getX() * -1, setpoint);
   }
 
   public double getVisionDistancePIDOutput(double setpoint) {

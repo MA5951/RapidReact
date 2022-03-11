@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import com.ma5951.utils.JoystickContainer;
+import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.PistonCommand;
 
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
+    Limelight.pipeline(0);
   }
 
   /**
@@ -108,10 +110,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-
+    Chassis.getinstance().resetSensors();
     Conveyor.getInstance().setAmountOfBalls(1);
     Shooter.getInstance().close();
-    CommandScheduler.getInstance().schedule(new RedPathAutonomous());
+    CommandScheduler.getInstance().schedule(new BluePathAutonomous());
 
   }
 
@@ -146,13 +148,13 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
         ClimbExtension.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
-            ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4
+            ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4 
             : 0));
-    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
-        ClimbRotation.getInstance(),
-        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
-            ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
-            : 0));
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
+    //     ClimbRotation.getInstance(),
+    //     () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
+    //         ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
+    //         : 0));
 
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));

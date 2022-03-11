@@ -28,6 +28,9 @@ public class Paths {
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2), new Waypoint(-0.5, 1.75)), 0.2, 1.5, 2, 1,
                         0.3, 0.035);
 
+        public static final Path gettingOutOfLunchPad = new Path(
+                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.8)), 0.2, 1.5, 4, 2.7, 0.2, 0.01);
+
         // public static final Path goToTheSecondBallPart4= new Path (
         // Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.2))
         // , 0.2, 1.5, 2, 1, 0.1, 0.01);

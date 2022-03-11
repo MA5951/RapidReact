@@ -117,7 +117,7 @@ public double calculate(double input) {
    */
   public double calculateRPM(){
     return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
-        - 467.32 * frc.robot.Limelight.distance() + 3075.2) * -1);
+        - 467.32 * frc.robot.Limelight.distance() + 3095.2) * -1);
   }
 
   public double getVoltage(){
@@ -132,6 +132,7 @@ public double calculate(double input) {
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
     shooterShuffleboard.addNum("Shooter Calc", calculateRPM());
+    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint());
   }
 
   public void off() {

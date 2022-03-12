@@ -11,12 +11,11 @@ public class Paths {
         /**
          * Autonomous Paths
          */
-
         public static final Path getingOutOfLunchPadPart1 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.3)), 0.2, 1.5, 4, 2.7, 0.2, 0.02);
 
         public static final Path getingOutOfLunchPadPart2 = new Path(
-                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.1)), 0.2, 1.5, 3, 1, 0.2, 0.02);
+                        Arrays.asList(new Waypoint(0, 0),new Waypoint(0, 2.45)), 0.2, 1.5, 3, 10, 0.2, 0.02);
 
         public static final Path goToTheSecondBallPart1 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6),

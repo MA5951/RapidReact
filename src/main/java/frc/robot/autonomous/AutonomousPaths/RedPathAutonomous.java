@@ -7,6 +7,7 @@ package frc.robot.autonomous.AutonomousPaths;
 import com.ma5951.utils.commands.PistonCommand;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -33,11 +34,11 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 		// addCommands(new FooCommand(), new BarCommand());
 		addCommands(
 				new PistonCommand(Intake.getInstance(), true),
-				new AutonomousCommand(Paths.getingOutOfLunchPadPart1, true),
 				new ParallelDeadlineGroup(
-						new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true),
-						new IntakeAutomation(0.8),
-						new ShooterCommand(-200)),
+					new ParallelCommandGroup( 
+							new WaitCommand(4),
+							new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true)),
+					new IntakeAutomation(0.6)),
 				new ParallelDeadlineGroup(
 						new PIDVision(0),
 						new ShooterCommand(-200)),

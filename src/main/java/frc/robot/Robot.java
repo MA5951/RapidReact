@@ -57,6 +57,8 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
     Limelight.pipeline(0);
+
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
   }
 
   /**
@@ -99,16 +101,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
+    Chassis.getinstance().resetSensors();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    Chassis.getinstance().resetSensors();
     Conveyor.getInstance().setAmountOfBalls(1);
     Shooter.getInstance().close();
-    CommandScheduler.getInstance().schedule(new TestingPathAutonomous());
+    // CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
 
   }
 

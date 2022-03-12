@@ -82,11 +82,13 @@ public class AutonomousCommand extends CommandBase {
 
     chassis.setLeftPercent(leftVelocity);
     chassis.setRightPercent(rightVelocity);
+    System.out.println("exec");
   }
 
   @Override
   public void end(boolean interrupted) {
     chassis.chassisShuffleboard.addBoolean("Autonomus Test", false);
+    System.out.println("end");
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
     chassis.setInverted(false);

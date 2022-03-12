@@ -37,7 +37,7 @@ public class PathFollower {
         this.robotWidth = robotWidth;
         this.lookaheadDistance = lookaheadDistance;
         this.size = path.size();
-        this.lastIndex = 1;
+        this.lastIndex = 0;
         this.lastLookaheadIndex = 0;
     }
 

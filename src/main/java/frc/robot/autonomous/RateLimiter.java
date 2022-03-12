@@ -8,6 +8,7 @@ public class RateLimiter {
 
     public RateLimiter(double maxChange) {
         this.maxChange = maxChange;
+        this.lastVelocity = 0;
     }
 
     public double calculate(double targetVelocity) {

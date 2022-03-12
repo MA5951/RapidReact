@@ -13,7 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight {
     public static double K_DELTA_Y = 1.64; // Height between the hub and the limelight
-    private static double K_LIMELIGHT_STATIC_ANGLE = 10; // Limelight stand angle
+    private static double K_LIMELIGHT_STATIC_ANGLE = 25; // Limelight stand angle
     public static double x;
     public static double y;
     public static boolean v;

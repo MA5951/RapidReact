@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.TestingPathAutonomous;
 import frc.robot.commands.Automations.*;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.climb.ClimbConstants;
@@ -106,8 +109,8 @@ public class RobotContainer {
         // ---------------------------- Shooter ------------ ----------------
         rightTrigger.whileActiveContinuous(new ShooterAutomation());
 
-        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), false).andThen(
-                new ShooterCommand(3000).alongWith(
+        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), true).andThen(
+                new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(
                         new UpperConveyorcommandAutonomous().perpetually())));
 
         JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));
@@ -155,6 +158,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return null;
+        return new RedPathAutonomous();
     }
 }

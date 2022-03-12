@@ -1,5 +1,6 @@
 package frc.robot.commands.chassis;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,7 +30,13 @@ public class Paths {
                         0.3, 0.035);
 
         public static final Path gettingOutOfLunchPad = new Path(
-                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.8)), 0.2, 1.5, 4, 2.7, 0.2, 0.01);
+                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.8)), 0.7, 1.5, 3.8, 15, 0.5, 0.03
+        );
+
+        public static final Path testingTurn = new Path(
+                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6), new Waypoint(-1.2, 0)), 
+                0.2, 1.5, 0.3, 15, 0.3, 0.01
+        );
 
         // public static final Path goToTheSecondBallPart4= new Path (
         // Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.2))

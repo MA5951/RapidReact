@@ -72,7 +72,7 @@ public class RobotContainer {
         JoystickButton controlModeToogle = new JoystickButton(JoystickContainer.leftJoystick, 3);
 
         // ---------------------------- Intake & Conveyor ----------------------------
-        JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.7));
+        JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
                 .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
@@ -106,8 +106,8 @@ public class RobotContainer {
         // ---------------------------- Shooter ------------ ----------------
         rightTrigger.whileActiveContinuous(new ShooterAutomation());
 
-        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), true).andThen(
-                new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(
+        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), false).andThen(
+                new ShooterCommand(3000).alongWith(
                         new UpperConveyorcommandAutonomous().perpetually())));
 
         JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));

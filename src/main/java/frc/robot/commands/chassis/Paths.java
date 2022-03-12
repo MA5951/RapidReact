@@ -35,7 +35,7 @@ public class Paths {
 
         public static final Path testingTurn = new Path(
                 Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6), new Waypoint(-1.2, 0)), 
-                0.2, 1.5, 0.3, 15, 0.3, 0.01
+                0.2, 2, 0.3, 1.5, 0.3, 0.01
         );
 
         // public static final Path goToTheSecondBallPart4= new Path (

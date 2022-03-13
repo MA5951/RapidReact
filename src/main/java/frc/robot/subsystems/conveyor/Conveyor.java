@@ -1,5 +1,7 @@
 package frc.robot.subsystems.conveyor;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
@@ -8,8 +10,8 @@ import com.ma5951.utils.motor.MA_TalonSRX;
 
 public class Conveyor extends SubsystemBase {
 
-    private MA_TalonSRX lowerVictor;
-    private MA_TalonSRX upperVictor;
+    private MA_TalonSRX lowerTalon;
+    private TalonFX upperFalcon;
 
     private DigitalInput lowerIR;
     private DigitalInput upperIR;
@@ -23,13 +25,13 @@ public class Conveyor extends SubsystemBase {
     private int amountOfBalls;
 
     public Conveyor() {
-        lowerVictor = new MA_TalonSRX(PortMap.conveyorLowerMotor, false, false); // ID6
-        upperVictor = new MA_TalonSRX(PortMap.conveyorUpperMotor, false, false); // ID7
+        lowerTalon = new MA_TalonSRX(PortMap.conveyorLowerMotor, false, false); // ID6
+        upperFalcon = new TalonFX(PortMap.conveyorUpperMotor); // ID7
 
         lowerIR = new DigitalInput(PortMap.conveyorLowerIR);
         upperIR = new DigitalInput(PortMap.conveyorUpperIR);
 
-        lowerVictor.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
+        lowerTalon.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 
         conveyorShuffleboard = new Shuffleboard("conveyor");
 
@@ -45,11 +47,11 @@ public class Conveyor extends SubsystemBase {
     }
 
     public void setLowerPower(double velocity) {
-        lowerVictor.setPower(velocity);
+        lowerTalon.setPower(velocity);
     }
 
     public void setUpperPower(double velocity) {
-        upperVictor.setPower(velocity);
+        upperFalcon.set(TalonFXControlMode.PercentOutput, velocity);
     }
 
     public void setAmountOfBalls(int numBalls) {
@@ -70,7 +72,7 @@ public class Conveyor extends SubsystemBase {
     }
 
     public double getUpperStator(){
-        return upperVictor.getStatorCurrent();
+        return upperFalcon.getStatorCurrent();
     }
 
     @Override

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
@@ -18,20 +20,19 @@ import com.ma5951.utils.subsystem.ControlSubsystem;
 public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   /** Climb Extension Arm */
   private static ClimbExtension climbExtension;
-  private MA_SparkMax extensionMotor;
+  private TalonFX extensionMotor;
   private PIDController extensionPID;
   private Shuffleboard shuffleboard;
   public double feedforward = 1;
   public double setPoint = 0;
 
   public ClimbExtension() {
-    extensionMotor = new MA_SparkMax(PortMap.climbExtensionMotor, false, RobotConstants.KMOTOR_BRAKE,
-        RobotConstants.ENCODER.Alternate_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+    extensionMotor = new TalonFX(PortMap.climbExtensionMotor);
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
         ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
     shuffleboard = new Shuffleboard("ClimbExtension");
     feedforward = 1;
-    extensionMotor.resetEncoder();
+    extensionMotor.setSelectedSensorPosition(0);
   }
 
   public static ClimbExtension getInstance() {
@@ -53,28 +54,28 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public double calculate() {
-    return extensionPID.calculate(extensionMotor.getPosition());
+    return extensionPID.calculate(extensionMotor.getSelectedSensorPosition());
   }
 
   @Override
   public void setVoltage(double voltage) {
-    extensionMotor.setVoltage(voltage);
+    extensionMotor.set(TalonFXControlMode.PercentOutput, voltage / 12.0);
   }
 
   public boolean canMove() {
-    return extensionMotor.getPosition() > ClimbConstants.MAX_POSITION;
+    return extensionMotor.getSelectedSensorPosition() > ClimbConstants.MAX_POSITION;
   }
 
   public void keepArmInPlace() {
-    extensionPID.setSetpoint(extensionMotor.getPosition());
+    extensionPID.setSetpoint(extensionMotor.getSelectedSensorPosition());
   }
 
   public void reset() {
-    extensionMotor.resetEncoder();
+    extensionMotor.setSelectedSensorPosition(0);
   }
 
   public double getVoltage() {
-    return extensionMotor.getOutput() * 12;
+    return extensionMotor.getMotorOutputVoltage();
   }
 
   public double getCurrent() {
@@ -84,9 +85,9 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    shuffleboard.addNum("encoder", extensionMotor.getPosition());
+    shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition());
     shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
 
-    shuffleboard.addNum("pid value", calculate(extensionMotor.getPosition()));
+    shuffleboard.addNum("pid value", calculate(extensionMotor.getSelectedSensorPosition()));
   }
 }

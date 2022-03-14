@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ma5951.utils.motor.MA_Falcon;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -22,7 +26,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
      * Climb Rotation Arm
      */
     private static ClimbRotation climbRotation;
-    private MA_SparkMax leftRotationMotor, rightRotationMotor;
+    private TalonFX leftRotationMotor, rightRotationMotor;
     private DigitalInput hallEffect;
     private PIDController rotationPID;
     private Shuffleboard shuffleboard;
@@ -30,11 +34,13 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     public double setPoint = 0;
 
     public ClimbRotation() {
-        leftRotationMotor = new MA_SparkMax(PortMap.climbRotationLeftMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.ENCODER.Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftRotationMotor = new TalonFX(PortMap.climbRotationLeftMotor);
+        rightRotationMotor = new TalonFX(PortMap.climbRotationRightMotor);
 
-        rightRotationMotor = new MA_SparkMax(PortMap.climbRotationRightMotor, false, RobotConstants.KMOTOR_BRAKE,
-                RobotConstants.ENCODER.No_Encoder, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftRotationMotor.setNeutralMode(NeutralMode.Brake);
+        rightRotationMotor.setNeutralMode(NeutralMode.Brake);
+
+
         rightRotationMotor.follow(leftRotationMotor);
 
         hallEffect = new DigitalInput(1);
@@ -69,16 +75,16 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public double calculate() {
-        return rotationPID.calculate(leftRotationMotor.getPosition()) * feedforward;
+        return rotationPID.calculate(leftRotationMotor.getSelectedSensorPosition()) * feedforward;
     }
 
     @Override
     public void setVoltage(double voltage) {
-        leftRotationMotor.setVoltage(0);//leftRotationMotor.setVoltage(voltage);
+        leftRotationMotor.set(TalonFXControlMode.PercentOutput, voltage / 12.0);//leftRotationMotor.setVoltage(voltage);
     }
 
     public double getVoltage() {
-        return leftRotationMotor.getOutput() * 12;
+        return leftRotationMotor.getMotorOutputVoltage();
     }
 
     public double getCurrent() {
@@ -90,21 +96,21 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     }
 
     public void reset() {
-        leftRotationMotor.resetEncoder();
+        leftRotationMotor.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
 
         if (getHallEffect()) {
-            leftRotationMotor.resetEncoder();
+            leftRotationMotor.setSelectedSensorPosition(0);
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         shuffleboard.addBoolean("open passive?", Chassis.getinstance().canOpenPassiveArm());
 
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
-        shuffleboard.addNum("encoder left", leftRotationMotor.getPosition());
+        shuffleboard.addNum("encoder left", leftRotationMotor.getSelectedSensorPosition());
         shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
         // feedforward = shuffleboard.getNum("F");
     }

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -28,6 +29,8 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   public ClimbExtension() {
     extensionMotor = new TalonFX(PortMap.climbExtensionMotor);
+    extensionMotor.setNeutralMode(NeutralMode.Brake);
+    
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
         ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
     shuffleboard = new Shuffleboard("ClimbExtension");

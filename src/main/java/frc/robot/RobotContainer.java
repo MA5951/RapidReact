@@ -107,7 +107,8 @@ public class RobotContainer {
                 .whileActiveContinuous(() -> Conveyor.getInstance().setAmountOfBalls(0));
 
         // ---------------------------- Shooter ------------ ----------------
-        rightTrigger.whileActiveContinuous(new ShooterAutomation());
+        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
+                .whileActiveContinuous(new ShooterAutomation());
 
         leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), true).andThen(
                 new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(

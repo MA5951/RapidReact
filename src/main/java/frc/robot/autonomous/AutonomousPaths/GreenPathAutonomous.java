@@ -51,13 +51,15 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
                 new ParallelDeadlineGroup(
                         new ParallelCommandGroup( 
                                 new WaitCommand(4),
-                                new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true)),
-                        new IntakeAutomation(0.6)),
-                new PIDVision(0),
-                new ParallelCommandGroup(
-                        new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-                        new UpperConveyorcommandAutonomous()
+                                new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+                                new IntakeAutomation(0.8))
+                        //new IntakeAutomation(0.6)),
                 )
+                // new PIDVision(0),
+                // new ParallelCommandGroup(
+                //         new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
+                //         new UpperConveyorcommandAutonomous()
+                // )
         );
     }
 }

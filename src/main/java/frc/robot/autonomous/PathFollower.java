@@ -37,10 +37,10 @@ public class PathFollower {
         this.robotWidth = robotWidth;
         this.lookaheadDistance = lookaheadDistance;
         this.size = path.size();
-        this.lastIndex = 0;
+        this.lastIndex = 1;
         this.lastLookaheadIndex = 0;
     }
-
+ 
     /**
      * finds closest point (on the autonomous path) to the robot's position
      *

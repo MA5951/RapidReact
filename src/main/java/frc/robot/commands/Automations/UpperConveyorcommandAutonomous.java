@@ -45,7 +45,7 @@ public class UpperConveyorcommandAutonomous extends CommandBase {
             if (stator == 0) {
                 stator = Shooter.getInstance().getStator();
             }
-            conveyor.setUpperPower(0.9);
+            conveyor.setUpperPower(-0.9);
 
             if ((Shooter.getInstance().getStator() - stator >= 10) && !ballCounted) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);

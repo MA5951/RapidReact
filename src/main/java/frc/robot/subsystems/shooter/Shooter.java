@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Limelight;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.RobotConstants;
@@ -32,12 +33,12 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
   private static Shooter shooter;
 
-
   public Shooter() {
     shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
     shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); // ID9
 
-    shooterPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, PortMap.shooterPistonForward, PortMap.shooterPistonReverse);//Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
+    shooterPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, PortMap.shooterPistonForward,
+        PortMap.shooterPistonReverse);// Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
 
     pidController = new PIDController(ShooterConstants.SHOOTER_VELOCITY_PID_KP,
         ShooterConstants.SHOOTER_VELOCITY_PID_KI, ShooterConstants.SHOOTER_VELOCITY_PID_KD, 0,
@@ -72,8 +73,8 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   public double calculate() {
     return pidController.calculate(getVelocity());
   }
-  
-public double calculate(double input) {
+
+  public double calculate(double input) {
     return pidController.calculate(input);
   }
 
@@ -107,20 +108,28 @@ public double calculate(double input) {
     return true;
   }
 
-  public double getStator(){
+  public double getStator() {
     return shooterRightMotor.getStatorCurrent();
   }
 
   /**
    * Get shooter RPM according to the distance from the target
+   * 
    * @return RPM setpoint
    */
-  public double calculateRPM(){
-    return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) 
-        - 467.32 * frc.robot.Limelight.distance() + 3095.2) * -1);
+  public double calculateRPM() {
+    if (Limelight.distance() > 2.1) {
+      return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2)
+          - 467.32 * frc.robot.Limelight.distance() + 3140.2) * -1);
+    }
+    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2290.8) * -1;
   }
 
-  public double getVoltage(){
+  public double calculateAngle() {
+    return Limelight.distance() * -1.3097 + 8.9796;
+  }
+
+  public double getVoltage() {
     return shooterLeftMotor.getOutput();
   }
 
@@ -132,7 +141,8 @@ public double calculate(double input) {
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
     shooterShuffleboard.addNum("Shooter Calc", calculateRPM());
-    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint());
+    shooterShuffleboard.addNum("Shooter Calc Angle", calculateAngle());
+    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint()); 
   }
 
   public void off() {

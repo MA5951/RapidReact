@@ -7,6 +7,7 @@ package frc.robot.commands.Automations;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Limelight;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
@@ -20,8 +21,7 @@ public class ShooterAutomation extends SequentialCommandGroup {
   public ShooterAutomation() {
     // Add your commands in the addCommands() call, e.g.
     addCommands(
-        new InstantCommand(() -> Shooter.getInstance().close()),
-        new PIDVision(0),
+        new PIDVision(Shooter.getInstance().calculateAngle()),
         new ParallelCommandGroup(
             new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
             new UpperConveyorcommandAutonomous()));

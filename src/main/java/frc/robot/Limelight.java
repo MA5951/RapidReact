@@ -61,6 +61,11 @@ public class Limelight {
         return tx.getDouble(0.0);
     }
 
+    public static boolean getTv() {
+        return tv.getDouble(0) == 1.0;
+    }
+
+
     public static void ledMode(int ledMode) {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ledMode);
     }

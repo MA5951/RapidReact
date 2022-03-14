@@ -1,5 +1,7 @@
 package frc.robot.subsystems.chassis;
 
+import java.nio.file.ClosedWatchServiceException;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -72,7 +74,7 @@ public class Chassis extends SubsystemBase {
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 0, -1, 1);
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
-        ChassisConstants.KD_VISION_ANGLE, 0, 3, -12, 12);
+        ChassisConstants.KD_VISION_ANGLE, 0, 1, -12, 12);
     distancePIDVision = new PIDController(ChassisConstants.KP_VISION_DISTANCE, ChassisConstants.KI_VISION_DISTANCE,
         ChassisConstants.KD_VISION_DISTANCE, 0, 2, -12, 12);
 
@@ -358,5 +360,6 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("roll", navx.getRoll());
     chassisShuffleboard.addNum("pitch", navx.getPitch());
 
+    chassisShuffleboard.addBoolean("tv", Limelight.getTv());
   }
 }

@@ -38,7 +38,7 @@ public class ConveyorCommand extends CommandBase {
     if (conveyor.isBallInUpper) {
       conveyor.setUpperPower(0);
     } else {
-      conveyor.setUpperPower(0.6);
+      conveyor.setUpperPower(-0.6);
     }
     if (conveyor.isBallInUpper()) {
       conveyor.isBallInUpper = true;

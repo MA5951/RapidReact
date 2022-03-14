@@ -15,7 +15,7 @@ public class Paths {
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.3)), 0.2, 1.5, 4, 2.7, 0.2, 0.02);
 
         public static final Path getingOutOfLunchPadPart2 = new Path(
-                        Arrays.asList(new Waypoint(0, 0),new Waypoint(0, 2.45)), 0.2, 1.5, 3, 10, 0.2, 0.02);
+                Arrays.asList(new Waypoint(0, 0),new Waypoint(0, 1.2)), 0.2, 1.5, 3, 10, 0.2, 0.02);
 
         public static final Path goToTheSecondBallPart1 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6),
@@ -29,12 +29,12 @@ public class Paths {
                         0.3, 0.035);
 
         public static final Path gettingOutOfLunchPad = new Path(
-                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.8)), 0.7, 1.5, 3.8, 15, 0.5, 0.03
+                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.45)), 0.1, 1.5, 3.8, 15, 0.5, 0.045
         );
 
         public static final Path testingTurn = new Path(
                 Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6), new Waypoint(-1.2, 0)), 
-                0.2, 2, 0.3, 1.5, 0.3, 0.01
+                0.3, 3, 3.8, 15, 0.3, 0.02
         );
 
         // public static final Path goToTheSecondBallPart4= new Path (

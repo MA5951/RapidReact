@@ -32,14 +32,18 @@ public class AutonomousCommand extends CommandBase {
 
   private Chassis chassis;
 
+  private List<Waypoint> waypoints;
+
+  private Path path;
+
   public AutonomousCommand(Path CHECKING_PATH, boolean reverse) {
+    path = CHECKING_PATH;
     chassis = Chassis.getinstance();
     odometry = chassis.getOdomoteryHandler();
 
-    pathGenerator = new PathGenerator(CHECKING_PATH.spacing, CHECKING_PATH.k, CHECKING_PATH.maxVelocity, CHECKING_PATH.maxAcceleration);
-    List<Waypoint> waypoints = (List<Waypoint>) pathGenerator.calculate(CHECKING_PATH.points);
-    pathFollower = new PathFollower(waypoints, odometry, CHECKING_PATH.lookaheadDistance,
-        CHECKING_PATH.maxRate, ChassisConstants.TRACK_WIDTH);
+    pathGenerator = new PathGenerator(path.spacing, path.k, path.maxVelocity, path.maxAcceleration);
+    waypoints = (List<Waypoint>) pathGenerator.calculate(path.points);
+    
     this.reverse = reverse;
 
     addRequirements(chassis);
@@ -47,6 +51,8 @@ public class AutonomousCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    pathFollower = new PathFollower(waypoints, odometry, path.lookaheadDistance,
+        path.maxRate, ChassisConstants.TRACK_WIDTH);
     chassis.chassisShuffleboard.addBoolean("Autonomus Test", true);
     chassis.resetSensors();
     chassis.setIdleMode(NeutralMode.Brake);

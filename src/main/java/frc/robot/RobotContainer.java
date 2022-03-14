@@ -15,6 +15,8 @@ import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.TestingPathAutonomous;
 import frc.robot.commands.Automations.*;
+import frc.robot.commands.chassis.AutonomousCommand;
+import frc.robot.commands.chassis.Paths;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.climb.ClimbConstants;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -110,7 +112,7 @@ public class RobotContainer {
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                 .whileActiveContinuous(new ShooterAutomation());
 
-        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), true).andThen(
+        leftTrigger.whileActiveContinuous(new PistonCommand(Shooter.getInstance(), false).andThen(
                 new ShooterCommand(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(
                         new UpperConveyorcommandAutonomous().perpetually())));
 
@@ -159,6 +161,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new RedPathAutonomous();
+        return new AutonomousCommand(Paths.testingTurn, false);
     }
 }

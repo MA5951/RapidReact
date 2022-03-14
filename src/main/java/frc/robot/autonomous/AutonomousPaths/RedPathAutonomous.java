@@ -37,7 +37,7 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 				new ParallelDeadlineGroup(
 					new ParallelCommandGroup( 
 							new WaitCommand(4),
-							new AutonomousCommand(Paths.getingOutOfLunchPadPart2, true)),
+							new AutonomousCommand(Paths.gettingOutOfLunchPad, true)),
 					new IntakeAutomation(0.6)),
 				new ParallelDeadlineGroup(
 						new PIDVision(0),

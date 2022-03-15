@@ -102,12 +102,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // schedule the autonomous command (example)
+    Shooter.getInstance().close();
+    Conveyor.getInstance().setAmountOfBalls(1);
     Chassis.getinstance().resetSensors();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    Conveyor.getInstance().setAmountOfBalls(1);
-    Shooter.getInstance().close();
     // CommandScheduler.getInstance().schedule(new GreenPathAutonomous());
 
   }
@@ -145,11 +145,11 @@ public class Robot extends TimedRobot {
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
             ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4 
             : 0));
-    // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
-    //     ClimbRotation.getInstance(),
-    //     () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
-    //         ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
-    //         : 0));
+    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
+        ClimbRotation.getInstance(),
+        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
+            ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
+            : 0));
 
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));

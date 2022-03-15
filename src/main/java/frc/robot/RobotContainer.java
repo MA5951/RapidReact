@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.TestingPathAutonomous;
@@ -160,6 +161,6 @@ public class RobotContainer {
          */
         public Command getAutonomousCommand() {
                 // An ExampleCommand will run in autonomous
-                return new AutonomousCommand(Paths.testingTurn, false);
+                return new RedPathAutonomous();
         }
 }

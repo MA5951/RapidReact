@@ -30,7 +30,6 @@ public class BluePathAutonomous extends SequentialCommandGroup {
                         new PIDVision(0),
                         new ShooterCommand(-200)
                 ),
-                new WaitCommand(3.5),
                 new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
                         new UpperConveyorcommandAutonomous()));
     }

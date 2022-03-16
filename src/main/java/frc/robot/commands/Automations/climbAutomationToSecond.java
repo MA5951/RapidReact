@@ -22,16 +22,16 @@ public class climbAutomationToSecond extends SequentialCommandGroup {
 		// Add your commands in the addCommands() call, e.g.
 		// addCommands(new FooCommand(), new BarCommand());
 		addCommands(
-				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 6.5),
+				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1), // change to 3 
 				new ParallelDeadlineGroup(
 						new ControlCommand(ClimbExtension.getInstance(),
 								ClimbConstants.MAX_POSITION / 1.4, true, true),
-						new ControlCommand(ClimbRotation.getInstance(), -0.28,
+						new ControlCommand(ClimbRotation.getInstance(), 3,
 								false,
 								true)),
 				new ParallelDeadlineGroup(
-						new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
-						new ControlCommand(ClimbRotation.getInstance(), 1.55,
+						new ControlCommand(ClimbExtension.getInstance(), 0, false, true),
+						new ControlCommand(ClimbRotation.getInstance(), 0,
 								false,
 								true)),
 				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1));

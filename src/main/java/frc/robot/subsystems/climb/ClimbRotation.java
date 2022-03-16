@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import frc.robot.subsystems.chassis.Chassis;
 
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
@@ -59,13 +60,17 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         return climbRotation;
     }
 
+    public double averageDis(){
+        return (leftRotationMotor.getSelectedSensorPosition() + rightRotationMotor.getSelectedSensorPosition())/2;
+    }
+
     public boolean getHallEffect() {
         return !hallEffect.get();
     }
 
     @Override
     public void setSetpoint(double setPoint) {
-        rotationPID.setSetpoint(setPoint);
+       rotationPID.setSetpoint((setPoint/90) * ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
     }
 
     @Override
@@ -75,7 +80,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public double calculate() {
-        return rotationPID.calculate(leftRotationMotor.getSelectedSensorPosition()) * feedforward;
+        return rotationPID.calculate(averageDis()) * feedforward;
     }
 
     @Override
@@ -97,21 +102,23 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     public void reset() {
         leftRotationMotor.setSelectedSensorPosition(0);
+        rightRotationMotor.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
-
         if (getHallEffect()) {
-            leftRotationMotor.setSelectedSensorPosition(0);
+           reset();
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         shuffleboard.addBoolean("open passive?", Chassis.getinstance().canOpenPassiveArm());
 
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
-        shuffleboard.addNum("encoder left", leftRotationMotor.getSelectedSensorPosition());
+        shuffleboard.addNum("averageDis", averageDis());
         shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
-        // feedforward = shuffleboard.getNum("F");
+
+    
+       
     }
 }

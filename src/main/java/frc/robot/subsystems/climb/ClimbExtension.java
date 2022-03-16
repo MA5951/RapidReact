@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import frc.robot.subsystems.chassis.Chassis;
 
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
@@ -24,8 +25,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   private TalonFX extensionMotor;
   private PIDController extensionPID;
   private Shuffleboard shuffleboard;
-  public double feedforward = 1;
-  public double setPoint = 0;
+
 
   public ClimbExtension() {
     extensionMotor = new TalonFX(PortMap.climbExtensionMotor);
@@ -34,8 +34,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
         ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
     shuffleboard = new Shuffleboard("ClimbExtension");
-    feedforward = 1;
-    extensionMotor.setSelectedSensorPosition(0);
+     reset();
   }
 
   public static ClimbExtension getInstance() {
@@ -47,7 +46,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public void setSetpoint(double setPoint) {
-    extensionPID.setSetpoint(setPoint);
+    extensionPID.setSetpoint(setPoint * ClimbConstants.TICK_PER_METER_EXTENSION);
   }
 
   @Override
@@ -57,6 +56,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public double calculate() {
+   
     return extensionPID.calculate(extensionMotor.getSelectedSensorPosition());
   }
 
@@ -90,7 +90,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     // This method will be called once per scheduler run
     shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition());
     shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
-
-    shuffleboard.addNum("pid value", calculate(extensionMotor.getSelectedSensorPosition()));
+    shuffleboard.addNum("pid value", calculate());
+    shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint());
   }
 }

@@ -1,7 +1,4 @@
-package frc.robot.commands.chassis;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+package frc.robot.autonomous;
 import java.util.Arrays;
 
 import com.ma5951.utils.autonomous.Path;
@@ -30,19 +27,5 @@ public class Paths {
 
         public static final Path gettingOutOfLunchPad = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.2)), 0.1, 1.5, 3.8, 15, 0.5, 0.045);
-
-        public static final Path testingTurn = new Path(
-                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.6), new Waypoint(-1.2, 0)),
-                        0.3, 3, 3.8, 15, 0.4, 0.02);
-
-        // public static final Path goToTheSecondBallPart4= new Path (
-        // Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.2))
-        // , 0.2, 1.5, 2, 1, 0.1, 0.01);
-
-        public static final Path goToHPBallPart1 = new Path(
-                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.8), new Waypoint(0.8, 1)), 0.2, 1.5, 2, 1,
-                        0.3, 0.01);
-
-        // public static final Path goToHPBallPart1 = new Path()
 
 }

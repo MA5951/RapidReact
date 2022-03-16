@@ -7,16 +7,11 @@ package frc.robot.subsystems.climb;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
-import frc.robot.subsystems.chassis.Chassis;
 
-import com.ma5951.utils.JoystickContainer;
-import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
-import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
 
 public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
@@ -48,6 +43,10 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   public void setSetpoint(double setPoint) {
     extensionPID.setSetpoint(setPoint * ClimbConstants.TICK_PER_METER_EXTENSION);
   }
+  
+  public double getSetPoint(){
+    return extensionPID.getSetpoint();
+  }
 
   @Override
   public boolean atSetpoint() {
@@ -70,7 +69,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   }
 
   public void keepArmInPlace() {
-    extensionPID.setSetpoint(extensionMotor.getSelectedSensorPosition());
+    extensionPID.setSetpoint(extensionMotor.getSelectedSensorPosition() /  ClimbConstants.TICK_PER_METER_EXTENSION);
   }
 
   public void reset() {

@@ -7,19 +7,14 @@ package frc.robot.subsystems.climb;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ma5951.utils.motor.MA_Falcon;
-import com.revrobotics.CANSparkMaxLowLevel;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import frc.robot.subsystems.chassis.Chassis;
 
-import com.ma5951.utils.JoystickContainer;
-import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
-import com.ma5951.utils.motor.MA_SparkMax;
 import com.ma5951.utils.subsystem.ControlSubsystem;
 
 public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
@@ -97,7 +92,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     }
 
     public boolean canMove() {
-        return getCurrent() > 20; // TODO
+        return getCurrent() > 20;
     }
 
     public void reset() {

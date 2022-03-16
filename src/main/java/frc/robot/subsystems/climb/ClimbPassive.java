@@ -62,7 +62,7 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
   }
 
   public boolean canMove() {
-    return leftPassiveMotor.getPosition() < 10; // TODO
+    return leftPassiveMotor.getPosition() < 10;
   }
 
   public void reset() {

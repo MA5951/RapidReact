@@ -52,7 +52,7 @@ public class ChassisConstants {
     public static final double KTHRESHOLD = 0.1;
     public static final double KSCALE = 0.3;
 
-    public static final double KchassisLength = 0.83; // TODO
+    public static final double KchassisLength = 0.83;
     public static final double KwhellRadius = 0.508;
 
     public static final double KSUB_MAS = 26;
@@ -61,11 +61,11 @@ public class ChassisConstants {
     public static final int KTICKS_PER_REVOLUTION = 2048;
     public static final double KMETER_PER_TICKS = (2 * Math.PI * KwhellRadius)
             / (KTICKS_PER_REVOLUTION / KMOTOR_GEAR_RATIO);
-    public final static double KSPROCKET_RADIUS = 0.016;// TOOD
-    public static final double KCHASSIS_GEAR = KwhellRadius * KMOTOR_GEAR_RATIO; // TODO
+    public final static double KSPROCKET_RADIUS = 0.016;
+    public static final double KCHASSIS_GEAR = KwhellRadius * KMOTOR_GEAR_RATIO;
     public final static double KMOTOR_FORCE = ((1 / KMOTOR_GEAR_RATIO) * RobotConstants.KSTALL_TORQUE_FALCON * 2)
             / KwhellRadius;
     public static final double KMAX_SPEED = Calculations.fromRPMToLinearSpeed(DCMotor.getNEO(2).freeSpeedRadPerSec * 10,
-            KCHASSIS_GEAR); // TODO
+            KCHASSIS_GEAR);
     public static final double KMAX_ACCELERATION = KMOTOR_FORCE * 2 / KSUB_MAS;
 }

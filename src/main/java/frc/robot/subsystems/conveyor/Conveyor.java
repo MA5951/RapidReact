@@ -77,7 +77,6 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        conveyorShuffleboard.addNum("statur", getUpperStator());
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);

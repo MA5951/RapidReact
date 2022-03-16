@@ -5,7 +5,6 @@
 package frc.robot.commands.shooter;
 
 import java.util.function.Supplier;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Limelight;
 import frc.robot.subsystems.shooter.Shooter;
@@ -15,16 +14,12 @@ public class ShooterCommand extends CommandBase {
   /** Creates a new ShooterCommand. */
   private Shooter shooter;
   private Supplier<Double> setpoint;
-  private boolean stop;
-  private double timeOut;
-  private double time;
 
   public ShooterCommand(double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = Shooter.getInstance();
     addRequirements(shooter);
     this.setpoint = () -> setpoint;
-    this.stop = true;
   }
 
   public ShooterCommand(Supplier<Double> setpoint) {
@@ -32,25 +27,11 @@ public class ShooterCommand extends CommandBase {
     shooter = Shooter.getInstance();
     addRequirements(shooter);
     this.setpoint = setpoint;
-    this.stop = true;
-  }
-
-  public ShooterCommand(double setpoint, boolean stop) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this(setpoint);
-    this.stop = stop;
-  }
-
-  public ShooterCommand(Supplier<Double> setpoint, boolean stop) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this(setpoint);
-    this.stop = stop;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    time = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

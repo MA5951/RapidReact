@@ -4,38 +4,27 @@
 
 package frc.robot.commands.Automations;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.conveyor.ConveyBallsCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class UpperConveyorCommand extends CommandBase {
+public class UpperConveyorcommand extends CommandBase {
     /**
-     * Upper Conveyor Command Without Waiting
+     * Upper Conveyor Command With Waiting
      */
     private Conveyor conveyor;
     private double stator = 0;
 
-    private boolean isBallAtTop = true;
-    private boolean isStuck = false;
     private boolean ballCounted = false;
 
-    private double time;
-
-    private ConveyBallsCommand conveyBallsCommand;
-
-    public UpperConveyorCommand() {
+    public UpperConveyorcommand() {
         conveyor = Conveyor.getInstance();
         addRequirements(conveyor);
-
-        conveyBallsCommand = new ConveyBallsCommand();
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        time = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -46,12 +35,15 @@ public class UpperConveyorCommand extends CommandBase {
                 stator = Shooter.getInstance().getStator();
             }
             conveyor.setUpperPower(-0.9);
-            conveyor.setLowerPower(-0.6);
 
-            if ((Shooter.getInstance().getStator() - stator >= 10) && !ballCounted) {
+            if ((Shooter.getInstance().getStator() - stator >= 8) && !ballCounted) {
                 conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
                 conveyor.isBallInUpper = false;
                 ballCounted = true;
+            }
+
+            if (conveyor.getAmountOfBalls() < 2) {
+                conveyor.setLowerPower(-0.5);
             }
 
             if (ballCounted && (Shooter.getInstance().getStator() - stator <= 10)) {

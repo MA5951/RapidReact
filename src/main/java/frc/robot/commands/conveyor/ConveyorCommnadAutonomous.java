@@ -1,9 +1,5 @@
-package frc.robot.commands;
+package frc.robot.commands.conveyor;
 
-import java.sql.Time;
-
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
@@ -12,12 +8,6 @@ public class ConveyorCommnadAutonomous extends CommandBase {
 
   private boolean isBallInlower;
   private boolean isBallInUpper;;
-  private double lastCurrent;
-  private double time;
-  private boolean wasItStack;
-  private boolean giveMorePower;
-  private boolean isBallMovedFromLower;
-  private final double currentDiff = 45;
 
   public ConveyorCommnadAutonomous() {
     conveyor = Conveyor.getInstance();
@@ -28,9 +18,6 @@ public class ConveyorCommnadAutonomous extends CommandBase {
   public void initialize() {
     isBallInlower = false;
     isBallInUpper = false;
-    giveMorePower = false;
-    isBallMovedFromLower = false;
-    lastCurrent = 0;
     if (conveyor.getAmountOfBalls() == 1){
       isBallInUpper = true;
     } else if (conveyor.getAmountOfBalls() == 2){

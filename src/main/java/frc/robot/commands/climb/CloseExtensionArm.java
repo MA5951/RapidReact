@@ -10,7 +10,7 @@ import frc.robot.subsystems.climb.ClimbExtension;
 public class CloseExtensionArm extends CommandBase {
   /** Creates a new CloseExtensionArm. */
   private ClimbExtension climbExtension;
-  private final static double maxCurrent = 8; // TODO Change to real voltage value after testing
+  private final static double maxCurrent = 8;
 
   public CloseExtensionArm(ClimbExtension climbExtension) {
     this.climbExtension = climbExtension;
@@ -26,7 +26,7 @@ public class CloseExtensionArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climbExtension.setPower(-0.3); // TODO Check if it -value or +value
+    climbExtension.setPower(-0.3);
   }
 
   // Called once the command ends or is interrupted.

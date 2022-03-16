@@ -8,35 +8,16 @@
 // package frc.robot.autonomous;
 package frc.robot.autonomous.AutonomousPaths;
 
-import java.time.Instant;
-
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-// import frc.robot.Limelight;
-
-// import com.ma5951.utils.commands.ControlCommand;
-
-// import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import frc.robot.commands.automations.UpperConveyorCommand;
-// import frc.robot.commands.chassis.AutonomousCommand;
-// import frc.robot.commands.chassis.Paths;
-// import frc.robot.commands.shooter.ShooterCommand;
-// import frc.robot.subsystems.shooter.Shooter;
-// import frc.robot.subsystems.shooter.ShooterConstants;
-
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.autonomous.Paths;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
+import frc.robot.commands.Automations.UpperConveyorcommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
-import frc.robot.commands.chassis.Paths;
 import frc.robot.commands.shooter.ShooterCommand;
-import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.shooter.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -53,10 +34,10 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
                                 new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
                                 new IntakeAutomation(0.8))
                 ),
-                new PIDVision(0),
+                new PIDVision(Shooter.getInstance().calculateAngle()),
                 new ParallelCommandGroup(
                         new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-                        new UpperConveyorcommandAutonomous()
+                        new UpperConveyorcommand()
                 )
         );
     }

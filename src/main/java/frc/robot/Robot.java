@@ -10,13 +10,8 @@ import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.PistonCommand;
 
-import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
-import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
-import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
-import frc.robot.autonomous.AutonomousPaths.TestingPathAutonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.shooter.Shooter;
@@ -39,7 +34,6 @@ import frc.robot.subsystems.intake.Intake;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private SendableChooser<Command> autoChooser;
   private RobotContainer m_robotContainer;
 
   /**

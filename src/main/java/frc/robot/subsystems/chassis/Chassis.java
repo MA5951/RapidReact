@@ -1,7 +1,5 @@
 package frc.robot.subsystems.chassis;
 
-import java.nio.file.ClosedWatchServiceException;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -35,7 +33,6 @@ public class Chassis extends SubsystemBase {
   private PIDController leftVelocityPID;
 
   private PIDController anglePIDVision;
-  private PIDController distancePIDVision;
 
   public Shuffleboard chassisShuffleboard;
 
@@ -75,8 +72,6 @@ public class Chassis extends SubsystemBase {
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
         ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
-    distancePIDVision = new PIDController(ChassisConstants.KP_VISION_DISTANCE, ChassisConstants.KI_VISION_DISTANCE,
-        ChassisConstants.KD_VISION_DISTANCE, 0, 2, -12, 12);
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
@@ -271,7 +266,6 @@ public class Chassis extends SubsystemBase {
   public void resetPID() {
     leftVelocityPID.reset();
     rightVelocityPID.reset();
-    distancePIDVision.reset();
     anglePIDVision.reset();
   }
 
@@ -279,16 +273,8 @@ public class Chassis extends SubsystemBase {
     return anglePIDVision.calculate(Limelight.getX() * -1, setpoint);
   }
 
-  public double getVisionDistancePIDOutput(double setpoint) {
-    return distancePIDVision.calculate(Limelight.Tshort, setpoint);
-  }
-
   public boolean isVisionAngleAtSetpoint() {
     return anglePIDVision.atSetpoint();
-  }
-
-  public boolean isVisionDistanceAtSetpoint() {
-    return distancePIDVision.atSetpoint();
   }
 
   public boolean isPIDRightVelocityAtSetPoint() {
@@ -352,13 +338,10 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("left distance", getLeftDistance());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 
-    chassisShuffleboard.addNum("leftColorSensor", getLeftColorSensor());
-    chassisShuffleboard.addNum("rightColorSensor", getRightColorSensor());
-
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
-    chassisShuffleboard.addNum("yaw", navx.getYaw());
-    chassisShuffleboard.addNum("roll", navx.getRoll());
-    chassisShuffleboard.addNum("pitch", navx.getPitch());
+    // chassisShuffleboard.addNum("yaw", navx.getYaw());
+    // chassisShuffleboard.addNum("roll", navx.getRoll());
+    // chassisShuffleboard.addNum("pitch", navx.getPitch());
 
     chassisShuffleboard.addBoolean("tv", Limelight.getTv());
   }

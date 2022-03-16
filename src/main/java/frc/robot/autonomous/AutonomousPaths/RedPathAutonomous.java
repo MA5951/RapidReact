@@ -4,23 +4,20 @@
 
 package frc.robot.autonomous.AutonomousPaths;
 
-import com.ma5951.utils.commands.PistonCommand;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.ConveyorCommnadAutonomous;
+import frc.robot.autonomous.Paths;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.UpperConveyorcommandAutonomous;
+import frc.robot.commands.Automations.UpperConveyorcommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
-import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.commands.chassis.Paths;
+import frc.robot.commands.conveyor.ConveyorCommnadAutonomous;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -38,9 +35,9 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 								new WaitCommand(3),
 								new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
 								new IntakeAutomation(0.8))),
-				new PIDVision(0),
+				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
-						new UpperConveyorcommandAutonomous(),
+						new UpperConveyorcommand(),
 						new ShooterCommand(() -> Shooter.getInstance().calculateRPM())),
 				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
 				new ParallelDeadlineGroup(
@@ -52,9 +49,9 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 						new ShooterCommand(-200)),
 				new InstantCommand(() -> Conveyor.getInstance().setAmountOfBalls(1)),
 				new ParallelDeadlineGroup(
-						new PIDVision(0),
+						new PIDVision(Shooter.getInstance().calculateAngle()),
 						new ShooterCommand(-200)),
 				new ShooterCommand(() -> Shooter.getInstance().calculateRPM())
-						.alongWith(new UpperConveyorcommandAutonomous()));
+						.alongWith(new UpperConveyorcommand()));
 	}
 }

@@ -16,7 +16,7 @@ public class ClimbConstants {
     public static final double EXTENSION_KP = 0.0006;
     public static final double EXTENSION_KI = 0;
     public static final double EXTENSION_KD = 0;
-    public static final double EXTENSION_TOLERANCE = 600;
+    public static final double EXTENSION_TOLERANCE = 2212;
 
     public static final double PASSIVE_KP = 0;
     public static final double PASSIVE_KI = 0;

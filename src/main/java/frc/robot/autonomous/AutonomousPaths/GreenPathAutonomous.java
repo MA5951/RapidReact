@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.autonomous.Paths;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.UpperConveyorcommand;
+import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -37,7 +37,7 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
                 new PIDVision(Shooter.getInstance().calculateAngle()),
                 new ParallelCommandGroup(
                         new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-                        new UpperConveyorcommand()
+                        new UpperConveyorCommand()
                 )
         );
     }

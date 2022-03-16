@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.autonomous.Paths;
 import frc.robot.commands.Automations.IntakeAutomation;
-import frc.robot.commands.Automations.UpperConveyorcommand;
+import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -37,7 +37,7 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 								new IntakeAutomation(0.8))),
 				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
-						new UpperConveyorcommand(),
+						new UpperConveyorCommand(),
 						new ShooterCommand(() -> Shooter.getInstance().calculateRPM())),
 				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
 				new ParallelDeadlineGroup(
@@ -52,6 +52,6 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 						new PIDVision(Shooter.getInstance().calculateAngle()),
 						new ShooterCommand(-200)),
 				new ShooterCommand(() -> Shooter.getInstance().calculateRPM())
-						.alongWith(new UpperConveyorcommand()));
+						.alongWith(new UpperConveyorCommand()));
 	}
 }

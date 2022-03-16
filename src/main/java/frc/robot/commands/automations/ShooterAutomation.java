@@ -22,6 +22,6 @@ public class ShooterAutomation extends SequentialCommandGroup {
         new PIDVision(Shooter.getInstance().calculateAngle()),
         new ParallelCommandGroup(
             new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-            new UpperConveyorcommand()));
+            new UpperConveyorCommand()));
   }
 }

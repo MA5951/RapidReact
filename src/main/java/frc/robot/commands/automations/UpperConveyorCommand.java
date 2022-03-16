@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class UpperConveyorcommand extends CommandBase {
+public class UpperConveyorCommand extends CommandBase {
     /**
      * Upper Conveyor Command With Waiting
      */
@@ -17,7 +17,7 @@ public class UpperConveyorcommand extends CommandBase {
 
     private boolean ballCounted = false;
 
-    public UpperConveyorcommand() {
+    public UpperConveyorCommand() {
         conveyor = Conveyor.getInstance();
         addRequirements(conveyor);
     }

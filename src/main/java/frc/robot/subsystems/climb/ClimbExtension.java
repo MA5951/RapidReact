@@ -90,6 +90,6 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition());
     shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
     shuffleboard.addNum("pid value", calculate());
-    shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint());
+    shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint() / ClimbConstants.TICK_PER_METER_EXTENSION);
   }
 }

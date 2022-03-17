@@ -28,6 +28,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     private Shuffleboard shuffleboard;
     public double feedforward = 1;
     public double setPoint = 0;
+    public double shuffleBoardFeedforward = 1;
 
     public ClimbRotation() {
         leftRotationMotor = new TalonFX(PortMap.climbRotationLeftMotor);
@@ -107,11 +108,14 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         shuffleboard.addBoolean("open passive?", Chassis.getinstance().canOpenPassiveArm());
+        shuffleboard.addBoolean("At setpoint", rotationPID.atSetpoint());
 
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
-        shuffleboard.addNum("averageDis", averageDis());
-        shuffleboard.addNum("setPoint", rotationPID.getSetpoint());
+        shuffleboard.addNum("averageDis", (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
+        shuffleboard.addNum("setPoint", (rotationPID.getSetpoint() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
+
+        shuffleBoardFeedforward = shuffleboard.getNum("Rotation Feedforward");
 
     
        

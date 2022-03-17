@@ -6,10 +6,10 @@ package frc.robot.subsystems.climb;
 
 /** Add your docs here. */
 public class ClimbConstants {
-    public static final String SYSTEM_NAME = "Shooter";
+    public static final String SYSTEM_NAME = "Climb";
 
-    public static final double ROTATION_KP = 0.0006;
-    public static final double ROTATION_KI = 0.00000075;
+    public static final double ROTATION_KP = 0.0005;
+    public static final double ROTATION_KI = 0; //0.00000075;
     public static final double ROTATION_KD = 0.0003;
     public static final double ROTATION_TOLERANCE = 600;
 

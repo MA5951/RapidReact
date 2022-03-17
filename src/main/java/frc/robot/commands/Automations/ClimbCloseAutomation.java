@@ -33,14 +33,9 @@ public class ClimbCloseAutomation extends SequentialCommandGroup {
                 new ParallelDeadlineGroup(
                         new WaitCommand(2.5),
                         new MotorCommand(ClimbPassive.getInstance(), -0.5)),
-                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 8.5),
+                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 3.75),
                 new ParallelDeadlineGroup(
-                        new ControlCommand(ClimbRotation.getInstance(), 0, true, true),
-                        new KeepExtensionInPlace()),
-                new ParallelDeadlineGroup(
-                        new ControlCommand(ClimbExtension.getInstance(), 9400, false, true),
-                        new ControlCommand(ClimbRotation.getInstance(), 1.55,
-                                false,
-                                true)));
+                        new ControlCommand(ClimbExtension.getInstance(), -0.05, false, true),
+                        new ControlCommand(ClimbRotation.getInstance(), -3, false, true)));
     }
 }

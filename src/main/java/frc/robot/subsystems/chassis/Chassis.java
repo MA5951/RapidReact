@@ -71,7 +71,7 @@ public class Chassis extends SubsystemBase {
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 0, -1, 1);
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
-        ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
+        ChassisConstants.KD_VISION_ANGLE, 0, 1.5, -12, 12);
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
@@ -89,6 +89,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Invert motors and navX
+   * 
    * @param reverse true to invert
    */
   public void setInverted(boolean reverse) {
@@ -109,6 +110,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Invert joysticks
+   * 
    * @param mode true to invert
    */
   public void setJoystickInvert(boolean mode) {
@@ -121,6 +123,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Get if joystick is inverted
+   * 
    * @return true if inverted
    */
   public boolean getJoystickInvert() {
@@ -145,7 +148,8 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Autonomous driving
-   * @param angle Desired angle
+   * 
+   * @param angle    Desired angle
    * @param distance Desired distance
    */
   public void arcadeDrive(double angle, double distance) {
@@ -159,6 +163,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Get the distance the left part of the robot had been moving
+   * 
    * @return The distance in meters
    */
   public double getLeftDistance() {
@@ -167,6 +172,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Get the distance the right part of the robot had been moving
+   * 
    * @return The distance in meters
    */
   public double getRightDistance() {
@@ -199,6 +205,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Get robot velocity in meter per second (MPS)
+   * 
    * @param falconTicks Encoder ticks
    * @return Velocity in m/s
    */
@@ -208,6 +215,7 @@ public class Chassis extends SubsystemBase {
 
   /**
    * Get the distance the robot had been moving in meters
+   * 
    * @param ticks Encoder ticks
    * @return The distance in meters
    */
@@ -232,7 +240,6 @@ public class Chassis extends SubsystemBase {
   public double rightMPS() {
     return falconTicksToWheelVelocity(rightRearMotor.getSelectedSensorVelocity());
   }
-
 
   public void setIdleMode(NeutralMode mode) {
     leftRearMotor.setNeutralMode(mode);
@@ -336,6 +343,7 @@ public class Chassis extends SubsystemBase {
     odometryHandler.update();
     chassisShuffleboard.addNum("right distance", getRightDistance());
     chassisShuffleboard.addNum("left distance", getLeftDistance());
+    chassisShuffleboard.addNum("Right Velocity", getRightVelocity());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());

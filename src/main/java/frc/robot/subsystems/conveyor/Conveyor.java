@@ -71,7 +71,7 @@ public class Conveyor extends SubsystemBase {
         return conveyor;
     }
 
-    public double getUpperStator(){
+    public double getUpperStator() {
         return upperFalcon.getStatorCurrent();
     }
 

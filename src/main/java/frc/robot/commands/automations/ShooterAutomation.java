@@ -7,6 +7,7 @@ package frc.robot.commands.Automations;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.chassis.PIDVision;
+import frc.robot.commands.conveyor.ConveyorAllUp;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.shooter.Shooter;
 

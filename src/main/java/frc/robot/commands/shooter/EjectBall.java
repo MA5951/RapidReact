@@ -5,25 +5,16 @@
 package frc.robot.commands.shooter;
 
 import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Limelight;
-import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.ShooterConstants;
 
-public class ShooterCommand extends CommandBase {
-  /** Creates a new ShooterCommand. */
+public class EjectBall extends CommandBase {
+  /** Creates a new EjectBall. */
   private Shooter shooter;
-  private Supplier<Double> setpoint;
+  private double setpoint;
 
-  public ShooterCommand(double setpoint) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    shooter = Shooter.getInstance();
-    addRequirements(shooter);
-    this.setpoint = () -> setpoint;
-  }
-
-  public ShooterCommand(Supplier<Double> setpoint) {
+  public EjectBall(double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = Shooter.getInstance();
     addRequirements(shooter);
@@ -33,30 +24,20 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooter.open();
+    shooter.setSetpoint(this.setpoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Limelight.getTv()) {
-      if (Limelight.distance() > 2.1) {
-        shooter.close();
-      } else {
-        shooter.open();
-      }
-      shooter.setSetpoint(setpoint.get()); // Launch Pad: 3275 Fender: 2500
-    } else {
-      shooter.open();
-      shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_FENDER);
-    }
     shooter.setVoltage(shooter.calculate(shooter.getVelocity()));
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setPower(0);
+    shooter.setVoltage(0);
   }
 
   // Returns true when the command should end.

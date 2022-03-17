@@ -37,6 +37,7 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 								new IntakeAutomation(0.8))),
 				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
+						new WaitCommand(3.3),
 						new UpperConveyorCommand(),
 						new ShooterCommand(() -> Shooter.getInstance().calculateRPM())),
 				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),

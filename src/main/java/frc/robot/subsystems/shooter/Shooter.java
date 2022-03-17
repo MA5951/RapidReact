@@ -137,7 +137,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   public void periodic() {
     shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
-    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint()); 
+    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint());
   }
 
   public void off() {

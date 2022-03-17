@@ -15,7 +15,7 @@ import frc.robot.subsystems.chassis.Chassis;
 
 public class PIDVision extends CommandBase {
   /**
-   *  Center In Front Of A Target
+   * Center In Front Of A Target
    */
 
   private Chassis chassis;
@@ -30,9 +30,9 @@ public class PIDVision extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (Limelight.getX() < 0){
+    if (Limelight.getX() < 0) {
       this.angle *= -1;
-   }
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

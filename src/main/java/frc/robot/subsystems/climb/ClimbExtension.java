@@ -27,9 +27,10 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     extensionMotor.setNeutralMode(NeutralMode.Brake);
     
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
-        ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
+        ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -9, 9);
     shuffleboard = new Shuffleboard("ClimbExtension");
      reset();
+     
   }
 
   public static ClimbExtension getInstance() {
@@ -55,7 +56,6 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public double calculate() {
-   
     return extensionPID.calculate(extensionMotor.getSelectedSensorPosition());
   }
 
@@ -75,6 +75,9 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   public void reset() {
     extensionMotor.setSelectedSensorPosition(0);
   }
+public double getDistance(){
+  return extensionMotor.getSelectedSensorPosition();
+}
 
   public double getVoltage() {
     return extensionMotor.getMotorOutputVoltage();
@@ -83,6 +86,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   public double getCurrent() {
     return extensionMotor.getStatorCurrent();
   }
+  
 
   @Override
   public void periodic() {
@@ -90,6 +94,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition());
     shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
     shuffleboard.addNum("pid value", calculate());
+    shuffleboard.addNum("Current", getCurrent());
     shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint() / ClimbConstants.TICK_PER_METER_EXTENSION);
   }
 }

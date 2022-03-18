@@ -142,12 +142,13 @@ public class Robot extends TimedRobot {
     ClimbExtension.getInstance().reset();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
+    
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
         ClimbExtension.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
             ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4
             : 0));
-
+           //  CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new Extancen());
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
         ClimbRotation.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
@@ -158,7 +159,7 @@ public class Robot extends TimedRobot {
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     Shuffleboard.selectTab("Teleop");
   }
-
+  
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {

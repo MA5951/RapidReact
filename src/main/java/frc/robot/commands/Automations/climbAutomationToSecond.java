@@ -5,12 +5,18 @@
 package frc.robot.commands.Automations;
 
 import com.ma5951.utils.commands.ControlCommand;
+import com.ma5951.utils.commands.MotorCommand;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.climb.ClimbPassiveCommand;
+import frc.robot.commands.climb.ClimbToSecend;
 import frc.robot.subsystems.climb.ClimbConstants;
 import frc.robot.subsystems.climb.ClimbExtension;
+import frc.robot.subsystems.climb.ClimbPassive;
 import frc.robot.subsystems.climb.ClimbRotation;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -22,14 +28,15 @@ public class climbAutomationToSecond extends SequentialCommandGroup {
 		// Add your commands in the addCommands() call, e.g.
 		// addCommands(new FooCommand(), new BarCommand());
 		addCommands(
-				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1), // change to 3
+				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 0), // change to 3
 				new ParallelDeadlineGroup(
 						new ControlCommand(ClimbExtension.getInstance(), ClimbConstants.MAX_POSITION / 1.3, true, true),
-						new ControlCommand(ClimbRotation.getInstance(), 2, false, true)),
-			//	new InstantCommand(() -> ClimbRotation.getInstance().feedforward = ClimbRotation.getInstance().shuffleBoardFeedforward),
-				new ParallelDeadlineGroup(
-						new ControlCommand(ClimbRotation.getInstance(), -3, false, true),
-						new ControlCommand(ClimbExtension.getInstance(), -0.05, false, true)),
-				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 1));
+						new MotorCommand(ClimbRotation.getInstance(), -0.07)),
+				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 0),//ClimbRotation.getInstance().shuffleBoardFeedforward),
+				new SequentialCommandGroup(
+						new ClimbToSecend(),
+						new ControlCommand(ClimbRotation.getInstance(), -3, true, true),
+					new ClimbPassiveCommand(0.5)),
+				new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 0));
 	}
 }

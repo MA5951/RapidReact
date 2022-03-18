@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 import frc.robot.subsystems.chassis.Chassis;
 
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.subsystem.ControlSubsystem;
@@ -42,9 +43,9 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
         hallEffect = new DigitalInput(1);
 
-        rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
-                ClimbConstants.ROTATION_KD,
-                0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
+        rotationPID = new PIDController(ClimbConstants.ROTATION_ON_BAR_KP, ClimbConstants.ROTATION_ON_BAR_KI,
+                ClimbConstants.ROTATION_ON_BAR_KD,
+                0, ClimbConstants.ROTATION_TOLERANCE, -5, 5);
         shuffleboard = new Shuffleboard("ClimbRotation");
         feedforward = 1;
     }
@@ -114,10 +115,6 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         shuffleboard.addNum("pid", calculate());
         shuffleboard.addNum("averageDis", (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
         shuffleboard.addNum("setPoint", (rotationPID.getSetpoint() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
-
-        shuffleBoardFeedforward = shuffleboard.getNum("Rotation Feedforward");
-
-    
-       
+        
     }
 }

@@ -19,7 +19,7 @@ public class Paths {
                                         new Waypoint(-0.9, 0)),
                         0.2, 3, 3.7, 1.5, 0.3, 0.02);
         public static final Path goToTheSecondBallPart2 = new Path(
-                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0.1, 2.5)), 0.1, 1.2, 2.8, 1.2, 0.3, 0.04);
+                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0.25, 2.5)), 0.1, 1.2, 2.8, 1.2, 0.3, 0.04);
 
         public static final Path goToTheSecondBallPart3 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2), new Waypoint(-0.5, 1.75)), 0.2, 1, 3, 1,

@@ -27,12 +27,10 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 	 * Three Balls Autonomous
 	 */
 	public RedPathAutonomous() {
-		// Add your commands in the addCommands() call, e.g.
-		// addCommands(new FooCommand(), new BarCommand());
 		addCommands(
 				new ParallelDeadlineGroup(
 						new ParallelCommandGroup(
-								new WaitCommand(3),
+								new WaitCommand(2.2),
 								new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
 								new IntakeAutomation(0.8))),
 				new PIDVision(Shooter.getInstance().calculateAngle()),

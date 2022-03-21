@@ -75,6 +75,7 @@ public class RobotContainer {
 
         // ---------------------------- Intake & Conveyor ----------------------------
         JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5)).whileActiveContinuous(new IntakeAutomation(0.8));
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
                 .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
@@ -112,7 +113,7 @@ public class RobotContainer {
         leftTrigger.whileActiveContinuous(new EjectBall(ShooterConstants.SHOOTER_VELOCITY_FENDER)
                 .alongWith(new UpperConveyorCommand()));
 
-        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
                 .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
 
         JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));
@@ -160,6 +161,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new RedPathAutonomous();
+        return new GreenPathAutonomous();
     }
 }

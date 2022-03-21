@@ -6,6 +6,7 @@ package frc.robot.autonomous.AutonomousPaths;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.autonomous.Paths;
 import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
@@ -29,7 +30,11 @@ public class BluePathAutonomous extends SequentialCommandGroup {
                         new PIDVision(Shooter.getInstance().calculateAngle()),
                         new ShooterCommand(-200)
                 ),
-                new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
-                        new UpperConveyorCommand()));
+                new ParallelDeadlineGroup(
+                        new WaitCommand(3),
+                        new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
+                                new UpperConveyorCommand())    
+                        )
+                );
     }
 }

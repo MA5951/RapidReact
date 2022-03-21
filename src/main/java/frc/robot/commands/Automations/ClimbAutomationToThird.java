@@ -6,6 +6,8 @@ package frc.robot.commands.Automations;
 
 import com.ma5951.utils.commands.ControlCommand;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbRotation;
@@ -20,7 +22,14 @@ public class ClimbAutomationToThird extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ControlCommand(ClimbExtension.getInstance(),
-            0.6, true, true),
-        new ControlCommand(ClimbRotation.getInstance(), -15, true, true));// );
+            0.1, true, true),
+        new InstantCommand(() -> ClimbRotation.getInstance().setF(0)),
+        new InstantCommand(() -> ClimbRotation.getInstance().setIntegratorRange(-0.1, 0.1)),
+        new InstantCommand(() -> ClimbRotation.getInstance().setOutputRange(-2, 2)),
+        new ControlCommand(ClimbRotation.getInstance(), -28, true, true),
+        new ParallelCommandGroup(
+            new ControlCommand(ClimbExtension.getInstance(),
+                0.86, false, true),
+            new ControlCommand(ClimbRotation.getInstance(), -28, false, true)));
   }
 }

@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.climb.ClimbPassiveCommand;
+import frc.robot.commands.climb.CloseExtensionToSecend;
 import frc.robot.commands.climb.KeepExtensionInPlace;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -24,18 +26,20 @@ import frc.robot.subsystems.climb.ClimbRotation;
 public class ClimbCloseAutomation extends SequentialCommandGroup {
     /** Close Extension Arms Automation */
     public ClimbCloseAutomation() {
-        // Add the deadline command in the super() call. Add other commands using
-        // addCommands().
         addCommands(
                 new ParallelDeadlineGroup(
                         new WaitUntilCommand(Chassis.getinstance()::canOpenPassiveArm),
                         new MotorCommand(ClimbExtension.getInstance(), 0.4)),
                 new ParallelDeadlineGroup(
-                        new WaitCommand(2.5),
+                        new WaitCommand(1.5),
                         new MotorCommand(ClimbPassive.getInstance(), -0.5)),
-                new InstantCommand(() -> ClimbRotation.getInstance().feedforward = 3.75),
                 new ParallelDeadlineGroup(
-                        new ControlCommand(ClimbExtension.getInstance(), -0.05, false, true),
-                        new ControlCommand(ClimbRotation.getInstance(), -3, false, true)));
+                        new ControlCommand(ClimbRotation.getInstance(), -3, false, true),
+                        new CloseExtensionToSecend()),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(1.5),
+                        new ClimbPassiveCommand(0.5),
+                        new KeepExtensionInPlace(),
+                        new ControlCommand(ClimbRotation.getInstance(), -3, true, true)));           
     }
 }

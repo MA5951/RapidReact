@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
 
+import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.controllers.PIDController;
 import com.ma5951.utils.subsystem.ControlSubsystem;
@@ -27,7 +28,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
     extensionMotor.setNeutralMode(NeutralMode.Brake);
     
     extensionPID = new PIDController(ClimbConstants.EXTENSION_KP, ClimbConstants.EXTENSION_KI,
-        ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -9, 9);
+        ClimbConstants.EXTENSION_KD, 0, ClimbConstants.EXTENSION_TOLERANCE, -12, 12);
     shuffleboard = new Shuffleboard("ClimbExtension");
      reset();
      
@@ -69,7 +70,7 @@ public class ClimbExtension extends SubsystemBase implements ControlSubsystem {
   }
 
   public void keepArmInPlace() {
-    extensionPID.setSetpoint(extensionMotor.getSelectedSensorPosition() /  ClimbConstants.TICK_PER_METER_EXTENSION);
+    extensionPID.setSetpoint(extensionMotor.getSelectedSensorPosition() *  ClimbConstants.TICK_PER_METER_EXTENSION);
   }
 
   public void reset() {
@@ -91,10 +92,22 @@ public double getDistance(){
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition());
+    shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition()/ ClimbConstants.TICK_PER_METER_EXTENSION);
     shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
     shuffleboard.addNum("pid value", calculate());
     shuffleboard.addNum("Current", getCurrent());
     shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint() / ClimbConstants.TICK_PER_METER_EXTENSION);
+/*
+    extensionPID.setP(shuffleboard.getNum("KP"));
+    extensionPID.setI(shuffleboard.getNum("KI"));
+    extensionPID.setD(shuffleboard.getNum("KD"));
+    setSetpoint(shuffleboard.getNum("setSetPoint"));
+    if(shuffleboard.getBoolean("Start")){
+        setVoltage(calculate());
+    }else{
+        
+      setVoltage(JoystickContainer.operatingJoystick.getRawAxis(1) * 12 * 0.4);
   }
+  */
+}
 }

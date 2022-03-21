@@ -26,10 +26,10 @@ public class ClimbAutomationToThird extends SequentialCommandGroup {
         new InstantCommand(() -> ClimbRotation.getInstance().setF(0)),
         new InstantCommand(() -> ClimbRotation.getInstance().setIntegratorRange(-0.1, 0.1)),
         new InstantCommand(() -> ClimbRotation.getInstance().setOutputRange(-2, 2)),
-        new ControlCommand(ClimbRotation.getInstance(), -28, true, true),
+        new ControlCommand(ClimbRotation.getInstance(), -23, true, true),
         new ParallelCommandGroup(
             new ControlCommand(ClimbExtension.getInstance(),
                 0.86, false, true),
-            new ControlCommand(ClimbRotation.getInstance(), -28, false, true)));
+            new ControlCommand(ClimbRotation.getInstance(), -23, false, true)));
   }
 }

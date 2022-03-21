@@ -43,7 +43,7 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
         rotationPID = new PIDController(ClimbConstants.ROTATION_KP, ClimbConstants.ROTATION_KI,
                 ClimbConstants.ROTATION_KD,
-                0, ClimbConstants.ROTATION_TOLERANCE, -10, 10);
+                0, ClimbConstants.ROTATION_TOLERANCE, -12, 12);
         rotationPID.setF(2.5);
         shuffleboard = new Shuffleboard("ClimbRotation");
         rotationPID.setIntegratorRange(-0.15, 0.15);

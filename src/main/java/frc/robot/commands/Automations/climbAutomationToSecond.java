@@ -37,7 +37,7 @@ public class climbAutomationToSecond extends SequentialCommandGroup {
 				new SequentialCommandGroup(
 						new ControlCommand(ClimbExtension.getInstance(), 0, true, true),
 						new ParallelCommandGroup(
-								new ControlCommand(ClimbRotation.getInstance(), -3.5, false, true),
-								new ControlCommand(ClimbExtension.getInstance(), 0, false, true))));
+								new ControlCommand(ClimbRotation.getInstance(), -12, false, true),
+								new ControlCommand(ClimbExtension.getInstance(), -0.02, false, true))));
 }
 }

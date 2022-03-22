@@ -23,7 +23,7 @@ public class ClimbConstants {
     public static final double PASSIVE_KD = 0;
     public static final double PASSIVE_TOLERANCE = 0;
 
-    public static final double MAX_POSITION = 0.6;
+    public static final double MAX_POSITION = 0.53;
     public static final double TICK_PER_METER_EXTENSION = -155900 * 2;
     public static final double TICK_FOR_90_DEGREES_ROTATION = -53000;
     

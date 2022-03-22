@@ -28,14 +28,12 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
     private PIDController rotationPID;
     private Shuffleboard shuffleboard;
 
-
     public ClimbRotation() {
         leftRotationMotor = new TalonFX(PortMap.climbRotationLeftMotor);
         rightRotationMotor = new TalonFX(PortMap.climbRotationRightMotor);
 
         leftRotationMotor.setNeutralMode(NeutralMode.Brake);
         rightRotationMotor.setNeutralMode(NeutralMode.Brake);
-
 
         rightRotationMotor.follow(leftRotationMotor);
 
@@ -56,20 +54,20 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
         return climbRotation;
     }
 
-public void setF(double F){
-    rotationPID.setF(F);
-    rotationPID.reset();
+    public void setF(double F) {
+        rotationPID.setF(F);
+        rotationPID.reset();
     }
 
-    public void setIntegratorRange(double minimumIntegral , double maximumIntegral){
+    public void setIntegratorRange(double minimumIntegral, double maximumIntegral) {
         rotationPID.setIntegratorRange(minimumIntegral, maximumIntegral);
     }
 
-    public double averageDis(){
-        return (leftRotationMotor.getSelectedSensorPosition() + rightRotationMotor.getSelectedSensorPosition())/2;
+    public double averageDis() {
+        return (leftRotationMotor.getSelectedSensorPosition() + rightRotationMotor.getSelectedSensorPosition()) / 2;
     }
 
-    public double getAngle(){
+    public double getAngle() {
         return (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION;
     }
 
@@ -79,7 +77,7 @@ public void setF(double F){
 
     @Override
     public void setSetpoint(double setPoint) {
-       rotationPID.setSetpoint((setPoint/90) * ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
+        rotationPID.setSetpoint((setPoint / 90) * ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
     }
 
     @Override
@@ -94,7 +92,7 @@ public void setF(double F){
 
     @Override
     public void setVoltage(double voltage) {
-        leftRotationMotor.set(TalonFXControlMode.PercentOutput, voltage / 12.0);//leftRotationMotor.setVoltage(voltage);
+        leftRotationMotor.set(TalonFXControlMode.PercentOutput, 0);//leftRotationMotor.set(TalonFXControlMode.PercentOutput, voltage / 12.0);
     }
 
     public double getVoltage() {
@@ -106,8 +104,8 @@ public void setF(double F){
     }
 
     public boolean canMovePassive() {
-    return (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION <= -2.9;
-      }
+        return (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION <= -2.9;
+    }
 
     public boolean canMove() {
         return getCurrent() > 20;
@@ -116,36 +114,35 @@ public void setF(double F){
     public void reset() {
         leftRotationMotor.setSelectedSensorPosition(0);
         rightRotationMotor.setSelectedSensorPosition(0);
-    } 
+    }
 
-    public void setOutputRange(double low , double high){
+    public void setOutputRange(double low, double high) {
         rotationPID.setOutputRange(low, high);
     }
 
     @Override
     public void periodic() {
-        if (getHallEffect() &&  leftRotationMotor.getMotorOutputPercent() == 0) {
-           //reset();
+        if (getHallEffect() && leftRotationMotor.getMotorOutputPercent() == 0) {
+            // reset();
         }
         shuffleboard.addBoolean("hallEffect", getHallEffect());
         shuffleboard.addBoolean("open passive?", canMovePassive());
         shuffleboard.addBoolean("At setpoint", rotationPID.atSetpoint());
 
-
         // This method will be called once per scheduler run
         shuffleboard.addNum("pid", calculate());
         shuffleboard.addNum("averageDis", (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
         shuffleboard.addNum("setPoint", (rotationPID.getSetpoint() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
-/*
-      rotationPID.setP(shuffleboard.getNum("KP"));
-      rotationPID.setI(shuffleboard.getNum("KI"));
-      rotationPID.setD(shuffleboard.getNum("KD"));
-      setSetpoint(shuffleboard.getNum("setSetPoint"));
-      if(shuffleboard.getBoolean("Start")){
-          setVoltage(calculate());
-      }else{
-         setVoltage(JoystickContainer.operatingJoystick.getRawAxis(4) * 12 * 0.4);
-      }
-      */
-}
+        /*
+         * rotationPID.setP(shuffleboard.getNum("KP"));
+         * rotationPID.setI(shuffleboard.getNum("KI"));
+         * rotationPID.setD(shuffleboard.getNum("KD"));
+         * setSetpoint(shuffleboard.getNum("setSetPoint"));
+         * if(shuffleboard.getBoolean("Start")){
+         * setVoltage(calculate());
+         * }else{
+         * setVoltage(JoystickContainer.operatingJoystick.getRawAxis(4) * 12 * 0.4);
+         * }
+         */
+    }
 }

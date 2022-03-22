@@ -9,6 +9,7 @@ import com.ma5951.utils.commands.PistonCommand;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.conveyor.ConveyorCommand;
 import frc.robot.subsystems.intake.Intake;
 
@@ -22,6 +23,7 @@ public class IntakeAutomation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new PistonCommand(Intake.getInstance(), true),
+        new WaitCommand(0.1),
         new ParallelDeadlineGroup(
           new ConveyorCommand(),
           new MotorCommand(Intake.getInstance(), power)

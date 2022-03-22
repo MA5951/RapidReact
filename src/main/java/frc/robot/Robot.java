@@ -146,7 +146,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
         ClimbExtension.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
-            ? JoystickContainer.operatingJoystick.getRawAxis(1) * 0.4
+            ? JoystickContainer.operatingJoystick.getRawAxis(1)
             : 0));
            
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(

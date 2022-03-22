@@ -31,13 +31,15 @@ public class climbAutomationToSecond extends SequentialCommandGroup {
 	/** Second Bar Automation */
 	public climbAutomationToSecond() {
 		addCommands(
-				new InstantCommand(() -> ClimbRotation.getInstance().setF(2.5)),
-				new InstantCommand(() -> ClimbRotation.getInstance().setIntegratorRange(-0.15, 0.15)),
+				// new InstantCommand(() -> ClimbRotation.getInstance().setF(2.5)),
+				// new InstantCommand(() -> ClimbRotation.getInstance().setIntegratorRange(-0.15, 0.15)),
 				new InstantCommand(() -> Intake.getInstance().close()),
 				new SequentialCommandGroup(
 						new ControlCommand(ClimbExtension.getInstance(), 0, true, true),
-						new ParallelCommandGroup(
-								new ControlCommand(ClimbRotation.getInstance(), -12, false, true),
-								new ControlCommand(ClimbExtension.getInstance(), -0.02, false, true))));
+						new ControlCommand(ClimbExtension.getInstance(), -0.01, true, true))
+		);
+						// new ParallelCommandGroup(
+						// 		new ControlCommand(ClimbRotation.getInstance(), -12, false, true),
+						// 		new ControlCommand(ClimbExtension.getInstance(), -0.02, false, true))));
 }
 }

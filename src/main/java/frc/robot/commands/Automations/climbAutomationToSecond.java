@@ -4,24 +4,11 @@
 
 package frc.robot.commands.Automations;
 
-import javax.swing.GroupLayout.ParallelGroup;
-
 import com.ma5951.utils.commands.ControlCommand;
-import com.ma5951.utils.commands.MotorCommand;
 
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.climb.ClimbPassiveCommand;
-import frc.robot.commands.climb.CloseExtensionToSecend;
-import frc.robot.commands.climb.KeepExtensionInPlace;
-import frc.robot.subsystems.climb.ClimbConstants;
 import frc.robot.subsystems.climb.ClimbExtension;
-import frc.robot.subsystems.climb.ClimbPassive;
-import frc.robot.subsystems.climb.ClimbRotation;
 import frc.robot.subsystems.intake.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

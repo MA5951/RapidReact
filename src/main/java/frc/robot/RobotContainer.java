@@ -75,9 +75,6 @@ public class RobotContainer {
 
         // ---------------------------- Intake & Conveyor ----------------------------
         JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
-        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5)).whileActiveContinuous(new IntakeAutomation(0.8));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
-                .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
         JoystickContainer.XButton.whileActiveContinuous(
                 () -> Conveyor.getInstance().setLowerPower(0.7));
@@ -152,6 +149,13 @@ public class RobotContainer {
                 .whenPressed(
                         () -> Conveyor.getInstance().setAmountOfBalls(
                                 Conveyor.getInstance().getAmountOfBalls() - 1));
+
+        // ---------------------------- Emergency buttons ----------------------------
+        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
+                .whenActive(new TogglePistonCommand(Intake.getInstance()));
+
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5)).whileActiveContinuous(new IntakeAutomation(0.8));
+        
     }
 
     /**

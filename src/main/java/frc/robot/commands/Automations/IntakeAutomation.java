@@ -23,7 +23,7 @@ public class IntakeAutomation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new PistonCommand(Intake.getInstance(), true),
-        new WaitCommand(0.1),
+        new WaitCommand(0.3),
         new ParallelDeadlineGroup(
           new ConveyorCommand(),
           new MotorCommand(Intake.getInstance(), power)

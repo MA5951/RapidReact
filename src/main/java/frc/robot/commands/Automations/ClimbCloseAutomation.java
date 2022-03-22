@@ -7,13 +7,12 @@ package frc.robot.commands.Automations;
 import com.ma5951.utils.commands.ControlCommand;
 import com.ma5951.utils.commands.MotorCommand;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.climb.ClimbPassiveCommand;
-import frc.robot.commands.climb.CloseExtensionToSecend;
+import frc.robot.commands.climb.CloseExtensionToSecond;
 import frc.robot.commands.climb.KeepExtensionInPlace;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
@@ -35,7 +34,7 @@ public class ClimbCloseAutomation extends SequentialCommandGroup {
                         new MotorCommand(ClimbPassive.getInstance(), -0.5)),
                 new ParallelDeadlineGroup(
                         new ControlCommand(ClimbRotation.getInstance(), -3, false, true),
-                        new CloseExtensionToSecend()),
+                        new CloseExtensionToSecond()),
                 new ParallelDeadlineGroup(
                         new WaitCommand(1.5),
                         new ClimbPassiveCommand(0.5),

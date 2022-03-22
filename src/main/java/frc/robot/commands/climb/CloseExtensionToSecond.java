@@ -7,11 +7,11 @@ package frc.robot.commands.climb;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.climb.ClimbExtension;
 
-public class CloseExtensionToSecend extends CommandBase {
+public class CloseExtensionToSecond extends CommandBase {
   /** Creates a new ClimbToSecend. */
  private double deltaCurrent = 0;
  private double lastCurrent = 0;
-  public CloseExtensionToSecend() {
+  public CloseExtensionToSecond() {
      addRequirements(ClimbExtension.getInstance());
   }
 

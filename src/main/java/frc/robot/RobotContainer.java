@@ -88,6 +88,7 @@ public class RobotContainer {
 
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                 .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
+        
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                 .whenInactive(() -> Intake.getInstance().setPower(0));
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
@@ -155,6 +156,7 @@ public class RobotContainer {
                 .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5)).whileActiveContinuous(new IntakeAutomation(0.8));
+
         
     }
 

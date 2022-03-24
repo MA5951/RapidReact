@@ -34,6 +34,10 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     intakePiston.set(Value.kReverse);
   }
 
+  public void off(){
+    intakePiston.set(Value.kOff);
+  }
+
   public boolean isOpen() {
     return intakePiston.get() == Value.kForward;
   }
@@ -57,9 +61,9 @@ public class Intake extends SubsystemBase implements MotorSubsystem, PistonSubsy
     return true;
   }
 
-  public void off() {
-    intakePiston.set(Value.kReverse);
-  }
+  // public void off() {
+  //   intakePiston.set(Value.kReverse);
+  // }
 
   public void reset() {
   }

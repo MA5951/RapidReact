@@ -1,0 +1,42 @@
+ import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
+import frc.robot.commands.Automations.*;
+import frc.robot.commands.chassis.PIDVision;
+import frc.robot.commands.shooter.EjectBall;
+import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.climb.ClimbConstants;
+@ -105,7 +106,7 @@ public class RobotContainer {
+
+        // ---------------------------- Shooter ------------ ----------------
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
+                .whileActiveContinuous(new ShooterAutomation());
+                .whileActiveContinuous(new PIDVision(Shooter.getInstance().calculateAngle()));
+
+        leftTrigger.whileActiveContinuous(new EjectBall(ShooterConstants.SHOOTER_VELOCITY_FENDER)
+                .alongWith(new UpperConveyorCommand()));
+@ -113,7 +114,7 @@ public class RobotContainer {
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
+                .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
+
+        JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));
+        // JoystickContainer.YButton.whenPressed(new PistonCommand(Intake.getInstance(), false));
+
+        JoystickContainer.BButton.whileActiveContinuous(new EjectBall(-1000));
+        JoystickContainer.BButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
+@ -150,6 +151,8 @@ public class RobotContainer {
+                        () -> Conveyor.getInstance().setAmountOfBalls(
+                                Conveyor.getInstance().getAmountOfBalls() - 1));
+
+        leftTrigger.whileActiveContinuous(new ShooterAutomation());
+;
+        // ---------------------------- Emergency buttons ----------------------------
+        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
+                .whenActive(new TogglePistonCommand(Intake.getInstance()));
+@ -165,6 +168,6 @@ public class RobotContainer {
+     */
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return new GreenPathAutonomous();
+        return new RedPathAutonomous();
+    }
+}

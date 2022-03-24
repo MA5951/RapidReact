@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ma5951.utils.JoystickContainer;
 import com.ma5951.utils.Limelight;
 import com.ma5951.utils.commands.PistonCommand;
+import com.ma5951.utils.commands.RunCommand;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
@@ -16,11 +17,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.commands.MotorCommandSuplier;
 import frc.robot.commands.chassis.ChassisPID;
 import frc.robot.commands.chassis.TankDrive;
+import frc.robot.commands.climb.ClimbExtensionCommand;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
 import frc.robot.subsystems.climb.ClimbRotation;
@@ -143,11 +147,13 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
     
-    CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
-        ClimbExtension.getInstance(),
-        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
-            ? JoystickContainer.operatingJoystick.getRawAxis(1)
-            : 0));
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
+    //     ClimbExtension.getInstance(),
+    //     () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
+    //         ? JoystickContainer.operatingJoystick.getRawAxis(1)
+    //         : 0));
+
+    CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new ClimbExtensionCommand());
            
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
         ClimbRotation.getInstance(),
@@ -155,6 +161,7 @@ public class Robot extends TimedRobot {
             ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
             : 0));
 
+    CommandScheduler.getInstance().setDefaultCommand(Intake.getInstance(), new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Intake.getInstance()::off,()->{}, Intake.getInstance())));
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     Shuffleboard.selectTab("Teleop");

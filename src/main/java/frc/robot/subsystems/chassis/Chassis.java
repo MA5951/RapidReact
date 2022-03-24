@@ -352,5 +352,8 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("pitch", navx.getPitch());
 
     chassisShuffleboard.addBoolean("tv", Limelight.getTv());
+
+    chassisShuffleboard.addBoolean("Vision Angle At Setpoint", anglePIDVision.atSetpoint());
+    chassisShuffleboard.addBoolean("In Shooting Distance", Limelight.getX() < 5);
   }
 }

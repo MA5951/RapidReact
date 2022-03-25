@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
     Limelight.pipeline(0);
+    LEDManager.getInstance().setRainbow();
 
     camera = CameraServer.startAutomaticCapture();
     camera.setResolution(80, 60);
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     Limelight.periodic();
+    LEDManager.getInstance().periodic();
     CommandScheduler.getInstance().run();
   }
 
@@ -146,27 +148,30 @@ public class Robot extends TimedRobot {
     ClimbExtension.getInstance().reset();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
-    
-    // CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new MotorCommandSuplier(
-    //     ClimbExtension.getInstance(),
-    //     () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
-    //         ? JoystickContainer.operatingJoystick.getRawAxis(1)
-    //         : 0));
+
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(),
+    // new MotorCommandSuplier(
+    // ClimbExtension.getInstance(),
+    // () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3
+    // ? JoystickContainer.operatingJoystick.getRawAxis(1)
+    // : 0));
 
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new ClimbExtensionCommand());
-           
+
     CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
         ClimbRotation.getInstance(),
         () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
             ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
             : 0));
 
-    CommandScheduler.getInstance().setDefaultCommand(Intake.getInstance(), new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Intake.getInstance()::off,()->{}, Intake.getInstance())));
+    CommandScheduler.getInstance().setDefaultCommand(Intake.getInstance(),
+        new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Intake.getInstance()::off, () -> {
+        }, Intake.getInstance())));
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
     Shuffleboard.selectTab("Teleop");
   }
-  
+
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {

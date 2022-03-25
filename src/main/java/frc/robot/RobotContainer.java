@@ -88,7 +88,7 @@ public class RobotContainer {
 
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                 .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
-        
+
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
                 .whenInactive(() -> Intake.getInstance().setPower(0));
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
@@ -130,7 +130,9 @@ public class RobotContainer {
 
         JoystickContainer.POVUp
                 .whenActive(new ControlCommand(ClimbExtension.getInstance(),
-                        ClimbConstants.MAX_POSITION, true, true));
+                        ClimbConstants.MAX_POSITION, true, true)
+                                .alongWith(new InstantCommand(
+                                        LEDManager.getInstance()::setRainbow)));
 
         JoystickContainer.POVDown.whenActive(new climbAutomationToSecond());
 
@@ -155,9 +157,9 @@ public class RobotContainer {
         new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
                 .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
-        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5)).whileActiveContinuous(new IntakeAutomation(0.8));
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
+                .whileActiveContinuous(new IntakeAutomation(0.8));
 
-        
     }
 
     /**

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LEDManager;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.motor.MA_TalonSRX;
@@ -57,6 +58,17 @@ public class Conveyor extends SubsystemBase {
     public void setAmountOfBalls(int numBalls) {
         if ((numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS && numBalls >= 0) {
             amountOfBalls = numBalls;
+            switch (amountOfBalls) {
+                case 0:
+                    LEDManager.getInstance().setRed();
+                    break;
+                case 1:
+                    LEDManager.getInstance().setOrange();
+                    break;
+                case 2:
+                    LEDManager.getInstance().setGreen();
+                    break;
+            }
         }
     }
 

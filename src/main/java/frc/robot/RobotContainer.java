@@ -44,24 +44,24 @@ import com.ma5951.utils.commands.TogglePistonCommand;
  */
 
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    public static boolean robotControlMode;
-    public static Joystick leftJoystick = new Joystick(RobotConstants.KLEFT_JOYSTICK_PORT);
-    public static Joystick righJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
-    public static Trigger leftTrigger = new Trigger(
-            () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.L_TRIGER) > 0.5);
-    public static Trigger rightTrigger = new Trigger(
-            () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.R_TRIGER) > 0.5);
+        // The robot's subsystems and commands are defined here...
+        public static boolean robotControlMode;
+        public static Joystick leftJoystick = new Joystick(RobotConstants.KLEFT_JOYSTICK_PORT);
+        public static Joystick righJoystick = new Joystick(RobotConstants.KRIGHT_JOYSTICK_PORT);
+        public static Trigger leftTrigger = new Trigger(
+                        () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.L_TRIGER) > 0.5);
+        public static Trigger rightTrigger = new Trigger(
+                        () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.R_TRIGER) > 0.5);
 
-    JoystickButton controlModeToogle;
+        JoystickButton controlModeToogle;
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-    }
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+                // Configure the button bindings
+                configureButtonBindings();
+        }
 
     /**
      * Use this method to define your button->command mappings. Buttons can be
@@ -88,30 +88,20 @@ public class RobotContainer {
                 () -> Conveyor.getInstance()
                         .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
 
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
-
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whenInactive(() -> Intake.getInstance().setPower(0));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whenInactive(() -> Conveyor.getInstance().isBallInUpper = false);
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(0.8));
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(2))
-                .whileActiveContinuous(() -> Conveyor.getInstance().setAmountOfBalls(0));
+        JoystickContainer.YButton.whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
+        JoystickContainer.YButton.whenInactive(() -> Intake.getInstance().setPower(0));
+        JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
+        JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
+        JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().isBallInUpper = false);
+        JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
+        JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(0.8));
 
         // ---------------------------- Shooter ------------ ----------------
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                 .whileActiveContinuous(new ShooterAutomation());
 
-        leftTrigger.whileActiveContinuous(new EjectBall(ShooterConstants.SHOOTER_VELOCITY_FENDER)
-                .alongWith(new UpperConveyorCommand()));
+        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
+                .whileActiveContinuous(new EjectBall(ShooterConstants.SHOOTER_VELOCITY_FENDER).alongWith(new UpperConveyorCommand()));
 
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
                 .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
@@ -156,21 +146,22 @@ public class RobotContainer {
                                 Conveyor.getInstance().getAmountOfBalls() - 1));
 
         // ---------------------------- Emergency buttons ----------------------------
-        new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(1))
-                .whenActive(new TogglePistonCommand(Intake.getInstance()));
 
         new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
                 .whileActiveContinuous(new IntakeAutomation(0.8));
 
+        new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
+                .whenInactive(new PistonCommand(Intake.getInstance(), false));
+
     }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new GreenPathAutonomous();
-    }
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         */
+        public Command getAutonomousCommand() {
+                // An ExampleCommand will run in autonomous
+                return new GreenPathAutonomous();
+        }
 }

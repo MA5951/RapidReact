@@ -15,12 +15,17 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.OrangePathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.PurplePathAutonomous;
+import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.commands.MotorCommandSuplier;
 import frc.robot.commands.chassis.ChassisPID;
 import frc.robot.commands.chassis.TankDrive;
@@ -46,6 +51,8 @@ public class Robot extends TimedRobot {
 
   private UsbCamera camera;
 
+  private SendableChooser<Command> autoChooser;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -54,8 +61,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    autoChooser = new SendableChooser<Command>();
+
+    autoChooser.setDefaultOption("1 Ball", new BluePathAutonomous());
+    autoChooser.addOption("2 Balls", new GreenPathAutonomous());
+    autoChooser.addOption("3 Balls", new RedPathAutonomous());
+    autoChooser.addOption("3-4 Balls - HP", new OrangePathAutonomous());
+    autoChooser.addOption("3 Balls - Finish HP", new PurplePathAutonomous());
+    
     m_robotContainer = new RobotContainer();
-    // Shuffleboard.selectTab("Pre-Match");
+    Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
+    .withPosition(3, 1).withSize(2, 2);
+    Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
@@ -114,8 +131,8 @@ public class Robot extends TimedRobot {
     Shooter.getInstance().close();
     Conveyor.getInstance().setAmountOfBalls(1);
     Chassis.getinstance().resetSensors();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (autoChooser.getSelected() != null) {
+      autoChooser.getSelected().schedule();
     }
 
   }
@@ -167,9 +184,12 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(Intake.getInstance(),
         new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Intake.getInstance()::off, () -> {
         }, Intake.getInstance())));
+
+        CommandScheduler.getInstance().setDefaultCommand(Shooter.getInstance(),
+        new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Shooter.getInstance()::off, () -> {
+        }, Shooter.getInstance())));
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
-    Shuffleboard.selectTab("Teleop");
   }
 
   /** This function is called periodically during operator control. */

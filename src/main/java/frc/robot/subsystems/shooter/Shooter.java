@@ -120,13 +120,13 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   public double calculateRPM() {
     if (Limelight.distance() > 2.1) {
       return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2)
-          - 467.32 * frc.robot.Limelight.distance() + 3120.2) * -1);
+          - 467.32 * frc.robot.Limelight.distance() + 3070.2) * -1);
     }
-    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2290.8) * -1;
+    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2240.8) * -1;
   }
 
   public double calculateAngle() {
-    return Limelight.distance() * -1.3097 + 8.9796;
+    return Limelight.distance() * -1.3097 + 7.9796;
   }
 
   public double getVoltage() {
@@ -141,6 +141,6 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   }
 
   public void off() {
-    shooterPiston.set(Value.kReverse);
+    shooterPiston.set(Value.kOff);
   }
 }

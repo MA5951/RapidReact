@@ -33,6 +33,8 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooter.resetPID();
+    shooter.setSetpoint(setpoint.get()); // Launch Pad: 3275 Fender: 2500
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,7 +46,6 @@ public class ShooterCommand extends CommandBase {
       } else {
         shooter.open();
       }
-      shooter.setSetpoint(setpoint.get()); // Launch Pad: 3275 Fender: 2500
     } else {
       shooter.open();
       shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_FENDER);
@@ -57,6 +58,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shooter.setPower(0);
+    shooter.setSetpoint(0);
   }
 
   // Returns true when the command should end.

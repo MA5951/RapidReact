@@ -62,6 +62,6 @@ public class UpperConveyorCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !conveyor.isBallInUpper() && (Timer.getFPGATimestamp() - timer) > 0.4;
+        return (!conveyor.isBallInUpper() && !conveyor.isBallInLower()) && (Timer.getFPGATimestamp() - timer) > 0.4;
     }
 }

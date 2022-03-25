@@ -60,6 +60,7 @@ public class LEDManager {
                 isStopped = false;
                 led.start();
             } else {
+                isStopped = true;
                 led.stop();
             }
             lastChange = current;

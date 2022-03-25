@@ -4,6 +4,9 @@
 
 package frc.robot.commands.Automations;
 
+import java.sql.Time;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
@@ -14,6 +17,7 @@ public class UpperConveyorCommand extends CommandBase {
      */
     private Conveyor conveyor;
     private double stator = 0;
+    private double timer;
 
     private boolean ballCounted = false;
 
@@ -25,33 +29,26 @@ public class UpperConveyorCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        ballCounted = false;
+        timer = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         if (Shooter.getInstance().atSetpoint()) {
-            if (stator == 0) {
-                stator = Shooter.getInstance().getStator();
+            if (!conveyor.isBallInLower() && !conveyor.isBallInUpper()) {
+               timer = Timer.getFPGATimestamp();
             }
             conveyor.setUpperPower(-0.9);
 
-            if ((Shooter.getInstance().getStator() - stator >= 8) && !ballCounted) {
-                conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() - 1);
-                conveyor.isBallInUpper = false;
-                ballCounted = true;
-            }
-
-            if (conveyor.getAmountOfBalls() < 2) {
+            if (!conveyor.isBallInUpper()) {
                 conveyor.setLowerPower(-0.5);
             }
 
-            if (ballCounted && (Shooter.getInstance().getStator() - stator <= 10)) {
-                ballCounted = false;
-            }
-        } else {
-            conveyor.setUpperPower(0);
-            conveyor.setLowerPower(0);
+        } 
+        else {
+            timer = Timer.getFPGATimestamp();
         }
     }
 
@@ -65,6 +62,6 @@ public class UpperConveyorCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return conveyor.getAmountOfBalls() == 0;
+        return !conveyor.isBallInUpper() && (Timer.getFPGATimestamp() - timer) > 0.4;
     }
 }

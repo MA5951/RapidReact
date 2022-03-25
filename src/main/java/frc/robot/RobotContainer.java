@@ -76,6 +76,8 @@ public class RobotContainer {
         // ---------------------------- Intake & Conveyor ----------------------------
         JoystickContainer.AButton.whileActiveContinuous(new IntakeAutomation(0.8));
 
+        JoystickContainer.AButton.whenInactive(new PistonCommand(Intake.getInstance(), false));
+
         JoystickContainer.XButton.whileActiveContinuous(
                 () -> Conveyor.getInstance().setLowerPower(0.7));
         JoystickContainer.XButton.whileActiveContinuous(

@@ -35,18 +35,13 @@ public class ConveyorCommand extends CommandBase {
       detectedTime = Timer.getFPGATimestamp();
       conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
     }
-    if (conveyor.isBallInUpper) {
-      conveyor.setUpperPower(0);
-    } else {
-      conveyor.setUpperPower(-0.6);
-    }
+
     if (conveyor.isBallInUpper()) {
-      conveyor.isBallInUpper = true;
+      conveyor.setUpperPower(0);
     }
-    if (conveyor.getAmountOfBalls() == 2) {
-      conveyor.setLowerPower(0);
-    } else {
-      conveyor.setLowerPower(-0.4);
+    else {
+      conveyor.setUpperPower(-0.5);
+      conveyor.setLowerPower(-0.3);
     }
 
     isBallInLower = conveyor.isBallInLower();
@@ -63,6 +58,6 @@ public class ConveyorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return conveyor.getAmountOfBalls() == 2 && conveyor.isBallInUpper;
+    return conveyor.isBallInLower() && conveyor.isBallInUpper();
   }
 }

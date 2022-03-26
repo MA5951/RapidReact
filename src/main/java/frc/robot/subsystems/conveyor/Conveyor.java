@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LEDManager;
 import frc.robot.PortMap;
@@ -62,17 +63,6 @@ public class Conveyor extends SubsystemBase {
     public void setAmountOfBalls(int numBalls) {
         if ((numBalls) <= ConveyorConstants.CONVEYOR_MAX_BALLS && numBalls >= 0) {
             amountOfBalls = numBalls;
-            switch (amountOfBalls) {
-                case 0:
-                    LEDManager.getInstance().setRed();
-                    break;
-                case 1:
-                    LEDManager.getInstance().setOrange();
-                    break;
-                case 2:
-                    LEDManager.getInstance().setGreen();
-                    break;
-            }
         }
     }
 
@@ -97,9 +87,10 @@ public class Conveyor extends SubsystemBase {
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
         if (isInControlLED) {
-            if (DriverStation.getMatchTime() > 5 || isInAutonomous) {
+            if (DriverStation.getMatchType() == MatchType.None
+                    || (DriverStation.getMatchTime() > 5 || isInAutonomous)) {
                 double current = Timer.getFPGATimestamp();
-                if (current - lastLEDTime > 0.75) {
+                if (current - lastLEDTime > 0.95) {
                     if (isBallInUpper() && isBallInLower()) {
                         LEDManager.getInstance().setGreen();
                     } else if (isBallInUpper() || isBallInLower()) {

@@ -4,6 +4,10 @@
 
 package frc.robot.commands.Automations;
 
+import com.ma5951.utils.JoystickContainer;
+
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.chassis.PIDVision;

@@ -20,7 +20,9 @@ public class Conveyor extends SubsystemBase {
     private DigitalInput upperIR;
 
     public boolean isBallInUpper = false;
-
+    private double lastLEDTime = 0;
+    public boolean isInControlLED = true;
+    public boolean isInAutonomous = true;
     private static Conveyor conveyor;
 
     private Shuffleboard conveyorShuffleboard;
@@ -94,17 +96,23 @@ public class Conveyor extends SubsystemBase {
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
-
-        if (DriverStation.getMatchTime() < 120) {
-            if (isBallInUpper() && isBallInLower()) {
-                LEDManager.getInstance().setGreen();
-            } else if (isBallInUpper() || isBallInLower()) {
-                LEDManager.getInstance().setOrange();
+        if (isInControlLED) {
+            if (DriverStation.getMatchTime() > 5 || isInAutonomous) {
+                double current = Timer.getFPGATimestamp();
+                if (current - lastLEDTime > 1.4) {
+                    if (isBallInUpper() && isBallInLower()) {
+                        LEDManager.getInstance().setGreen();
+                    } else if (isBallInUpper() || isBallInLower()) {
+                        LEDManager.getInstance().setOrange();
+                        lastLEDTime = current;
+                    } else {
+                        LEDManager.getInstance().setRed();
+                        lastLEDTime = current;
+                    }
+                }
             } else {
-                LEDManager.getInstance().setRed();
+                LEDManager.getInstance().setRainbow();
             }
-        } else {
-            LEDManager.getInstance().setRainbow();
         }
     }
 }

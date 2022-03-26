@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "Compressor[0]": {
         "header": {
@@ -22,6 +27,11 @@
         }
       },
       "Talon SRX[5]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[7]": {
         "header": {
           "open": true
         }
@@ -64,7 +74,48 @@
       "/LiveWindow/Ungrouped/Talon SRX [7]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon SRX [8]": "Motor Controller",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Commands/Close Intake": "Command",
+      "/Shuffleboard/Commands/Open Intake": "Command",
+      "/Shuffleboard/Commands/Shooter Piston Fender": "Command",
+      "/Shuffleboard/Commands/Shooter Piston LaunchZone": "Command",
       "/Shuffleboard/Pre-Match/Autonoumus Chooser": "String Chooser"
+    },
+    "windows": {
+      "/LiveWindow/Chassis": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/ClimbExtension": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/ClimbPassive": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/Conveyor": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/Intake": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/Shooter": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Commands/Open Intake": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

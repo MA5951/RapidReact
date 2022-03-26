@@ -36,12 +36,12 @@ public class LEDManager {
         leftLed = new AddressableLED(PortMap.leftLeds);
         // rightLed = new AddressableLED(PortMap.rightLeds);
         buffer = new AddressableLEDBuffer(LED_LENGTH);
-
         leftLed.setLength(buffer.getLength());
         leftLed.start();
         // rightLed.setLength(buffer.getLength());
         // rightLed.start();
         isStopped = false;
+        setRed();
     }
 
     private void modifyRainbow() {
@@ -87,18 +87,28 @@ public class LEDManager {
     }
 
     public void setRed() {
-        currentState = State.FLASHING;
-        // setSolidColor(255, 0, 0);
+        currentState = State.IDLE;
+        setSolidColor(255, 0, 0);
     }
 
     public void setOrange() {
         currentState = State.IDLE;
-        setSolidColor(255, 215, 0);
+        setSolidColor(255, 154, 0);
     }
 
     public void setGreen() {
         currentState = State.IDLE;
-        setSolidColor(0, 255, 0);
+        setSolidColor(21, 255, 0);
+    }
+
+    public void setBlue() {
+        currentState = State.IDLE;
+        setSolidColor(0, 17, 255);
+    }
+
+    public void setWhite() {
+        currentState = State.IDLE;
+        setSolidColor(255, 255, 255);
     }
 
     public void setBlinkingPurple() {

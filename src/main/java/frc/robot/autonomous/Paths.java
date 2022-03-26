@@ -1,4 +1,5 @@
 package frc.robot.autonomous;
+
 import java.util.Arrays;
 
 import com.ma5951.utils.autonomous.Path;
@@ -27,14 +28,15 @@ public class Paths {
 
         public static final Path goToHPBall = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(1.35, 3.25)), 0.2, 0.85, 2.8, 1,
-                        0.3, 0.026);
+                        0.3, 0.01);
 
         public static final Path goToHPBallFrom3Ball = new Path(
-                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.2), new Waypoint(2, 3.2)), 0.2, 0.85, 2.8, 1,
-                0.3, 0.026);
+                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 0.2), new Waypoint(2, 3)), 0.2, 0.85, 2.8,
+                        1,
+                        0.31, 0.026);
 
         public static final Path goToShootingPosition = new Path(
-                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1.5)), 0.2, 1.5, 2.8, 15,
+                        Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2)), 0.2, 1.5, 2.8, 15,
                         0.5, 0.045);
 
         public static final Path goToShootingPosition5Balls = new Path(

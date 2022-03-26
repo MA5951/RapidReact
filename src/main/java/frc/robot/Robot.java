@@ -78,8 +78,8 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
     Limelight.pipeline(0);
 
-    // camera = CameraServer.startAutomaticCapture();
-    // camera.setResolution(80, 60);
+    camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(103, 80);
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
   }
@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
     Conveyor.getInstance();
     ClimbExtension.getInstance();
     Conveyor.getInstance().setAmountOfBalls(1);
-    Conveyor.getInstance().isInAutonomous = false;
+    Conveyor.getInstance().isInAutonomous = true;
     // ClimbExtension.getInstance();
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();

@@ -28,13 +28,10 @@ public class BluePathAutonomous extends SequentialCommandGroup {
                 new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
                 new ParallelDeadlineGroup(
                         new PIDVision(Shooter.getInstance().calculateAngle()),
-                        new ShooterCommand(-200)
-                ),
+                        new ShooterCommand(-200)),
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
                         new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
-                                new UpperConveyorCommand())    
-                        )
-                );
+                                new UpperConveyorCommand())));
     }
 }

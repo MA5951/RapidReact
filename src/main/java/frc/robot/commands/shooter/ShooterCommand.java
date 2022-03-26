@@ -6,8 +6,10 @@ package frc.robot.commands.shooter;
 
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.LEDManager;
 import frc.robot.Limelight;
 import frc.robot.subsystems.chassis.Chassis;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
 
@@ -34,6 +36,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void initialize() {
     shooter.resetPID();
+    Conveyor.getInstance().isInControlLED = false;
     shooter.setSetpoint(setpoint.get()); // Launch Pad: 3275 Fender: 2500
   }
 
@@ -50,6 +53,11 @@ public class ShooterCommand extends CommandBase {
       shooter.open();
       shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_FENDER);
     }
+    if (Limelight.getTs() > -4) {
+      LEDManager.getInstance().setWhite();
+    } else {
+      LEDManager.getInstance().setBlue();
+    }
     shooter.setVoltage(shooter.calculate(shooter.getVelocity()));
 
   }
@@ -59,6 +67,7 @@ public class ShooterCommand extends CommandBase {
   public void end(boolean interrupted) {
     shooter.setPower(0);
     shooter.setSetpoint(0);
+    Conveyor.getInstance().isInControlLED = true;
   }
 
   // Returns true when the command should end.

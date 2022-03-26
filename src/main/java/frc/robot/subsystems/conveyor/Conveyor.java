@@ -99,7 +99,7 @@ public class Conveyor extends SubsystemBase {
         if (isInControlLED) {
             if (DriverStation.getMatchTime() > 5 || isInAutonomous) {
                 double current = Timer.getFPGATimestamp();
-                if (current - lastLEDTime > 1.4) {
+                if (current - lastLEDTime > 0.75) {
                     if (isBallInUpper() && isBallInLower()) {
                         LEDManager.getInstance().setGreen();
                     } else if (isBallInUpper() || isBallInLower()) {

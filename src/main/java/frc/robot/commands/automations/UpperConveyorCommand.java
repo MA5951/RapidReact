@@ -38,7 +38,7 @@ public class UpperConveyorCommand extends CommandBase {
     public void execute() {
         if (Shooter.getInstance().atSetpoint()) {
             if (!conveyor.isBallInLower() && !conveyor.isBallInUpper()) {
-               timer = Timer.getFPGATimestamp();
+                timer = Timer.getFPGATimestamp();
             }
             conveyor.setUpperPower(-0.9);
 
@@ -46,9 +46,9 @@ public class UpperConveyorCommand extends CommandBase {
                 conveyor.setLowerPower(-0.5);
             }
 
-        } 
-        else {
+        } else {
             timer = Timer.getFPGATimestamp();
+            conveyor.setUpperPower(0);
         }
     }
 

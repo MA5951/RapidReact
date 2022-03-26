@@ -28,34 +28,29 @@ import frc.robot.subsystems.shooter.ShooterConstants;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class OrangePathAutonomous extends SequentialCommandGroup {
-    /**
-     * Two Balls Autonomous
-     */
-    public OrangePathAutonomous() {
-        addCommands(
-                new ParallelDeadlineGroup(
-                        new WaitCommand(2.5),
-                        new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
-                        new IntakeAutomation(0.8)
-                ),
-                new PIDVision(Shooter.getInstance().calculateAngle()),
-                new ParallelDeadlineGroup(
-                        new WaitCommand(2.5),
-                        new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-                        new UpperConveyorCommand()
-                ),
-                new ParallelDeadlineGroup(
-                        new WaitCommand(4),
-                        new AutonomousCommand(Paths.goToHPBall, true),
-                        new IntakeAutomation(0.8)
-                ),
-                new AutonomousCommand(Paths.goToShootingPosition, false),
-                new PIDVision(Shooter.getInstance().calculateAngle()),
-                new ParallelDeadlineGroup(
-                    new WaitCommand(2.5),
-                    new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
-                    new UpperConveyorCommand()
-                )
-        );
-    }
+        /**
+         * Two Balls Autonomous
+         */
+        public OrangePathAutonomous() {
+                addCommands(
+                                new ParallelDeadlineGroup(
+                                                new WaitCommand(2),
+                                                new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+                                                new IntakeAutomation(0.8)),
+                                new PIDVision(Shooter.getInstance().calculateAngle()).raceWith(new WaitCommand(2.5)),
+                                new ParallelDeadlineGroup(
+                                                new WaitCommand(2.5),
+                                                new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
+                                                new UpperConveyorCommand()),
+                                new ParallelDeadlineGroup(
+                                                new WaitCommand(4.5),
+                                                new AutonomousCommand(Paths.goToHPBall, true),
+                                                new IntakeAutomation(0.8)),
+                                new AutonomousCommand(Paths.goToShootingPosition, false),
+                                new PIDVision(Shooter.getInstance().calculateAngle()),
+                                new ParallelDeadlineGroup(
+                                                new WaitCommand(2.5),
+                                                new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
+                                                new UpperConveyorCommand()));
+        }
 }

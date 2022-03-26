@@ -29,12 +29,12 @@ public class PurplePathAutonomous extends SequentialCommandGroup {
 	public PurplePathAutonomous() {
 		addCommands(
 				new ParallelDeadlineGroup(
-					new WaitCommand(2.2),
-					new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
-					new IntakeAutomation(0.8)),
+						new WaitCommand(2),
+						new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+						new IntakeAutomation(0.8)),
 				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
-						new WaitCommand(3.3),
+						new WaitCommand(3),
 						new UpperConveyorCommand(),
 						new ShooterCommand(() -> Shooter.getInstance().calculateRPM())),
 				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
@@ -43,9 +43,14 @@ public class PurplePathAutonomous extends SequentialCommandGroup {
 						new IntakeAutomation(0.8)),
 				new ParallelDeadlineGroup(
 						new AutonomousCommand(Paths.goToTheSecondBallPart3, false),
-						new ConveyorCommnadAutonomous()),
+						new ConveyorCommnadAutonomous(),
+						new ShooterCommand(-200)),
 				new InstantCommand(() -> Conveyor.getInstance().setAmountOfBalls(1)),
-				new AutonomousCommand(Paths.goToHPBallFrom3Ball, true)
-                );
+				new ParallelDeadlineGroup(
+						new PIDVision(Shooter.getInstance().calculateAngle()),
+						new ShooterCommand(-200)),
+				new ShooterCommand(() -> Shooter.getInstance().calculateRPM())
+						.alongWith(new UpperConveyorCommand()),
+				new AutonomousCommand(Paths.goToHPBallFrom3Ball, true));
 	}
 }

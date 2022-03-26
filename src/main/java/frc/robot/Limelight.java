@@ -46,6 +46,7 @@ public class Limelight {
 
     /**
      * Get the distance between the limelight and the target
+     * 
      * @return Distance in meters
      */
     public static double distance() {
@@ -65,6 +66,9 @@ public class Limelight {
         return tv.getDouble(0) == 1.0;
     }
 
+    public static double getTs() {
+        return ts.getDouble(0.0);
+    }
 
     public static void ledMode(int ledMode) {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ledMode);

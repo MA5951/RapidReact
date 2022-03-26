@@ -29,6 +29,7 @@ public class PortMap {
     public static final int climbRotationRightMotor = 13;
     public static final int climbPassiveMotor = 14;
 
-
-    public static final int leds = 0;
+    // LED
+    public static final int leftLeds = 0;
+    public static final int rightLeds = 1;
 }

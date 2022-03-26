@@ -10,6 +10,7 @@ package frc.robot.commands.chassis;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.LEDManager;
 import frc.robot.Limelight;
 import frc.robot.subsystems.chassis.Chassis;
 
@@ -38,8 +39,13 @@ public class PIDVision extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = chassis.getVisionAnglePIDOutput(angle);
-    chassis.arcadeDrive(output, 0);
+    if (Limelight.getTs() > -4) {
+      double output = chassis.getVisionAnglePIDOutput(angle);
+      chassis.arcadeDrive(output, 0);
+    } else {
+      LEDManager.getInstance().setBlinkingPurple();
+    }
+
   }
 
   // Called once the command ends or is interrupted.

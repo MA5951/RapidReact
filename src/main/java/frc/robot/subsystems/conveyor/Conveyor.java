@@ -3,6 +3,8 @@ package frc.robot.subsystems.conveyor;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LEDManager;
 import frc.robot.PortMap;
@@ -92,5 +94,17 @@ public class Conveyor extends SubsystemBase {
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
+
+        if (DriverStation.getMatchTime() < 120) {
+            if (isBallInUpper() && isBallInLower()) {
+                LEDManager.getInstance().setGreen();
+            } else if (isBallInUpper() || isBallInLower()) {
+                LEDManager.getInstance().setOrange();
+            } else {
+                LEDManager.getInstance().setRed();
+            }
+        } else {
+            LEDManager.getInstance().setRainbow();
+        }
     }
 }

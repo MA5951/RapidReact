@@ -13,7 +13,7 @@ import com.ma5951.utils.autonomous.*;
 
 public class AutonomousCommand extends CommandBase {
   /**
-   *  Autonomous Movement
+   * Autonomous Movement
    */
 
   PathGenerator pathGenerator;
@@ -43,7 +43,7 @@ public class AutonomousCommand extends CommandBase {
 
     pathGenerator = new PathGenerator(path.spacing, path.k, path.maxVelocity, path.maxAcceleration);
     waypoints = (List<Waypoint>) pathGenerator.calculate(path.points);
-    
+
     this.reverse = reverse;
 
     addRequirements(chassis);
@@ -74,8 +74,8 @@ public class AutonomousCommand extends CommandBase {
     chassis.chassisShuffleboard.addNum("right speed", rightSetPointVelocity);
 
     chassis.chassisShuffleboard.addString("lookhaed point", "(" +
-     pathFollower.getLookaheadPoint().x + "," +
-      pathFollower.getLookaheadPoint().y + ")");
+        pathFollower.getLookaheadPoint().x + "," +
+        pathFollower.getLookaheadPoint().y + ")");
 
     chassis.setLeftVelocitySetpoint(leftSetPointVelocity);
     chassis.setRightVelocitySetpoint(rightSetPointVelocity);
@@ -93,6 +93,7 @@ public class AutonomousCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     chassis.chassisShuffleboard.addBoolean("Autonomus Test", false);
+    odometry.reset();
     chassis.setLeftVoltage(0);
     chassis.setRightVoltage(0);
     chassis.setInverted(false);

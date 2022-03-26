@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.security.KeyFactory;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -12,10 +14,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 /** Add your docs here. */
 public class LEDManager {
-    private final int LED_LENGTH = 1;
+    private final int LED_LENGTH = 78;
 
     private static LEDManager ledManager;
-    private AddressableLED led;
+    private AddressableLED leftLed;
+    private AddressableLED rightLed;
     private AddressableLEDBuffer buffer;
     private State currentState;
     private boolean isStopped;
@@ -30,10 +33,14 @@ public class LEDManager {
     }
 
     private LEDManager() {
-        led = new AddressableLED(PortMap.leds);
+        leftLed = new AddressableLED(PortMap.leftLeds);
+        // rightLed = new AddressableLED(PortMap.rightLeds);
         buffer = new AddressableLEDBuffer(LED_LENGTH);
-        led.setLength(buffer.getLength());
-        led.start();
+
+        leftLed.setLength(buffer.getLength());
+        leftLed.start();
+        // rightLed.setLength(buffer.getLength());
+        // rightLed.start();
         isStopped = false;
     }
 
@@ -50,7 +57,8 @@ public class LEDManager {
         m_rainbowFirstPixelHue += 3;
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
-        led.setData(buffer);
+        leftLed.setData(buffer);
+        // rightLed.setData(buffer);
     }
 
     private void modifyFlashing() {
@@ -58,10 +66,13 @@ public class LEDManager {
         if (current - lastChange >= 2) {
             if (isStopped) {
                 isStopped = false;
-                led.start();
+                setSolidColor(255, 0, 0);
+                leftLed.start();
+                // rightLed.start();
             } else {
                 isStopped = true;
-                led.stop();
+                leftLed.stop();
+                // rightLed.stop();
             }
             lastChange = current;
         }
@@ -71,12 +82,13 @@ public class LEDManager {
         for (int i = 0; i < buffer.getLength(); i++) {
             buffer.setRGB(i, r, g, b);
         }
-        led.setData(buffer);
+        leftLed.setData(buffer);
+        // rightLed.setData(buffer);
     }
 
     public void setRed() {
-        currentState = State.IDLE;
-        setSolidColor(255, 0, 0);
+        currentState = State.FLASHING;
+        // setSolidColor(255, 0, 0);
     }
 
     public void setOrange() {

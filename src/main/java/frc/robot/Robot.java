@@ -32,7 +32,6 @@ import frc.robot.commands.chassis.TankDrive;
 import frc.robot.commands.climb.ClimbExtensionCommand;
 import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.climb.ClimbExtension;
-import frc.robot.subsystems.climb.ClimbRotation;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
@@ -68,10 +67,10 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("3 Balls", new RedPathAutonomous());
     autoChooser.addOption("3-4 Balls - HP", new OrangePathAutonomous());
     autoChooser.addOption("3 Balls - Finish HP", new PurplePathAutonomous());
-    
+
     m_robotContainer = new RobotContainer();
     Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-    .withPosition(3, 1).withSize(2, 2);
+        .withPosition(3, 1).withSize(2, 2);
     Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
@@ -161,7 +160,6 @@ public class Robot extends TimedRobot {
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();
     Conveyor.getInstance().setAmountOfBalls(0);
-    ClimbRotation.getInstance().reset();
     ClimbExtension.getInstance().reset();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
@@ -175,17 +173,11 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(), new ClimbExtensionCommand());
 
-    CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(), new MotorCommandSuplier(
-        ClimbRotation.getInstance(),
-        () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(4)) > 0.3
-            ? JoystickContainer.operatingJoystick.getRawAxis(4) * 0.4
-            : 0));
-
     CommandScheduler.getInstance().setDefaultCommand(Intake.getInstance(),
         new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Intake.getInstance()::off, () -> {
         }, Intake.getInstance())));
 
-        CommandScheduler.getInstance().setDefaultCommand(Shooter.getInstance(),
+    CommandScheduler.getInstance().setDefaultCommand(Shooter.getInstance(),
         new SequentialCommandGroup(new WaitCommand(1), new RunCommand(Shooter.getInstance()::off, () -> {
         }, Shooter.getInstance())));
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),

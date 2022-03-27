@@ -58,6 +58,9 @@ public class ShooterCommand extends CommandBase {
     } else {
       LEDManager.getInstance().setBlue();
     }
+    if (Limelight.distance() > 9){
+      LEDManager.getInstance().setPurple();
+    }
     shooter.setVoltage(shooter.calculate(shooter.getVelocity()));
 
   }

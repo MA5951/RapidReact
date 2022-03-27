@@ -9,8 +9,8 @@ public class PortMap {
 
     // Intake
     public static final int intakeMotor = 6;
-    public static final int intakePistonForward = 1;
-    public static final int intakePistonReverse = 0;
+    public static final int intakePistonForward = 3;
+    public static final int intakePistonReverse = 2;
     // Conveyor
     public static final int conveyorLowerMotor = 7;
     public static final int conveyorUpperMotor = 8;
@@ -20,8 +20,8 @@ public class PortMap {
     // Shooter
     public static final int shooterLeftMotor = 9;
     public static final int shooterRightMotor = 10;
-    public static final int shooterPistonForward = 6;
-    public static final int shooterPistonReverse = 7;
+    public static final int shooterPistonForward = 4;
+    public static final int shooterPistonReverse = 8;
 
     // Climb
     public static final int climbExtensionMotor = 11;

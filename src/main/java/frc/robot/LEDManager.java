@@ -111,8 +111,8 @@ public class LEDManager {
         setSolidColor(255, 255, 255);
     }
 
-    public void setBlinkingPurple() {
-        currentState = State.FLASHING;
+    public void setPurple() {
+        currentState = State.IDLE;
         setSolidColor(128, 0, 128);
     }
 

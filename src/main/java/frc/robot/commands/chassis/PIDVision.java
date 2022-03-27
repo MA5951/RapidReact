@@ -50,6 +50,9 @@ public class PIDVision extends CommandBase {
     } else {
       LEDManager.getInstance().setBlue();
     }
+    if (Limelight.distance() > 9){
+      LEDManager.getInstance().setPurple();
+    }
 
   }
 

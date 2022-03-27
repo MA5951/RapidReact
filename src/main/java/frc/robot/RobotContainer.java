@@ -122,17 +122,8 @@ public class RobotContainer {
 
                 JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.4));
 
-                JoystickContainer.startButton
-                                .whenPressed(
-                                                () -> Conveyor.getInstance().setAmountOfBalls(
-                                                                Conveyor.getInstance().getAmountOfBalls() + 1));
-                JoystickContainer.backButton
-                                .whenPressed(
-                                                () -> Conveyor.getInstance().setAmountOfBalls(
-                                                                Conveyor.getInstance().getAmountOfBalls() - 1));
 
                 // ---------------------------- Emergency buttons ----------------------------
-
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
                                 .whileActiveContinuous(new IntakeAutomation(0.8));
 

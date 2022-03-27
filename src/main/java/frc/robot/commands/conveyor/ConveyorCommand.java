@@ -11,9 +11,6 @@ import frc.robot.subsystems.conveyor.Conveyor;
 public class ConveyorCommand extends CommandBase {
   /** Creates a new ConveyorCommand2. */
   private Conveyor conveyor;
-  private boolean isBallInLower;
-  private double detectedTime = 0;
-  private double currentTime;
 
   public ConveyorCommand() {
     conveyor = Conveyor.getInstance();
@@ -23,19 +20,12 @@ public class ConveyorCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    currentTime = Timer.getFPGATimestamp();
-    detectedTime = 0;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    if ((conveyor.isBallInLower() && !isBallInLower) && ((currentTime - detectedTime) > 0.65)) {
-      detectedTime = Timer.getFPGATimestamp();
-      conveyor.setAmountOfBalls(conveyor.getAmountOfBalls() + 1);
-    }
-
     if (conveyor.isBallInUpper()) {
       conveyor.setUpperPower(0);
     }
@@ -44,8 +34,6 @@ public class ConveyorCommand extends CommandBase {
       conveyor.setLowerPower(-0.3);
     }
 
-    isBallInLower = conveyor.isBallInLower();
-    currentTime = Timer.getFPGATimestamp();
   }
 
   // Called once the command ends or is interrupted.

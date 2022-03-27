@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.LEDManager;
 import frc.robot.Limelight;
-import frc.robot.subsystems.chassis.Chassis;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
@@ -38,11 +37,7 @@ public class ShooterCommand extends CommandBase {
     shooter.resetPID();
     Conveyor.getInstance().isInControlLED = false;
     shooter.setSetpoint(setpoint.get()); // Launch Pad: 3275 Fender: 2500
-  }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     if (Limelight.getTv()) {
       if (Limelight.distance() > 2.1) {
         shooter.close();
@@ -53,6 +48,11 @@ public class ShooterCommand extends CommandBase {
       shooter.open();
       shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_FENDER);
     }
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
     if (Limelight.getTs() > -4) {
       LEDManager.getInstance().setWhite();
     } else {

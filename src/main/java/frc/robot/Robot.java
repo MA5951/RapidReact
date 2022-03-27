@@ -26,8 +26,6 @@ import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.OrangePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.PurplePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
-import frc.robot.commands.MotorCommandSuplier;
-import frc.robot.commands.chassis.ChassisPID;
 import frc.robot.commands.chassis.TankDrive;
 import frc.robot.commands.climb.ClimbExtensionCommand;
 import frc.robot.subsystems.chassis.Chassis;

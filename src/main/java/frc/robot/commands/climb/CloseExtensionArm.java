@@ -4,35 +4,29 @@
 
 package frc.robot.commands.climb;
 
-import com.ma5951.utils.JoystickContainer;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.climb.ClimbConstants;
 import frc.robot.subsystems.climb.ClimbExtension;
 
-public class ClimbExtensionCommand extends CommandBase {
-  /** Creates a new ClimbExtensionCommand. */
+public class CloseExtensionArm extends CommandBase {
+  /** Creates a new CloseExtensionArm. */
   private ClimbExtension climbExtension;
-  public ClimbExtensionCommand() {
-    climbExtension = ClimbExtension.getInstance();
-    addRequirements(climbExtension);
+  private final static double maxCurrent = 8;
+
+  public CloseExtensionArm(ClimbExtension climbExtension) {
+    this.climbExtension = climbExtension;
+
+    addRequirements(this.climbExtension);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (climbExtension.getDistance() / ClimbConstants.TICK_PER_METER_EXTENSION <= 0.55 && (JoystickContainer.operatingJoystick.getLeftY() < -0.3)){
-          climbExtension.setPower(-0.7);
-    }else if (JoystickContainer.operatingJoystick.getLeftY() > 0.3){
-          climbExtension.setPower(0.7);
-    }
-    else {
-      climbExtension.setPower(0);
-    }
+    climbExtension.setPower(-0.3);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +38,6 @@ public class ClimbExtensionCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return climbExtension.getCurrent() < maxCurrent;
   }
 }

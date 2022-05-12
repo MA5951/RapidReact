@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class PortMap {
     // Chassis
     public static final int chassisLeftFrontMotor = 2;
@@ -20,7 +22,7 @@ public class PortMap {
     // Shooter
     public static final int shooterLeftMotor = 9;
     public static final int shooterRightMotor = 10;
-    public static final int shooterPistonForward = 4;
+    public static final int shooterPistonForward = 7;
     public static final int shooterPistonReverse = 8;
 
     // Climb

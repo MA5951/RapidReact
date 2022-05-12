@@ -43,7 +43,7 @@ public class OrangePathAutonomous extends SequentialCommandGroup {
                                                 new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
                                                 new UpperConveyorCommand()),
                                 new ParallelDeadlineGroup(
-                                                new WaitCommand(4.5),
+                                                new WaitCommand(5.5),
                                                 new AutonomousCommand(Paths.goToHPBall, true),
                                                 new IntakeAutomation(0.8)),
                                 new AutonomousCommand(Paths.goToShootingPosition, false),

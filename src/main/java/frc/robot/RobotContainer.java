@@ -51,7 +51,7 @@ public class RobotContainer {
         public static Trigger leftTrigger = new Trigger(
                         () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.L_TRIGER) > 0.5);
         public static Trigger rightTrigger = new Trigger(
-                        () -> JoystickContainer.operatingJoystick.getRawAxis(RobotConstants.R_TRIGER) > 0.5);
+                        () -> JoystickContainer.operatingJoystick.getRawAxis(4) > 0.5);
 
         JoystickButton controlModeToogle;
 
@@ -85,16 +85,16 @@ public class RobotContainer {
                                 () -> Intake.getInstance().setPower(-0.8));
                 JoystickContainer.AButton.whenReleased(() -> Intake.getInstance().setPower(0));
                 JoystickContainer.AButton.whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
+                JoystickContainer.AButton.whenReleased(new PistonCommand(Intake.getInstance(), false));
                 JoystickContainer.AButton.whenPressed(new InstantCommand(
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
 
-                JoystickContainer.YButton.whileActiveContinuous(() -> Intake.getInstance().setPower(-0.7));
-                JoystickContainer.YButton.whenInactive(() -> Intake.getInstance().setPower(0));
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
-                JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(0.7));
-                JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(0.8));
+                JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(-0.7));
+                JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
+                JoystickContainer.YButton.whileActiveContinuous(new EjectBall(-1300));
 
                 // ---------------------------- Shooter ------------ ----------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
@@ -107,10 +107,16 @@ public class RobotContainer {
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
                                 .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
 
-                JoystickContainer.XButton.whileActiveContinuous(new EjectBall(-1000));
+                JoystickContainer.XButton.whileActiveContinuous(new EjectBall(-1300));
                 JoystickContainer.XButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
                 JoystickContainer.XButton.whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 
+                rightTrigger.whileActiveContinuous(() -> Intake.getInstance().setPower(0));
+                rightTrigger.whileActiveContinuous(new EjectBall(-2000));
+                rightTrigger.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
+                rightTrigger.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(-0.9));
+                rightTrigger.whenInactive(() -> Conveyor.getInstance().setUpperPower(0), Conveyor.getInstance());
+                rightTrigger.whenInactive(() -> Conveyor.getInstance().setLowerPower(0), Conveyor.getInstance());
                 // ---------------------------- Climb ----------------------------
                 JoystickContainer.POVUp
                                 .whenActive(new ControlCommand(ClimbExtension.getInstance(),

@@ -69,7 +69,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
         .withPosition(3, 1).withSize(2, 2);
-    Shuffleboard.selectTab("Pre-Match");
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
@@ -77,7 +76,7 @@ public class Robot extends TimedRobot {
     Limelight.pipeline(0);
 
     camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(103, 80);
+    camera.setResolution(80, 60);
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
   }
@@ -131,6 +130,7 @@ public class Robot extends TimedRobot {
     if (autoChooser.getSelected() != null) {
       autoChooser.getSelected().schedule();
     }
+    Shuffleboard.selectTab("Match");
 
   }
 
@@ -154,12 +154,14 @@ public class Robot extends TimedRobot {
     Conveyor.getInstance();
     ClimbExtension.getInstance();
     Conveyor.getInstance().setAmountOfBalls(1);
-    Conveyor.getInstance().isInAutonomous = true;
+    Conveyor.getInstance().isInAutonomous = false;
     // ClimbExtension.getInstance();
     // // ClimbPassive.getInstance();
     // ClimbRotation.getInstance();
     Conveyor.getInstance().setAmountOfBalls(0);
     ClimbExtension.getInstance().reset();
+
+    Intake.getInstance().close();
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
 
@@ -181,6 +183,7 @@ public class Robot extends TimedRobot {
         }, Shooter.getInstance())));
     // CommandScheduler.getInstance().setDefaultCommand(ClimbRotation.getInstance(),
     // new ControlCommand(ClimbRotation.getInstance(), 0, false, true));
+
   }
 
   /** This function is called periodically during operator control. */

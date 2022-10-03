@@ -26,6 +26,8 @@ import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.OrangePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.PurplePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
+import frc.robot.commands.chassis.ChassisPID;
+import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.chassis.TankDrive;
 import frc.robot.commands.climb.ClimbExtensionCommand;
 import frc.robot.subsystems.chassis.Chassis;
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
   private UsbCamera camera;
 
   private SendableChooser<Command> autoChooser;
+  private SendableChooser<Boolean> teamColorChooser;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -66,9 +69,16 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("3-4 Balls - HP", new OrangePathAutonomous());
     autoChooser.addOption("3 Balls - Finish HP", new PurplePathAutonomous());
 
+    teamColorChooser = new SendableChooser<Boolean>();
+    teamColorChooser.setDefaultOption("blue", true);
+    teamColorChooser.addOption("red", false);
+
     m_robotContainer = new RobotContainer();
+    Shuffleboard.getTab("Pre-Match").add(" teamColor Chooser", teamColorChooser)
+      .withPosition(2, 1).withSize(2, 2);
+
     Shuffleboard.getTab("Pre-Match").add("Autonoumus Chooser", autoChooser)
-        .withPosition(3, 1).withSize(2, 2);
+        .withPosition(5, 1).withSize(2, 2);
     Shuffleboard.getTab("Commands").add("Open Intake", new PistonCommand(Intake.getInstance(), true));
     Shuffleboard.getTab("Commands").add("Close Intake", new PistonCommand(Intake.getInstance(), false));
     Shuffleboard.getTab("Commands").add("Shooter Piston Fender", new PistonCommand(Shooter.getInstance(), true));
@@ -151,7 +161,7 @@ public class Robot extends TimedRobot {
 
     Chassis.getinstance();
     Shooter.getInstance();
-    Conveyor.getInstance();
+    Conveyor.getInstance().setOurTeamColorBlue(teamColorChooser.getSelected());
     ClimbExtension.getInstance();
     Conveyor.getInstance().setAmountOfBalls(1);
     Conveyor.getInstance().isInAutonomous = false;
@@ -165,7 +175,7 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(Chassis.getinstance(), new TankDrive());
 
-    // CommandScheduler.getInstance().setDefaultCommand(ClimbExtension.getInstance(),
+    // CommandScheduler.getInstance().setDefaultCommand(ClimbEx tension.getInstance(),
     // new MotorCommandSuplier(
     // ClimbExtension.getInstance(),
     // () -> Math.abs(JoystickContainer.operatingJoystick.getRawAxis(1)) > 0.3

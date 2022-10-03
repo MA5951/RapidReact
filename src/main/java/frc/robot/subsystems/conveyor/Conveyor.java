@@ -4,13 +4,18 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LEDManager;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
 import com.ma5951.utils.motor.MA_TalonSRX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
 
 public class Conveyor extends SubsystemBase {
 
@@ -19,12 +24,19 @@ public class Conveyor extends SubsystemBase {
 
     private DigitalInput lowerIR;
     private DigitalInput upperIR;
+    private ColorSensorV3 colorSensor;
+    private boolean isOurTeamColorBlue;
 
+    private I2C.Port i2cPort = I2C.Port.kOnboard;
     public boolean isBallInUpper = false;
     private double lastLEDTime = 0;
     public boolean isInControlLED = true;
     public boolean isInAutonomous = true;
     private static Conveyor conveyor;
+    private   ColorMatch m_colorMatcher = new ColorMatch();
+
+    private  Color kBlueTarget = new Color(0.143, 0.427, 0.429);
+    private  Color kRedTarget = new Color(0.561, 0.232, 0.114);
 
     private Shuffleboard conveyorShuffleboard;
 
@@ -37,6 +49,8 @@ public class Conveyor extends SubsystemBase {
         lowerIR = new DigitalInput(PortMap.conveyorLowerIR);
         upperIR = new DigitalInput(PortMap.conveyorUpperIR);
 
+        colorSensor = new ColorSensorV3(i2cPort);
+
         lowerTalon.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 
         conveyorShuffleboard = new Shuffleboard("conveyor");
@@ -44,12 +58,20 @@ public class Conveyor extends SubsystemBase {
         amountOfBalls = 0;
     }
 
+    public void setOurTeamColorBlue(boolean isOurTeamColorBlue) {
+        this.isOurTeamColorBlue = isOurTeamColorBlue;
+    }
+
+    public boolean getOurTeamColorBlue() {
+        return isOurTeamColorBlue;
+    }
+
     public boolean isBallInLower() {
-        return !lowerIR.get();
+        return isBlue() || isRed();
     }
 
     public boolean isBallInUpper() {
-        return !upperIR.get();
+        return (!upperIR.get() || !lowerIR.get());
     }
 
     public void setLowerPower(double velocity) {
@@ -70,6 +92,39 @@ public class Conveyor extends SubsystemBase {
         return amountOfBalls;
     }
 
+    public boolean isRed(){
+        /*
+        Color detectedColor = colorSensor.getColor();
+        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+        if(match.color == kRedTarget){
+            return true;
+        }
+        else{
+            return false;
+        }*/
+        if(colorSensor.getRed() > 500 && colorSensor.getBlue() < 1000){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBlue(){
+        /*
+        Color detectedColor = colorSensor.getColor();
+        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+        if(match.color == kBlueTarget){
+            return true;
+        }
+        else{
+            return false;
+        }
+        */
+        if(colorSensor.getBlue() > 500 && colorSensor.getRed() < 1000){  
+            return true;
+        }
+        return false;
+    }
+
     public static Conveyor getInstance() {
         if (conveyor == null) {
             conveyor = new Conveyor();
@@ -86,6 +141,12 @@ public class Conveyor extends SubsystemBase {
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
         conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
+        conveyorShuffleboard.addNum("blue", colorSensor.getBlue());
+        conveyorShuffleboard.addNum("red", colorSensor.getRed());
+        conveyorShuffleboard.addNum("green", colorSensor.getGreen());
+        conveyorShuffleboard.addBoolean("isblue", isBlue());
+        conveyorShuffleboard.addBoolean("isRed", isRed());
+
         if (isInControlLED) {
             if (DriverStation.getMatchType() == MatchType.None
                     || (DriverStation.getMatchTime() > 5 || isInAutonomous)) {

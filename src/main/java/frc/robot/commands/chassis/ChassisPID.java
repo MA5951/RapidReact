@@ -31,25 +31,29 @@ public class ChassisPID extends CommandBase {
 
   @Override
   public void execute() {
-    if (JoystickContainer.rightJoystick.getRawButton(1)) {
-        chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
-        chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
-    } else {
-      chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
-      chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
-    }
-    if (Math.abs(JoystickContainer.rightJoystick.getY()) > 0.1){
-      double rightPower = ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF();
-      chassis.setRightPercent(rightPower * chassis.invert);
-    }else{
-      chassis.setRightPercent(0);
-    }
-    if (Math.abs(JoystickContainer.leftJoystick.getY()) > 0.1){
-      double leftPower = ChassisConstants.KV_MAPATH_LEFT_VELOCITY + chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF();
-      chassis.setLeftPercent(leftPower * chassis.invert);
-    }else{
-      chassis.setLeftPercent(0);
-    }
+    // if (JoystickContainer.rightJoystick.getRawButton(1)) {
+    //     chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+    //     chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS * 0.4);
+    // } else {
+    //   chassis.setRightVelocitySetpoint(JoystickContainer.rightJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+    //   chassis.setLeftVelocitySetpoint(JoystickContainer.leftJoystick.getY() * ChassisConstants.MAX_VELOCITY_MPS);
+    // }
+    // if (Math.abs(JoystickContainer.rightJoystick.getY()) > 0.1){
+    //   double rightPower = ChassisConstants.KV_MAPATH_RIGHT_VELOCITY + chassis.getRightPID(chassis.getRightVelocity()) + chassis.getRightF();
+    //   chassis.setRightPercent(rightPower * chassis.invert);
+    // }else{
+    //   chassis.setRightPercent(0);
+    // }
+    // if (Math.abs(JoystickContainer.leftJoystick.getY()) > 0.1){
+    //   double leftPower = ChassisConstants.KV_MAPATH_LEFT_VELOCITY + chassis.getLeftPID(chassis.getLeftVelocity()) + chassis.getLeftF();
+    //   chassis.setLeftPercent(leftPower * chassis.invert);
+    // }else{
+    //   chassis.setLeftPercent(0);
+    // }
+    chassis.setLeftVelocitySetpoint(1.5);
+    chassis.setLeftPercent(chassis.leftVelocityMApathPIDOutput() + 
+      ChassisConstants.KV_MAPATH_LEFT_VELOCITY + chassis.getLeftF());
+    //chassis.setLeftPercent(chassis.leftVelocityMApathPIDOutput());
   }
 
   @Override

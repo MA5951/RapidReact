@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PortMap;
@@ -71,7 +72,7 @@ public class Chassis extends SubsystemBase {
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 0, -1, 1);
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
-        ChassisConstants.KD_VISION_ANGLE, 0, 1.5, -12, 12);
+        ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);
@@ -167,7 +168,7 @@ public class Chassis extends SubsystemBase {
    * @return The distance in meters
    */
   public double getLeftDistance() {
-    return leftRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER;
+    return (leftRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER) * -1;
   }
 
   /**
@@ -210,7 +211,7 @@ public class Chassis extends SubsystemBase {
    * @return Velocity in m/s
    */
   private double falconTicksToWheelVelocity(double falconTicks) {
-    return falconTicksToMeters(falconTicks);
+    return falconTicksToMeters(falconTicks) * 10;
   }
 
   /**
@@ -344,9 +345,13 @@ public class Chassis extends SubsystemBase {
     chassisShuffleboard.addNum("right distance", getRightDistance());
     chassisShuffleboard.addNum("left distance", getLeftDistance());
     chassisShuffleboard.addNum("Right Velocity", getRightVelocity());
+    chassisShuffleboard.addNum("left Velocity", getLeftVelocity());
     chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
+    
+    chassisShuffleboard.addNum("angle", frc.robot.Limelight.getX());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
+
     chassisShuffleboard.addNum("yaw", navx.getYaw());
     chassisShuffleboard.addNum("roll", navx.getRoll());
     chassisShuffleboard.addNum("pitch", navx.getPitch());
@@ -355,5 +360,7 @@ public class Chassis extends SubsystemBase {
 
     chassisShuffleboard.addBoolean("Vision Angle At Setpoint", anglePIDVision.atSetpoint());
     chassisShuffleboard.addBoolean("In Shooting Distance", Limelight.getX() < 5);
+    chassisShuffleboard.addNum("time", Timer.getFPGATimestamp());
+
   }
 }

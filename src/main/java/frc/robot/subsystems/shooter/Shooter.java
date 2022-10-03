@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Limelight;
 import frc.robot.PortMap;
 import com.ma5951.utils.Shuffleboard;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ma5951.utils.RobotConstants;
 import com.ma5951.utils.RobotConstants.ENCODER;
 import com.ma5951.utils.controllers.PIDController;
@@ -22,8 +25,8 @@ import com.ma5951.utils.subsystem.PistonSubsystem;
 
 public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSubsystem {
   /** Creates a new Shooter. */
-  private MA_SparkMax shooterLeftMotor;
-  private MA_SparkMax shooterRightMotor;
+  private TalonFX shooterLeftMotor;
+  private TalonFX shooterRightMotor;
 
   private DoubleSolenoid shooterPiston;
 
@@ -34,8 +37,9 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   private static Shooter shooter;
 
   public Shooter() {
-    shooterLeftMotor = new MA_SparkMax(PortMap.shooterLeftMotor, true, false, ENCODER.Encoder, MotorType.kBrushless); // ID8
-    shooterRightMotor = new MA_SparkMax(PortMap.shooterRightMotor, false, false, ENCODER.Encoder, MotorType.kBrushless); // ID9
+    shooterLeftMotor = new TalonFX(PortMap.shooterLeftMotor); 
+    shooterRightMotor = new TalonFX(PortMap.shooterRightMotor); 
+
 
     shooterPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, PortMap.shooterPistonForward,
         PortMap.shooterPistonReverse);// Piston(PortMap.shooterPistonForward, PortMap.shooterPistonReverse);
@@ -48,8 +52,9 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
     shooterRightMotor.follow(shooterLeftMotor);
 
-    shooterLeftMotor.resetEncoder();
-    shooterRightMotor.resetEncoder();
+    shooterLeftMotor.configFactoryDefault();
+    shooterRightMotor.configFactoryDefault();
+    shooterLeftMotor.setSelectedSensorPosition(0);
   }
 
   public void resetPID() {
@@ -57,16 +62,17 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   }
 
   public void setVoltage(double power) {
-    shooterLeftMotor.setVoltage(power);
+    shooterLeftMotor.set(ControlMode.PercentOutput, power / 12);
   }
 
   public double getVelocity() {
-    return (shooterLeftMotor.getVelocity() + shooterRightMotor.getVelocity()) / 2.0;
+    return (((shooterLeftMotor.getSelectedSensorVelocity() + shooterRightMotor.getSelectedSensorVelocity())
+     / 2.0) * 600.0) / 1708.5;//RobotConstants.KCTRE_MAG_ENCODER_TPR;
   }
 
   public void setSetpoint(double setpoint) {
     pidController.setSetpoint(setpoint);
-    pidController.setF(((setpoint / RobotConstants.KMAX_RPM_NEO) * 12)
+    pidController.setF(((setpoint / 6374) * 12)
         * ShooterConstants.SHOOTER_VELOCITY_PID_KF);
   }
 
@@ -119,18 +125,17 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
    */
   public double calculateRPM() {
     if (Limelight.distance() > 2.1) {
-      return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2)
-          - 467.32 * frc.robot.Limelight.distance() + 3085.2) * -1);
+      return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) - 467.32 * frc.robot.Limelight.distance() + 3450));//3160.2
     }
-    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2240.8) * -1;
+    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2800);
   }
 
   public double calculateAngle() {
-    return Limelight.distance() * -1.3097 + 7.9796;
+    return Limelight.distance() * -1.3097 + 8;
   }
 
   public double getVoltage() {
-    return shooterLeftMotor.getOutput();
+    return 0;
   }
 
   @Override

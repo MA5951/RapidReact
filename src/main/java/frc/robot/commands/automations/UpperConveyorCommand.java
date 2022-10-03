@@ -28,6 +28,7 @@ public class UpperConveyorCommand extends CommandBase {
     @Override
     public void execute() {
         if (Shooter.getInstance().atSetpoint()) {
+            System.out.println("hi");
             conveyor.setUpperPower(-0.9);
     
             if (!conveyor.isBallInUpper()) {

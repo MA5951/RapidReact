@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.commands.Automations.*;
+import frc.robot.commands.conveyor.ConveyorCommandColor;
 import frc.robot.commands.shooter.EjectBall;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.climb.ClimbConstants;
@@ -89,13 +91,14 @@ public class RobotContainer {
                 JoystickContainer.AButton.whenPressed(new InstantCommand(
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
-
+                /*
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(-0.7));
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
                 JoystickContainer.YButton.whileActiveContinuous(new EjectBall(-1300));
-
+                */
+                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(-0.8));
                 // ---------------------------- Shooter ------------ ----------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whileActiveContinuous(new ShooterAutomation());
@@ -107,7 +110,7 @@ public class RobotContainer {
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
                                 .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
 
-                JoystickContainer.XButton.whileActiveContinuous(new EjectBall(-1300));
+                JoystickContainer.XButton.whileActiveContinuous(new EjectBall(1300));
                 JoystickContainer.XButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
                 JoystickContainer.XButton.whenReleased(() -> Conveyor.getInstance().setUpperPower(0));
 

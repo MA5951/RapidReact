@@ -146,6 +146,7 @@ public class Conveyor extends SubsystemBase {
         conveyorShuffleboard.addNum("green", colorSensor.getGreen());
         conveyorShuffleboard.addBoolean("isblue", isBlue());
         conveyorShuffleboard.addBoolean("isRed", isRed());
+        conveyorShuffleboard.addNum("Current", upperFalcon.getStatorCurrent());
 
         if (isInControlLED) {
             if (DriverStation.getMatchType() == MatchType.None

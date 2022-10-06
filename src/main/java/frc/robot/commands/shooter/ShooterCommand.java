@@ -41,10 +41,12 @@ public class ShooterCommand extends CommandBase {
     if (Limelight.getTv()) {
       if (Limelight.distance() > 2.1) {
         shooter.close();
-      } else {
+      } 
+      else {
         shooter.open();
       }
-    } else {
+    } 
+    else {
       shooter.open();
       shooter.setSetpoint(ShooterConstants.SHOOTER_VELOCITY_FENDER);
     }

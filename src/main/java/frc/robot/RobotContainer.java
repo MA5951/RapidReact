@@ -76,7 +76,7 @@ public class RobotContainer {
         private void configureButtonBindings() {
 
                 // ---------------------------- Intake & Conveyor ----------------------------
-                JoystickContainer.BButton.whileActiveContinuous(new IntakeAutomation(0.8));
+                JoystickContainer.BButton.whileActiveContinuous(new IntakeAutomation(1));
 
                 JoystickContainer.BButton.whenInactive(new PistonCommand(Intake.getInstance(), false));
 
@@ -84,7 +84,7 @@ public class RobotContainer {
                 JoystickContainer.AButton.whileActiveContinuous(
                                 () -> Conveyor.getInstance().setLowerPower(0.7));
                 JoystickContainer.AButton.whileActiveContinuous(
-                                () -> Intake.getInstance().setPower(-0.8));
+                                () -> Intake.getInstance().setPower(-1));
                 JoystickContainer.AButton.whenReleased(() -> Intake.getInstance().setPower(0));
                 JoystickContainer.AButton.whenReleased(() -> Conveyor.getInstance().setLowerPower(0));
                 JoystickContainer.AButton.whenReleased(new PistonCommand(Intake.getInstance(), false));
@@ -96,9 +96,10 @@ public class RobotContainer {
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setLowerPower(-0.7));
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
-                JoystickContainer.YButton.whileActiveContinuous(new EjectBall(-1300));
+                JoystickContainer.YButton.whileActiveContinuous
+                (new EjectBall(-1300));
                 */
-                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(-0.8));
+                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(1));
                 // ---------------------------- Shooter ------------ ----------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whileActiveContinuous(new ShooterAutomation());
@@ -108,7 +109,7 @@ public class RobotContainer {
                                                 .alongWith(new UpperConveyorCommand()));
 
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
-                                .whileActiveContinuous(new MotorCommand(Intake.getInstance(), -0.7));
+                                .whileActiveContinuous(new IntakeAutomation(0.8));
 
                 JoystickContainer.XButton.whileActiveContinuous(new EjectBall(1300));
                 JoystickContainer.XButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
@@ -134,7 +135,7 @@ public class RobotContainer {
 
                 // ---------------------------- Emergency buttons ----------------------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
-                                .whileActiveContinuous(new IntakeAutomation(0.8));
+                                .whileActiveContinuous(new IntakeAutomation(-1));
 
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
                                 .whenInactive(new PistonCommand(Intake.getInstance(), false));

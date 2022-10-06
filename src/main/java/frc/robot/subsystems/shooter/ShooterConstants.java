@@ -3,8 +3,8 @@ package frc.robot.subsystems.shooter;
 public class ShooterConstants {
     public static final String SYSTEM_NAME = "Shooter";
 
-    public static final double SHOOTER_VELOCITY_PID_KP = 0.002;
-    public static final double SHOOTER_VELOCITY_PID_KI = 0.00007;
+    public static final double SHOOTER_VELOCITY_PID_KP = 0.004;//0.002
+    public static final double SHOOTER_VELOCITY_PID_KI = 0.00008;
     public static final double SHOOTER_VELOCITY_PID_KD = 0;
     public static final double SHOOTER_VELOCITY_PID_KF = 0.95;
     public static final double SHOOTER_VELOCITY_PID_TOLERANCE = 100;

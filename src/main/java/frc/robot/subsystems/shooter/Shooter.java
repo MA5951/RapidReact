@@ -127,7 +127,7 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
     if (Limelight.distance() > 2.1) {
       return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) - 467.32 * frc.robot.Limelight.distance() + 3450));//3160.2
     }
-    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 2800);
+    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 3700);
   }
 
   public double calculateAngle() {

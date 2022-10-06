@@ -82,7 +82,7 @@ public class ConveyorCommandColor extends CommandBase {
       Intake.getInstance().setPower(-0.8);
     } else {
       conveyor.setLowerPower(-0.3);
-      Intake.getInstance().setPower(0.4);
+      Intake.getInstance().setPower(0.8);
     }
 
 

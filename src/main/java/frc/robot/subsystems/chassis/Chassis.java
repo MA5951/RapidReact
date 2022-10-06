@@ -72,7 +72,7 @@ public class Chassis extends SubsystemBase {
         ChassisConstants.KI_MAPATH_LEFT_VELOCITY, ChassisConstants.KD_MAPATH_LEFT_VELOCITY, 0, 0, -1, 1);
 
     anglePIDVision = new PIDController(ChassisConstants.KP_VISION_ANGLE, ChassisConstants.KI_VISION_ANGLE,
-        ChassisConstants.KD_VISION_ANGLE, 0, 2, -12, 12);
+        ChassisConstants.KD_VISION_ANGLE, 0, 1.75, -12, 12);
 
     anglePIDVision.enableContinuousInput(-ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE,
         ChassisConstants.KANGLE_PID_VISION_SET_INPUTRANGE);

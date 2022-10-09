@@ -102,7 +102,7 @@ public class Conveyor extends SubsystemBase {
         else{
             return false;
         }*/
-        if(colorSensor.getRed() > 500 && colorSensor.getBlue() < 1000){
+        if(colorSensor.getRed() > 2000 && colorSensor.getBlue() < 1000){
             return true;
         }
         return false;
@@ -119,7 +119,7 @@ public class Conveyor extends SubsystemBase {
             return false;
         }
         */
-        if(colorSensor.getBlue() > 500 && colorSensor.getRed() < 1000){  
+        if(colorSensor.getBlue() > 2000 && colorSensor.getRed() < 2000){  
             return true;
         }
         return false;

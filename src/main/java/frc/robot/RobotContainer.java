@@ -11,12 +11,16 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autonomous.AutonomousPaths.BluePathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.commands.Automations.*;
+import frc.robot.commands.conveyor.ConveyorCommand;
 import frc.robot.commands.conveyor.ConveyorCommandColor;
 import frc.robot.commands.shooter.EjectBall;
 import frc.robot.commands.shooter.ShooterCommand;
@@ -98,7 +102,8 @@ public class RobotContainer {
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
                 JoystickContainer.YButton.whileActiveContinuous(new EjectBall(-1300));
                 */
-                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(-0.8));
+                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(-0.8))
+                .whenInactive(new InstantCommand(() -> Intake.getInstance().close()));
                 // ---------------------------- Shooter ------------ ----------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
                                 .whileActiveContinuous(new ShooterAutomation());
@@ -108,7 +113,18 @@ public class RobotContainer {
                                                 .alongWith(new UpperConveyorCommand()));
 
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
-                                .whileActiveContinuous(new IntakeAutomation(0.8));
+                                .whileActiveContinuous(new IntakeAutomation(0.8))
+                                .whenInactive(new InstantCommand(() -> Intake.getInstance().close()));
+
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(4)).
+                whileActiveContinuous(
+                        new SequentialCommandGroup(
+                        new PistonCommand(Intake.getInstance(), true),
+                        new WaitCommand(0.3),
+                        new ParallelDeadlineGroup(
+                                new ConveyorCommand(),
+                                new MotorCommand(Intake.getInstance(), 0.8)
+          ))).whenInactive(new InstantCommand(() -> Intake.getInstance().close()));
 
                 JoystickContainer.XButton.whileActiveContinuous(new EjectBall(1300));
                 JoystickContainer.XButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
@@ -133,8 +149,8 @@ public class RobotContainer {
 
 
                 // ---------------------------- Emergency buttons ----------------------------
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
-                                .whileActiveContinuous(new IntakeAutomation(0.8));
+                // new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
+                //                 .whileActiveContinuous(new IntakeAutomation(0.8));
 
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(5))
                                 .whenInactive(new PistonCommand(Intake.getInstance(), false));

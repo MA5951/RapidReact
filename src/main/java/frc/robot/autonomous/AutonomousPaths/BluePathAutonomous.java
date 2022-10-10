@@ -4,6 +4,7 @@
 
 package frc.robot.autonomous.AutonomousPaths;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -25,7 +26,8 @@ public class BluePathAutonomous extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+                new InstantCommand(() -> System.out.println("hi")),
+                new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
                 new ParallelDeadlineGroup(
                         new PIDVision(Shooter.getInstance().calculateAngle()),
                         new ShooterCommand(-200)),

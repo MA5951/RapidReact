@@ -32,7 +32,7 @@ public class GreenPathAutonomous extends SequentialCommandGroup {
         addCommands(
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
-                        new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+                        new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
                          new IntakeAutomation(0.8)
                 ),
                 new PIDVision(Shooter.getInstance().calculateAngle()),

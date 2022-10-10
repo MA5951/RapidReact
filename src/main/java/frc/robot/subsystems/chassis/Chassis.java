@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -168,7 +169,7 @@ public class Chassis extends SubsystemBase {
    * @return The distance in meters
    */
   public double getLeftDistance() {
-    return (leftRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER) * -1;
+    return (leftRearMotor.getSelectedSensorPosition() / ChassisConstants.KTICKS_PER_METER);
   }
 
   /**

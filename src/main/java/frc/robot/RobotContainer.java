@@ -143,9 +143,9 @@ public class RobotContainer {
 
                 JoystickContainer.POVDown.whenActive(new climbAutomationToSecond());
 
-                JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.4));
+                JoystickContainer.LB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), -0.6));
 
-                JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.4));
+                JoystickContainer.RB.whileActiveContinuous(new MotorCommand(ClimbPassive.getInstance(), 0.6));
 
 
                 // ---------------------------- Emergency buttons ----------------------------
@@ -163,6 +163,6 @@ public class RobotContainer {
          */
         public Command getAutonomousCommand() {
                 // An ExampleCommand will run in autonomous
-                return new GreenPathAutonomous();
+                return new BluePathAutonomous();
         }
 }

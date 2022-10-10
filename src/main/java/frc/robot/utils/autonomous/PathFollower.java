@@ -121,8 +121,8 @@ public class PathFollower {
         System.out.println("curvature: " + lookaheadPoint.curvature);
         double velocity = closestPoint.targetVelocity;
         velocity = rateLimiter.calculate(closestPoint.targetVelocity);
-        return new double[] { (velocity * (2 + lookaheadPoint.curvature * robotWidth) / 2) * sign,
-                (velocity * (2 - lookaheadPoint.curvature * robotWidth) / 2) * sign };
+        return new double[] { (velocity * (2 + lookaheadPoint.curvature * robotWidth) / 2),
+                (velocity * (2 - lookaheadPoint.curvature * robotWidth) / 2)};
     }
 
     public boolean isDone() {

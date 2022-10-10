@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
     camera = CameraServer.startAutomaticCapture();
     camera.setResolution(80, 60);
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = autoChooser.getSelected();
   }
 
   /**
@@ -140,7 +140,7 @@ public class Robot extends TimedRobot {
     if (autoChooser.getSelected() != null) {
       autoChooser.getSelected().schedule();
     }
-    Shuffleboard.selectTab("Match");
+    // Shuffleboard.selectTab("Match");
 
   }
 

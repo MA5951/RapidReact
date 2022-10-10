@@ -34,11 +34,11 @@ public class TankDrive extends CommandBase {
   @Override
   public void execute() {
     if (rightJoystick.getRawButton(1)) {
-      chassis.setRightPercent(JoystickContainer.rightJoystick.getY() * 0.4);
-      chassis.setLeftPercent(JoystickContainer.leftJoystick.getY() * 0.4);
+      chassis.setRightPercent(-JoystickContainer.leftJoystick.getY() * 0.4);
+      chassis.setLeftPercent(-JoystickContainer.rightJoystick.getY() * 0.4);
     } else {
-      chassis.setRightPercent(JoystickContainer.rightJoystick.getY());
-      chassis.setLeftPercent(JoystickContainer.leftJoystick.getY());
+      chassis.setRightPercent(-JoystickContainer.leftJoystick.getY());
+      chassis.setLeftPercent(-JoystickContainer.rightJoystick.getY());
     }
   }
 

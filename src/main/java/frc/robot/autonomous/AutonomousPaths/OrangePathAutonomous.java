@@ -35,7 +35,7 @@ public class OrangePathAutonomous extends SequentialCommandGroup {
                 addCommands(
                                 new ParallelDeadlineGroup(
                                                 new WaitCommand(2),
-                                                new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+                                                new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
                                                 new IntakeAutomation(0.8)),
                                 new PIDVision(Shooter.getInstance().calculateAngle()).raceWith(new WaitCommand(2.5)),
                                 new ParallelDeadlineGroup(
@@ -44,7 +44,7 @@ public class OrangePathAutonomous extends SequentialCommandGroup {
                                                 new UpperConveyorCommand()),
                                 new ParallelDeadlineGroup(
                                                 new WaitCommand(5.5),
-                                                new AutonomousCommand(Paths.goToHPBall, true),
+                                                new AutonomousCommand(Paths.goToHPBall, false),
                                                 new IntakeAutomation(0.8)),
                                 new AutonomousCommand(Paths.goToShootingPosition, false),
                                 new PIDVision(Shooter.getInstance().calculateAngle()),

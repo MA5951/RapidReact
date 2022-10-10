@@ -30,16 +30,16 @@ public class RedPathAutonomous extends SequentialCommandGroup {
 		addCommands(
 				new ParallelDeadlineGroup(
 						new WaitCommand(2),
-						new AutonomousCommand(Paths.gettingOutOfLunchPad, true),
+						new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
 						new IntakeAutomation(0.8)),
 				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
 						new WaitCommand(3),
 						new UpperConveyorCommand(),
 						new ShooterCommand(() -> Shooter.getInstance().calculateRPM())),
-				new AutonomousCommand(Paths.goToTheSecondBallPart1, true),
+				new AutonomousCommand(Paths.goToTheSecondBallPart1, false),
 				new ParallelDeadlineGroup(
-						new AutonomousCommand(Paths.goToTheSecondBallPart2, true),
+						new AutonomousCommand(Paths.goToTheSecondBallPart2, false),
 						new IntakeAutomation(0.8)),
 				new ParallelDeadlineGroup(
 						new AutonomousCommand(Paths.goToTheSecondBallPart3, false),

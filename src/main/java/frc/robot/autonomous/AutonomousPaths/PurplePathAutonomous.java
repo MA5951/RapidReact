@@ -16,6 +16,7 @@ import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.commands.conveyor.ConveyorCommnadAutonomous;
 
@@ -28,10 +29,12 @@ public class PurplePathAutonomous extends SequentialCommandGroup {
 	 */
 	public PurplePathAutonomous() {
 		addCommands(
-				new ParallelDeadlineGroup(
-						new WaitCommand(2),
-						new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
-						new IntakeAutomation(0.8)),
+			new ParallelDeadlineGroup(
+                        new WaitCommand(3),
+                        new AutonomousCommand(Paths.gettingOutOfLunchPadPart1, false),
+                        new InstantCommand(() -> Intake.getInstance().setPower(0.7))
+                ),
+                new InstantCommand(() -> Intake.getInstance().setPower(0)),
 				new PIDVision(Shooter.getInstance().calculateAngle()),
 				new ParallelDeadlineGroup(
 						new WaitCommand(3),

@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  private UsbCamera camera;
+  // private UsbCamera camera;
 
   private SendableChooser<Command> autoChooser;
   private SendableChooser<Boolean> teamColorChooser;
@@ -85,8 +85,8 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Commands").add("Shooter Piston LaunchZone", new PistonCommand(Shooter.getInstance(), false));
     Limelight.pipeline(0);
 
-    camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(80, 60);
+    // camera = CameraServer.startAutomaticCapture();
+    // camera.setResolution(80, 60);
 
     m_autonomousCommand = autoChooser.getSelected();
   }

@@ -21,7 +21,6 @@ import frc.robot.autonomous.AutonomousPaths.GreenPathAutonomous;
 import frc.robot.autonomous.AutonomousPaths.RedPathAutonomous;
 import frc.robot.commands.Automations.*;
 import frc.robot.commands.conveyor.ConveyorCommand;
-import frc.robot.commands.conveyor.ConveyorCommandColor;
 import frc.robot.commands.shooter.EjectBall;
 import frc.robot.commands.shooter.ShooterCommand;
 import frc.robot.subsystems.climb.ClimbConstants;
@@ -95,6 +94,32 @@ public class RobotContainer {
                 JoystickContainer.AButton.whenPressed(new InstantCommand(
                                 () -> Conveyor.getInstance()
                                                 .setAmountOfBalls(Conveyor.getInstance().getAmountOfBalls() - 1)));
+
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3))
+                        .whenActive(new PistonCommand(Intake.getInstance(), true));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3)).
+                        whileActiveContinuous(
+                        () -> Conveyor.getInstance().setLowerPower(0.7));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3)).
+                        whileActiveContinuous(
+                        () -> Intake.getInstance().setPower(-0.8));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3)).
+                        whenInactive(new InstantCommand (() -> Intake.getInstance().setPower(0)));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3)).
+                        whenInactive(new InstantCommand (() -> Conveyor.getInstance().setLowerPower(0)));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(3)).
+                        whenInactive(new InstantCommand (() -> Intake.getInstance().close()));
+
+
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(4)).
+                        whileActiveContinuous(new EjectBall(1300));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(4)).
+                        whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.9));
+                new Trigger(() -> JoystickContainer.leftJoystick.getRawButton(4)).
+                        whenInactive(new InstantCommand (() -> Conveyor.getInstance().setUpperPower(0)));
+
+                
+
                 /*
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setUpperPower(0));
                 JoystickContainer.YButton.whenInactive(() -> Conveyor.getInstance().setLowerPower(0));
@@ -102,7 +127,7 @@ public class RobotContainer {
                 JoystickContainer.YButton.whileActiveContinuous(() -> Conveyor.getInstance().setUpperPower(-0.8));
                 JoystickContainer.YButton.whileActiveContinuous(new EjectBall(-1300));
                 */
-                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(-0.8))
+                JoystickContainer.YButton.whileActiveContinuous(new IntakeAutomation(0.8))
                 .whenInactive(new InstantCommand(() -> Intake.getInstance().close()));
                 // ---------------------------- Shooter ------------ ----------------
                 new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(2))
@@ -112,11 +137,11 @@ public class RobotContainer {
                                 .whileActiveContinuous(new EjectBall(ShooterConstants.SHOOTER_VELOCITY_FENDER)
                                                 .alongWith(new UpperConveyorCommand()));
 
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3))
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(4))
                                 .whileActiveContinuous(new IntakeAutomation(0.8))
                                 .whenInactive(new InstantCommand(() -> Intake.getInstance().close()));
 
-                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(4)).
+                new Trigger(() -> JoystickContainer.rightJoystick.getRawButton(3)).
                 whileActiveContinuous(
                         new SequentialCommandGroup(
                         new PistonCommand(Intake.getInstance(), true),

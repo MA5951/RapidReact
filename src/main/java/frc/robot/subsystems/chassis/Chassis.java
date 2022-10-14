@@ -343,25 +343,25 @@ public class Chassis extends SubsystemBase {
   @Override
   public void periodic() {
     odometryHandler.update();
-    chassisShuffleboard.addNum("right distance", getRightDistance());
-    chassisShuffleboard.addNum("left distance", getLeftDistance());
-    chassisShuffleboard.addNum("Right Velocity", getRightVelocity());
-    chassisShuffleboard.addNum("left Velocity", getLeftVelocity());
-    chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
+    // chassisShuffleboard.addNum("right distance", getRightDistance());
+    // chassisShuffleboard.addNum("left distance", getLeftDistance());
+    // chassisShuffleboard.addNum("Right Velocity", getRightVelocity());
+    // chassisShuffleboard.addNum("left Velocity", getLeftVelocity());
+    // chassisShuffleboard.addString("Robot Point", odometryHandler.getCurrentPosition().toString());
     
-    chassisShuffleboard.addNum("angle", frc.robot.Limelight.getX());
+    // chassisShuffleboard.addNum("angle", frc.robot.Limelight.getX());
 
     chassisShuffleboard.addNum("distance", frc.robot.Limelight.distance());
 
     chassisShuffleboard.addNum("yaw", navx.getYaw());
-    chassisShuffleboard.addNum("roll", navx.getRoll());
-    chassisShuffleboard.addNum("pitch", navx.getPitch());
+    // chassisShuffleboard.addNum("roll", navx.getRoll());
+    // chassisShuffleboard.addNum("pitch", navx.getPitch());
 
-    chassisShuffleboard.addBoolean("tv", Limelight.getTv());
+    // chassisShuffleboard.addBoolean("tv", Limelight.getTv());
 
-    chassisShuffleboard.addBoolean("Vision Angle At Setpoint", anglePIDVision.atSetpoint());
+    // chassisShuffleboard.addBoolean("Vision Angle At Setpoint", anglePIDVision.atSetpoint());
     chassisShuffleboard.addBoolean("In Shooting Distance", Limelight.getX() < 5);
-    chassisShuffleboard.addNum("time", Timer.getFPGATimestamp());
+    // chassisShuffleboard.addNum("time", Timer.getFPGATimestamp());
 
   }
 }

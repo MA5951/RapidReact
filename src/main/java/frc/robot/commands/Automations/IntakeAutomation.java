@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.commands.conveyor.ConveyorCommand;
-import frc.robot.commands.conveyor.ConveyorCommandColor;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
@@ -28,8 +27,8 @@ public class IntakeAutomation extends SequentialCommandGroup {
         new PistonCommand(Intake.getInstance(), true),
         new WaitCommand(0.3),
         new ParallelDeadlineGroup(
-          new ConveyorCommandColor(Conveyor.getInstance())
-          //new MotorCommand(Intake.getInstance(), power)
+          new ConveyorCommand(),
+          new MotorCommand(Intake.getInstance(), power)
           ));
   }
 }

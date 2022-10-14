@@ -122,17 +122,17 @@ public class ClimbRotation extends SubsystemBase implements ControlSubsystem {
 
     @Override
     public void periodic() {
-        if (getHallEffect() && leftRotationMotor.getMotorOutputPercent() == 0) {
-            // reset();
-        }
-        shuffleboard.addBoolean("hallEffect", getHallEffect());
-        shuffleboard.addBoolean("open passive?", canMovePassive());
-        shuffleboard.addBoolean("At setpoint", rotationPID.atSetpoint());
+        // if (getHallEffect() && leftRotationMotor.getMotorOutputPercent() == 0) {
+        //     // reset();
+        // }
+        // shuffleboard.addBoolean("hallEffect", getHallEffect());
+        // shuffleboard.addBoolean("open passive?", canMovePassive());
+        // shuffleboard.addBoolean("At setpoint", rotationPID.atSetpoint());
 
-        // This method will be called once per scheduler run
-        shuffleboard.addNum("pid", calculate());
-        shuffleboard.addNum("averageDis", (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
-        shuffleboard.addNum("setPoint", (rotationPID.getSetpoint() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
+        // // This method will be called once per scheduler run
+        // shuffleboard.addNum("pid", calculate());
+        // shuffleboard.addNum("averageDis", (averageDis() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
+        // shuffleboard.addNum("setPoint", (rotationPID.getSetpoint() * 90) / ClimbConstants.TICK_FOR_90_DEGREES_ROTATION);
         /*
          * rotationPID.setP(shuffleboard.getNum("KP"));
          * rotationPID.setI(shuffleboard.getNum("KI"));

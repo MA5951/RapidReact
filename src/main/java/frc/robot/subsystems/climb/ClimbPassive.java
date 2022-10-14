@@ -70,6 +70,6 @@ public class ClimbPassive extends SubsystemBase implements ControlSubsystem {
 
   @Override
   public void periodic() {
-    shuffleboard.addNum("ClimbPassive encoder", leftPassiveMotor.getPosition());
+    //shuffleboard.addNum("ClimbPassive encoder", leftPassiveMotor.getPosition());
   }
 }

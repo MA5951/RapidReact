@@ -24,7 +24,7 @@ public class Conveyor extends SubsystemBase {
 
     private DigitalInput lowerIR;
     private DigitalInput upperIR;
-    private ColorSensorV3 colorSensor;
+    // private ColorSensorV3 colorSensor;
     private boolean isOurTeamColorBlue;
 
     private I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -49,7 +49,7 @@ public class Conveyor extends SubsystemBase {
         lowerIR = new DigitalInput(PortMap.conveyorLowerIR);
         upperIR = new DigitalInput(PortMap.conveyorUpperIR);
 
-        colorSensor = new ColorSensorV3(i2cPort);
+        // colorSensor = new ColorSensorV3(i2cPort);
 
         lowerTalon.configRampRate(ConveyorConstants.CONVEYOR_LOWER_RAMP_RATE);
 
@@ -67,7 +67,7 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isBallInLower() {
-        return isBlue() || isRed();
+        return false;
     }
 
     public boolean isBallInUpper() {
@@ -92,38 +92,38 @@ public class Conveyor extends SubsystemBase {
         return amountOfBalls;
     }
 
-    public boolean isRed(){
-        /*
-        Color detectedColor = colorSensor.getColor();
-        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-        if(match.color == kRedTarget){
-            return true;
-        }
-        else{
-            return false;
-        }*/
-        if(colorSensor.getRed() > 500 && colorSensor.getBlue() < 300){
-            return true;
-        }
-        return false;
-    }
+    // public boolean isRed(){
+    //     /*
+    //     Color detectedColor = colorSensor.getColor();
+    //     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    //     if(match.color == kRedTarget){
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }*/
+    //     if((colorSensor.getRed() > 200 && colorSensor.getBlue() < 400) || colorSensor.getRed() > 3000){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public boolean isBlue(){
-        /*
-        Color detectedColor = colorSensor.getColor();
-        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-        if(match.color == kBlueTarget){
-            return true;
-        }
-        else{
-            return false;
-        }
-        */
-        if(colorSensor.getBlue() > 300 && colorSensor.getRed() < 300){  
-            return true;
-        }
-        return false;
-    }
+    // public boolean isBlue(){
+    //     /*
+    //     Color detectedColor = colorSensor.getColor();
+    //     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    //     if(match.color == kBlueTarget){
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    //     */
+    //     if((colorSensor.getBlue() > 200 && colorSensor.getRed() < 400) || colorSensor.getBlue() > 3000){  
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public static Conveyor getInstance() {
         if (conveyor == null) {
@@ -140,32 +140,12 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         conveyorShuffleboard.addBoolean("isBallInLower", isBallInLower());
         conveyorShuffleboard.addBoolean("isBallInUpper", isBallInUpper());
-        conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
-        conveyorShuffleboard.addNum("blue", colorSensor.getBlue());
-        conveyorShuffleboard.addNum("red", colorSensor.getRed());
-        conveyorShuffleboard.addNum("green", colorSensor.getGreen());
-        conveyorShuffleboard.addBoolean("isblue", isBlue());
-        conveyorShuffleboard.addBoolean("isRed", isRed());
-        conveyorShuffleboard.addNum("Current", upperFalcon.getStatorCurrent());
-
-        if (isInControlLED) {
-            if (DriverStation.getMatchType() == MatchType.None
-                    || (DriverStation.getMatchTime() > 5 || isInAutonomous)) {
-                double current = Timer.getFPGATimestamp();
-                if (current - lastLEDTime > 0.95) {
-                    if (isBallInUpper() && isBallInLower()) {
-                        LEDManager.getInstance().setGreen();
-                    } else if (isBallInUpper() || isBallInLower()) {
-                        LEDManager.getInstance().setOrange();
-                        lastLEDTime = current;
-                    } else {
-                        LEDManager.getInstance().setRed();
-                        lastLEDTime = current;
-                    }
-                }
-            } else {
-                LEDManager.getInstance().setRainbow();
-            }
-        }
+        // conveyorShuffleboard.addNum("amount of balls", amountOfBalls);
+        // conveyorShuffleboard.addNum("blue", colorSensor.getBlue());
+        // conveyorShuffleboard.addNum("red", colorSensor.getRed());
+        // conveyorShuffleboard.addNum("green", colorSensor.getGreen());
+        // conveyorShuffleboard.addBoolean("isblue", isBlue());
+        // conveyorShuffleboard.addBoolean("isRed", isRed());
+        // conveyorShuffleboard.addNum("Current", upperFalcon.getStatorCurrent());
     }
 }

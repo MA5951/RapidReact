@@ -48,7 +48,10 @@ public class Paths {
                         0.5, 0.045);
 
 
-        public static final Path gettingOutOfLunchPad = new Path(
+        public static final Path gettingOutOfLunchPadPart1 = new Path(
                         Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 2.2)), 0.1, 1.5, 3.8, 15, 0.5, 0.045);
+        
+        public static final Path gettingOutOfLunchPadPart2 = new Path(
+                Arrays.asList(new Waypoint(0, 0), new Waypoint(0, 1)), 0.1, 1.5, 3.8, 15, 0.5, 0.045);
 
 }

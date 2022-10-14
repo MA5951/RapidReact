@@ -27,5 +27,6 @@ public class ShooterAutomation extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new ShooterCommand(() -> Shooter.getInstance().calculateRPM()),
             new UpperConveyorCommand()));
+        //));
   }
 }

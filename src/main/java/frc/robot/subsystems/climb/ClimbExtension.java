@@ -92,11 +92,11 @@ public double getDistance(){
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition()/ ClimbConstants.TICK_PER_METER_EXTENSION);
-    shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
-    shuffleboard.addNum("pid value", calculate());
-    shuffleboard.addNum("Current", getCurrent());
-    shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint() / ClimbConstants.TICK_PER_METER_EXTENSION);
+    // shuffleboard.addNum("encoder", extensionMotor.getSelectedSensorPosition()/ ClimbConstants.TICK_PER_METER_EXTENSION);
+    // shuffleboard.addBoolean("setpoint", extensionPID.atSetpoint());
+    // shuffleboard.addNum("pid value", calculate());
+    // shuffleboard.addNum("Current", getCurrent());
+    // shuffleboard.addNum("getSetPoint", extensionPID.getSetpoint() / ClimbConstants.TICK_PER_METER_EXTENSION);
 /*
     extensionPID.setP(shuffleboard.getNum("KP"));
     extensionPID.setI(shuffleboard.getNum("KI"));

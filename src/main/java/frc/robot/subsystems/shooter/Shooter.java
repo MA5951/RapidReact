@@ -35,6 +35,9 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
   private Shuffleboard shooterShuffleboard;
 
   private static Shooter shooter;
+  // private static final String sd = "from distance shotting b";
+  // private static final String s = "shotting b";
+  // private static final String a = "angle b";
 
   public Shooter() {
     shooterLeftMotor = new TalonFX(PortMap.shooterLeftMotor); 
@@ -55,6 +58,9 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
     shooterLeftMotor.configFactoryDefault();
     shooterRightMotor.configFactoryDefault();
     shooterLeftMotor.setSelectedSensorPosition(0);
+    // shooterShuffleboard.addNum(sd, 3350);
+    // shooterShuffleboard.addNum(s, 3000);
+    // shooterShuffleboard.addNum(a, 5);
   }
 
   public void resetPID() {
@@ -125,13 +131,14 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
    */
   public double calculateRPM() {
     if (Limelight.distance() > 2.1) {
-      return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) - 467.32 * frc.robot.Limelight.distance() + 3350));//3160.2
+      return ((107.98 * Math.pow(frc.robot.Limelight.distance(), 2) - 467.32 * frc.robot.Limelight.distance() + 
+      3350)); //3350//3160.2
     }
-    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 3400);
+    return (61.558 * Math.pow(Limelight.distance(), 2) + 6.2312 * Limelight.distance() + 3000); // 3400
   }
 
   public double calculateAngle() {
-    return Limelight.distance() * -1.3097 + 6;
+    return Limelight.distance() * -1.3097 + 5;
   }
 
   public double getVoltage() {
@@ -140,9 +147,9 @@ public class Shooter extends SubsystemBase implements PistonSubsystem, ControlSu
 
   @Override
   public void periodic() {
-    shooterShuffleboard.addNum("Shooter RPM", getVelocity());
+    // shooterShuffleboard.addNum("Shooter RPM", getVelocity());
     shooterShuffleboard.addBoolean("At Setpoint", atSetpoint());
-    shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint());
+    // shooterShuffleboard.addNum("Shooter Setpoint", pidController.getSetpoint());
   }
 
   public void off() {

@@ -13,6 +13,7 @@ import frc.robot.commands.Automations.UpperConveyorCommand;
 import frc.robot.commands.chassis.AutonomousCommand;
 import frc.robot.commands.chassis.PIDVision;
 import frc.robot.commands.shooter.ShooterCommand;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -26,13 +27,14 @@ public class BluePathAutonomous extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new InstantCommand(() -> System.out.println("hi")),
-                new AutonomousCommand(Paths.gettingOutOfLunchPad, false),
+                 // TODO: Replace deadline with race
+                new WaitCommand(8),
+                new AutonomousCommand(Paths.gettingOutOfLunchPadPart1, false),
                 new ParallelDeadlineGroup(
                         new PIDVision(Shooter.getInstance().calculateAngle()),
                         new ShooterCommand(-200)),
                 new ParallelDeadlineGroup(
-                        new WaitCommand(3),
+                        new WaitCommand(5),
                         new ShooterCommand(() -> Shooter.getInstance().calculateRPM()).alongWith(
                                 new UpperConveyorCommand())));
     }
